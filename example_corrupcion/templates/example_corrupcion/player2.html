@@ -1,0 +1,17 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+    Participante B
+{% endblock %}
+
+{% block content %}
+    <p><b>tienes un {{group.opcionTokens}} ¿Quieres aceptar el monto de {{group.coinsJ1}}?</b></p>
+    <h1 class="display-1">{{prediccion}}</h1>
+    <div>
+        <button name="aceptarCoima" value="True" class="btn btn-primary btn-large">Si</button>
+        <button name="aceptarCoima" value="False" class="btn btn-primary btn-large">No</button>
+    </div>
+    
+
+{% endblock %}

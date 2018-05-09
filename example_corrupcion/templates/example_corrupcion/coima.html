@@ -1,0 +1,24 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+    COIMA
+{% endblock %}
+
+{% block content %}
+    {% if group.opciones == 1 %}
+    <p>
+        has recibido UNA COIMA
+    </p>
+        {% for field in form %}
+            {% formfield field %}
+        {% endfor %}
+        
+    {% else %}
+    <p>
+        tu eres el participante B, y no recibido UNA COIMA
+    </p>
+    {% endif %}
+    {% next_button %}
+
+{% endblock %}

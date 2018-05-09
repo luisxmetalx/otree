@@ -1,0 +1,14 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree %}
+
+{% block title %}
+    Ingrese su informacion
+{% endblock %}
+
+{% block content %}
+    {% formfield player.name label="Ingrese su nombre..." %}
+    {% formfield player.age label="Ingrese su edad..." %}
+
+    {% next_button %}
+
+{% endblock %}
