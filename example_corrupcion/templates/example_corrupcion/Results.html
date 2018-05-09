@@ -2,12 +2,25 @@
 {% load otree static %}
 
 {% block title %}
-    Page title
+    Resultados.
 {% endblock %}
 
 {% block content %}
+    {% if player.id_in_group == 1 %}
+        <p>
+            has enviado al  Servidor Público {{ group.coinsJ1 }} opcionTokens, como {{group.opcionTokens}}
+            
+        </p>
+    {% else %}
+        <p>
+            has recibido de la Firma {{group.coinsJ1}} tokens, te lo ha enviado como {{group.opcionTokens}}
+        </p>
 
-    {% next_button %}
+    {% endif %}
+
+    <p>
+    LO QUE SE PAGARA SERÁ: {{ player.payoff }}.
+    </p>
 {% endblock %}
 
 
