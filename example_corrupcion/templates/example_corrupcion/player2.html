@@ -1,17 +1,40 @@
 {% extends "global/Page.html" %}
 {% load otree static %}
 
+
 {% block title %}
     Servidor Público
 {% endblock %}
 
 {% block content %}
-    <p><b>tienes un {{group.opcionTokens}} ¿Quieres aceptar el monto de {{group.coinsJ1}} tokens?</b></p>
-    <h1 class="display-1">{{prediccion}}</h1>
-    <div>
-        <button name="aceptarCoima" value="True" class="btn btn-primary btn-large">Si</button>
-        <button name="aceptarCoima" value="False" class="btn btn-primary btn-large">No</button>
-    </div>
+    {% if group.porcentaje >= 4 %}
+        <p>tienes un <b>{{group.opcionTokens}}</b>, el monto a recibir es de <b>{{monto}}</b> de los <b>{{group.coinsJ1}} tokens</b>, la diferencia fue donada a una fundacion</p>
+        <p class="h1">tienes una probabilidad alta de que no seas atrapado... tu probabilidad es {{group.porcentaje}}</p>
+        <div class="row">
+            {% formfield group.aceptarCoima %}
+        </div>
+        <div class="row">
+            {% next_button %}
+        </div>
+    {% else %}
+        <div class="row">
+            <p><b>tienes un {{group.opcionTokens}} ¿Quieres aceptar el monto de {{group.coinsJ1}} tokens?</b></p>    
+        </div>
+        <div class="row">
+            {% next_button %}
+        </div>
+    {% endif %}
+
+    {% block app_styles %}
+
+        <style type="text/css">
+            ul#id_aceptarCoima > li:last-child{
+                visibility: visible;
+            }
+        </style>
+
+    {% endblock %}
+        
     
 
 {% endblock %}

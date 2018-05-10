@@ -6,21 +6,36 @@
 {% endblock %}
 
 {% block content %}
-    {% if player.id_in_group == 1 %}
+    {% if group.opciones == 1 %}
+        {% if player.id_in_group == 1 %}
+            <p>
+                has enviado al  Servidor Público {{ group.coinsJ1 }} opcionTokens, como {{group.opcionTokens}}
+                
+            </p>
+        {% else %}
+            <p>
+                has recibido de la Firma {{group.coinsJ1}} tokens, te lo ha enviado como {{group.opcionTokens}}
+            </p>
+
+        {% endif %}
+
         <p>
-            has enviado al  Servidor Público {{ group.coinsJ1 }} opcionTokens, como {{group.opcionTokens}}
-            
+        LO QUE SE PAGARA SERÁ: {{ player.payoff }}.
         </p>
     {% else %}
-        <p>
-            has recibido de la Firma {{group.coinsJ1}} tokens, te lo ha enviado como {{group.opcionTokens}}
-        </p>
+        {% if player.id_in_group == 1 %}
+            <p>
+                No hubo nada con respecto al servidor público
+                
+            </p>
+        {% else %}
+            <p>
+                No has recivido nada por parte de la firma
+            </p>
+
+        {% endif %}
 
     {% endif %}
-
-    <p>
-    LO QUE SE PAGARA SERÁ: {{ player.payoff }}.
-    </p>
 {% endblock %}
 
 

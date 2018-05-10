@@ -17,30 +17,49 @@ class coima(Page):
     form_fields =['coinsJ1','opcionTokens']
     def is_displayed(self):
         return self.player.id_in_group == 1 and self.group.opciones == 1
+    
+    def before_next_page(self):
+        self.group.opcionCoima == ''
 
 class player2(Page):
     form_model = 'group'
-    form_fields = ['coinsJ1']
-    form_fields =['aceptarCoima']
+    form_fields = ['aceptarCoima']
 
     def is_displayed(self):
-        return self.player.id_in_group == 2 
+        self.group.porcentaje =  choice(range(1000))
+        return self.player.id_in_group == 2 and self.group.opciones == 1
     
     def vars_for_template(self):
-        return {'prediccion': choice(range(1000))}
+        return {'prediccion': choice(range(1000)),
+                'monto': int(self.group.coinsJ1*self.Constants.tasa
+        }
 
 class reparticion(Page):
     form_model = 'group'
     form_fields = ['opcionCoima']
 
     def is_displayed(self):
-        return self.group.opciones == 1 and self.player.id_in_group== 2 and self.group.aceptarCoima == True
+        return self.group.opciones == 1 and self.player.id_in_group== 2 and self.group.aceptarCoima <= 2
+    
+    def vars_for_template(self):
+        return {}
+    
+class noReparticion(Page):
+    form_model = 'group'
+    form_fields = ['opcionesCogerDinero']
 
-class MyPage(Page):
-    pass
+    def is_displayed(self):
+        return self.player.id_in_group== 1 and self.group.aceptarCoima == 3
+
+
+
 
 class WaitForP1(WaitPage):
     pass
+
+class WaitForP2(WaitPage):
+    pass
+
 
 class ResultsWaitPage(WaitPage):
     form_model = 'group'
@@ -68,8 +87,8 @@ class ResultsWaitPage(WaitPage):
                     p2.payoff = 51
             if(group.coinsJ1 == 3):
                 if(group.opcionCoima == 'A'):
-                    p1.payoff = 45
-                    p2.payoff = 59
+                    p1.payoff = p1.payoff + (group.coinsJ1*Constants.tasa)
+                    p2.payoff = p2.payoff + (group.coinsJ1*Constants.tasa)
                 else:
                     p1.payoff = 65
                     p2.payoff = 54
@@ -122,12 +141,23 @@ class ResultsWaitPage(WaitPage):
                 else:
                     p1.payoff = 58
                     p2.payoff = 75
+        elif(group.aceptarCoima == 2):
+            p1.payoff = (Constants.tokens1)-group.coinsJ1
+            p2.payoff = Constants.tokens2+2 
+        elif(group.aceptarCoima == 3):
+            if(group.opcionesCogerDinero == 1):
+                p1.payoff = (Constants.tokens1)-2
+                p2.payoff = (Constants.tokens2)-3
+            else:
+                p1.payoff = (Constants.tokens1)-group.coinsJ1
+                p2.payoff = Constants.tokens2+group.coinsJ1
+
         else:
-            p1.payoff = (Constants.tokens1-2)- group.coinsJ1
-            p2.payoff = Constants.tokens2 
-        
+            p1.payoff = Constants.tokens1
+            p2.payoff = Constants.tokens2
 
 class Results(Page):
+    form_model = 'group'
     pass
 
 
@@ -136,7 +166,10 @@ page_sequence = [
     coima,
     WaitForP1,
     player2,
+    WaitForP1,
     reparticion,
+    WaitForP2,
+    noReparticion,
     ResultsWaitPage,
     Results
 ]
