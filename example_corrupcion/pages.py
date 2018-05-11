@@ -10,6 +10,14 @@ class player1(Page):
 
     def is_displayed(self):
         return self.player.id_in_group == 1
+    
+    def vars_for_template(self):
+        if(self.round_number==1):
+            token=Constants.tokens1
+        else:
+            p1=self.group.get_player_by_id(1)
+            token=p1.in_round(self.round_number - 1).payoff
+        return{'token':token}
 
 class coima(Page):
 
@@ -30,6 +38,7 @@ class player2(Page):
         return self.player.id_in_group == 2 and self.group.opciones == 1
     
     def vars_for_template(self):
+
         valor = int(self.group.coinsJ1*Constants.tasa)
         if(valor >1):
             self.group.monto = (self.group.coinsJ1)-valor
@@ -37,7 +46,7 @@ class player2(Page):
             self.group.monto = (self.group.coinsJ1)-(valor +1)
         return {'prediccion': choice(range(1000)),
                 'monto': self.group.monto,
-                'valor': valor  
+                'valor': valor,  
                 }
         
     print(Constants.monto)
@@ -76,23 +85,46 @@ class ResultsWaitPage(WaitPage):
         group = self.group
         p1 = group.get_player_by_id(1)
         p2 = group.get_player_by_id(2)
-        if(group.aceptarCoima == 1):
-            p1.payoff = (Constants.tokens1-2)+ (group.monto) + group.coinsJ1
-            p2.payoff = Constants.tokens2 + (group.monto)
-            
-        elif(group.aceptarCoima == 2):
-            p1.payoff = (Constants.tokens1)-group.coinsJ1
-            p2.payoff = Constants.tokens2+2 
-        elif(group.aceptarCoima == 3):
-            if(group.opcionesCogerDinero == 1):
-                p1.payoff = (Constants.tokens1)-2
-                p2.payoff = (Constants.tokens2)-3
-            else:
+        if(self.round_number == 1):
+            if(group.aceptarCoima == 1):
+                p1.payoff = (Constants.tokens1)+ (group.monto*2) - group.coinsJ1 + int(group.coinsJ1*Constants.tasa)
+
+                p2.payoff = Constants.tokens2 + (group.monto)
+            elif(group.aceptarCoima == 2):
                 p1.payoff = (Constants.tokens1)-group.coinsJ1
-                p2.payoff = Constants.tokens2+group.coinsJ1
+                p2.payoff = (Constants.tokens2)+2 
+            elif(group.aceptarCoima == 3):
+                if(group.opcionesCogerDinero == 1):
+                    p1.payoff = (Constants.tokens1)-2
+                    p2.payoff = (Constants.tokens2)-3
+                else:
+                    p1.payoff = (Constants.tokens1)-group.coinsJ1
+                    p2.payoff = Constants.tokens2+group.coinsJ1
+            else:
+                p1.payoff = Constants.tokens1
+                p2.payoff = Constants.tokens2
         else:
-            p1.payoff = Constants.tokens1
-            p2.payoff = Constants.tokens2
+            if(group.aceptarCoima == 1):
+                p1.payoff = (p1.in_round(self.round_number - 1).payoff-2)+ (group.monto*2) - group.coinsJ1 +int(group.coinsJ1*Constants.tasa)
+                p2.payoff = p2.in_round(self.round_number - 1).payoff+ (group.monto)
+                
+            elif(group.aceptarCoima == 2):
+                p1.payoff = (p1.in_round(self.round_number - 1).payoff)-group.coinsJ1
+                p2.payoff = p2.in_round(self.round_number - 1).payoff+2 
+
+            elif(group.aceptarCoima == 3):
+                if(group.opcionesCogerDinero == 1):
+                    p1.payoff = (p1.in_round(self.round_number - 1).payoff)-2
+                    p2.payoff = (p2.in_round(self.round_number - 1).payoff)-3
+
+                else:
+                    p1.payoff = (p1.in_round(self.round_number - 1).payoff)-group.coinsJ1
+                    p2.payoff = p2.in_round(self.round_number - 1).payoff+group.coinsJ1
+                    
+            else:
+                p1.payoff = p1.in_round(self.round_number - 1).payoff
+                p2.payoff = p2.in_round(self.round_number - 1).payoff
+                
 
 class Results(Page):
     form_model = 'group'

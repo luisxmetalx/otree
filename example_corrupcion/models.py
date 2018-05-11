@@ -14,7 +14,7 @@ Your app description
 class Constants(BaseConstants):
     name_in_url = 'example_corrupcion'
     players_per_group = 2
-    num_rounds = 2
+    num_rounds = 3
 
     tokens1=40
     tokens2=40
@@ -53,7 +53,10 @@ class Group(BaseGroup):
         choices=[[1,'Denunciar'],[2,'No hacer Nada']], widget=widgets.RadioSelect,blank=True,initial=0,label="cual es la opcion a escoger"
     )
 
+    
+    
     monto=models.IntegerField()
+
 
 
 class Player(BasePlayer):

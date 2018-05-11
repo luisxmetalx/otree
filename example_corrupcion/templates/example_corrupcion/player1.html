@@ -2,16 +2,30 @@
 {% load otree static %}
 
 {% block title %}
-    Firma
-    Round {{ subsession.round_number }} of {{ Constants.num_rounds }}
+    <p>
+        Firma
+    </p>
+    <p>
+        Round {{ subsession.round_number }} of {{ Constants.num_rounds }}
+    </p>
 {% endblock %}
 
 {% block content %}
-    <p>
-        tu eres el participante A, tienes estos puntos {{Constants.tokens1}}.
-    </p>
-    {% formfield group.opciones label="cuanto quieres dar al participante B" %}
 
-    {% next_button %}
+    {% if subsession.round_number == 1 %}
+        <p>
+            tu eres el participante A, tienes estos puntos {{Constants.tokens1}}.
+        </p>
+        {% formfield group.opciones label="cuanto quieres dar al participante B" %}
+
+        {% next_button %}
+    {% else %}
+        <p>
+            tu eres el participante A, tienes estos puntos {{token}}.
+        </p>
+        {% formfield group.opciones label="cuanto quieres dar al participante B" %}
+
+        {% next_button %}
+    {% endif %}
 
 {% endblock %}
