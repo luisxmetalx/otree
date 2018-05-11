@@ -30,8 +30,14 @@ class player2(Page):
         return self.player.id_in_group == 2 and self.group.opciones == 1
     
     def vars_for_template(self):
+        valor = int(self.group.coinsJ1*Constants.tasa)
+        if(valor >1):
+            self.group.monto = (self.group.coinsJ1)-valor
+        else:
+            self.group.monto = (self.group.coinsJ1)-(valor +1)
         return {'prediccion': choice(range(1000)),
-                'monto': int(self.group.coinsJ1*Constants.tasa)
+                'monto': self.group.monto,
+                'valor': valor  
                 }
         
     print(Constants.monto)
@@ -71,78 +77,9 @@ class ResultsWaitPage(WaitPage):
         p1 = group.get_player_by_id(1)
         p2 = group.get_player_by_id(2)
         if(group.aceptarCoima == 1):
-            p1.payoff = (Constants.tokens1-2)- group.coinsJ1
-            p2.payoff = Constants.tokens2 + ((group.coinsJ1)*3)
-            if(group.coinsJ1 == 1):
-                if(group.opcionCoima == 'A'):
-                    p1.payoff = 47
-                    p2.payoff = 63
-                else:
-                    p1.payoff = 67
-                    p2.payoff = 48
-            if(group.coinsJ1 == 2):
-                if(group.opcionCoima == 'A'):
-                    p1.payoff = 45
-                    p2.payoff = 56
-                else:
-                    p1.payoff = 66
-                    p2.payoff = 51
-            if(group.coinsJ1 == 3):
-                if(group.opcionCoima == 'A'):
-                    p1.payoff = p1.payoff + (group.coinsJ1*Constants.tasa)
-                    p2.payoff = p2.payoff + (group.coinsJ1*Constants.tasa)
-                else:
-                    p1.payoff = 65
-                    p2.payoff = 54
-            if(group.coinsJ1 == 4):
-                if(group.opcionCoima == 'A'):
-                    p1.payoff = 44
-                    p2.payoff = 62
-                else:
-                    p1.payoff = 64
-                    p2.payoff = 57
-            if(group.coinsJ1 == 5):
-                if(group.opcionCoima == 'A'):
-                    p1.payoff = 43
-                    p2.payoff = 65
-                else:
-                    p1.payoff = 63
-                    p2.payoff = 60
-            if(group.coinsJ1 == 6):
-                if(group.opcionCoima == 'A'):
-                    p1.payoff = 42
-                    p2.payoff = 68
-                else:
-                    p1.payoff = 62
-                    p2.payoff = 63
-            if(group.coinsJ1 == 7):
-                if(group.opcionCoima == 'A'):
-                    p1.payoff = 41
-                    p2.payoff = 71
-                else:
-                    p1.payoff = 61
-                    p2.payoff = 66
-            if(group.coinsJ1 == 8):
-                if(group.opcionCoima == 'A'):
-                    p1.payoff = 40
-                    p2.payoff = 74
-                else:
-                    p1.payoff = 60
-                    p2.payoff = 69
-            if(group.coinsJ1 == 9):
-                if(group.opcionCoima == 'A'):
-                    p1.payoff = 39
-                    p2.payoff = 77
-                else:
-                    p1.payoff = 59
-                    p2.payoff = 72
-            if(group.coinsJ1 == 10):
-                if(group.opcionCoima == 'A'):
-                    p1.payoff = 38
-                    p2.payoff = 80
-                else:
-                    p1.payoff = 58
-                    p2.payoff = 75
+            p1.payoff = (Constants.tokens1-2)+ (group.monto) + group.coinsJ1
+            p2.payoff = Constants.tokens2 + (group.monto)
+            
         elif(group.aceptarCoima == 2):
             p1.payoff = (Constants.tokens1)-group.coinsJ1
             p2.payoff = Constants.tokens2+2 
@@ -159,7 +96,8 @@ class ResultsWaitPage(WaitPage):
 
 class Results(Page):
     form_model = 'group'
-    pass
+    def is_displayed(self):
+        return self.round_number == Constants.num_rounds
 
 
 page_sequence = [

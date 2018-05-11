@@ -132,7 +132,7 @@ SESSION_CONFIGS = [
     {
     'name': 'example_corrupcion',
     'display_name': "experiemnto de corrupcion",
-    'num_demo_participants': 4,
+    'num_demo_participants': 2,
     'app_sequence': [
         'example_corrupcion',
         ],
