@@ -16,9 +16,9 @@ class Constants(BaseConstants):
     players_per_group = 2
     num_rounds = 1
 
-    tokens1=c(40)
-    tokens2=c(40)
-
+    tokens1=40
+    tokens2=40
+    monto=0
     tasa=0.25
 
 

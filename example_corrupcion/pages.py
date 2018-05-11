@@ -31,8 +31,10 @@ class player2(Page):
     
     def vars_for_template(self):
         return {'prediccion': choice(range(1000)),
-                'monto': int(self.group.coinsJ1*self.Constants.tasa
-        }
+                'monto': int(self.group.coinsJ1*Constants.tasa)
+                }
+        
+    print(Constants.monto)
 
 class reparticion(Page):
     form_model = 'group'
@@ -151,7 +153,6 @@ class ResultsWaitPage(WaitPage):
             else:
                 p1.payoff = (Constants.tokens1)-group.coinsJ1
                 p2.payoff = Constants.tokens2+group.coinsJ1
-
         else:
             p1.payoff = Constants.tokens1
             p2.payoff = Constants.tokens2
