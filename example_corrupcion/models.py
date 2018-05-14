@@ -4,7 +4,7 @@ from otree.api import (
 )
 
 
-author = 'Your name here'
+author = 'Luis Andrade'
 
 doc = """
 Your app description
@@ -16,8 +16,8 @@ class Constants(BaseConstants):
     players_per_group = 2
     num_rounds = 3
 
-    tokens1=40
-    tokens2=40
+    tokens1=25
+    tokens2=25
     monto=0
     tasa=0.25
 

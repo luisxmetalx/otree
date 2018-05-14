@@ -2,30 +2,51 @@
 {% load otree static %}
 
 {% block title %}
-    <p>
         Firma
-    </p>
-    <p>
-        Round {{ subsession.round_number }} of {{ Constants.num_rounds }}
-    </p>
 {% endblock %}
 
 {% block content %}
 
-    {% if subsession.round_number == 1 %}
-        <p>
-            tu eres el participante A, tienes estos puntos {{Constants.tokens1}}.
-        </p>
-        {% formfield group.opciones label="cuanto quieres dar al participante B" %}
+        <div class="container-fluit">
+            <div class="row">
+                <p class="h2">
+                    Round {{ subsession.round_number }} of {{ Constants.num_rounds }}
+                </p>
+            </div>
+            {% if subsession.round_number == 1 %}
+                <div class="row">
+                    <p class="text-justify">
+                            Usted ha sido elegido para el papel de gerente de una firma (empresa) que busca la concesión de un proyecto de obra pública. Durante las {{Constants.num_rounds}} rondas usted estará emparejado con otro jugador elegido al azar que desempeñará el papel de un servidor público encargado de asignar la firma que llevará a cabo el proyecto. En cada ronda, usted recibirá una dotación inicial de {{Constants.tokens1}} tokens.
+                    </p>
+                </div>
+                <div class="row">
+                    {% formfield group.opciones label="Cuantos Tokens desea enviar: " %}
+                </div>
+                <div class="row">{% next_button %}</div>
+            {% else %}
+                <p>
+                    tu eres el participante A, tienes estos puntos {{token}}.
+                </p>
+                {% formfield group.opciones label="cuanto quieres dar al participante B" %}
+        
+                {% next_button %}
+            {% endif %}
+        </div>
+   
 
-        {% next_button %}
-    {% else %}
-        <p>
-            tu eres el participante A, tienes estos puntos {{token}}.
-        </p>
-        {% formfield group.opciones label="cuanto quieres dar al participante B" %}
+{% endblock %}
+{% block styles %}
+  <style type="text/css">
+    #otree-body {
+      width: 85%;
+    }
+    .row{
+      margin-right: 1%;
+    }
 
-        {% next_button %}
-    {% endif %}
+    .page-header{
+        margin-top: 0%;
+    }
+  </style>
 
 {% endblock %}

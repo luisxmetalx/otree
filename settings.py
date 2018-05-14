@@ -132,9 +132,17 @@ SESSION_CONFIGS = [
     {
     'name': 'example_corrupcion',
     'display_name': "experiemnto de corrupcion",
+    'num_demo_participants': 4,
+    'app_sequence': [
+        'Bienvenida_v2','example_corrupcion',
+        ],
+    },
+    {
+    'name': 'Bienvenida_v2',
+    'display_name': "bienvenida de experimentos",
     'num_demo_participants': 2,
     'app_sequence': [
-        'example_corrupcion',
+        'Bienvenida_v2',
         ],
     },
     # other session configs ...

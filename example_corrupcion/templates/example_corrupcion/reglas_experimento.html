@@ -1,0 +1,71 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+    Reglas del Experimento
+{% endblock %}
+
+{% block content %}
+    {% if id_player_1 == 1 %}
+        <div class="container-fluid">
+            <div class="row">
+                <p class="h2">Firma:</p>
+                <p class="text-justify">Usted ha sido elegido para el papel de gerente de una firma (empresa) que busca la concesión de un proyecto de obra pública. Durante las x rondas usted estará emparejado con otro jugador elegido al azar que desempeñará el papel de un servidor público encargado de asignar la firma que llevará a cabo el proyecto. En cada ronda, usted recibirá una dotación inicial de 25 tokens.</p>
+                <p class="text-justify">En primer lugar, usted debe decidir entre enviar o no un mensaje ofreciendo una cantidad de tokens al servidor público para que se le adjudique el contrato.</p>
+                <p class="text-justify">Si usted decide no enviar el mensaje, se le informará al otro jugador y pasarán a la siguiente ronda conservado los 25 tokens.</p>
+                <p class="text-justify">Si usted decide no enviar el mensaje, se le informará al otro jugador y pasarán a la siguiente ronda conservado los 25 tokens.</p>
+            </div>
+            <div class="row">
+                <ol>
+                    <li value="1"><p class="text-justify">Reportar el mensaje a su agencia. Aunque no puede mantener el pago, el servidor público recibe un bono de 2 tokens y usted tendrá que pagar una penalización de 5 tokens que se reducirán de sus ganancias.</p></li>
+                    <li><p class="text-justify">Recibe los tokens, pero no favorece a su firma. Por el contrario, adjudica el contrato a otra más eficiente. En este caso, antes asignar los tokens, existe una pequeña probabilidad de que el evento sea descubierto (4/1000). En caso de ser descubierto, se confisca los tokens y se restan 5 a cada jugador, con lo cual pasan a la siguiente ronda; caso contrario, a usted se le restan los tokens enviados que son sumados a la cuenta del servidor público.</p> </li>
+                    <li><p class="text-justify">Recibe los tokens y da una parte del mismo (25%) a sus colegas para asegurar que la su firma realmente gane el contrato. Nuevamente, existe una pequeña probabilidad (4/1000) de ser descubiertos, en ese caso, se confisca los tokens y se le restan 5 a cada participante; caso contrario, se le sumarán al servidor público los tokens enviados menos el 25%, y a usted se le adjudicará el contrato obteniendo una ganancia de 35 tokens.</p></li>
+                </ol>
+            </div>
+            <div class="row">
+                <p class="text-justify">Si usted decide 1 o 3, automáticamente se les asigna sus premios y pasan a la siguiente ronda. Si usted decide 2, su decisión se informará al otro jugador y el tendrá que decidir entre dos opciones:</p>
+            </div>
+            <div class="row">
+                <ol>
+                    <li value="1">No hacer nada y pasar a la siguiente ronda.</li>
+                    <li>Denunciar que usted recibió los tokens, lo cual le costará la firma 2 tokens y le representará una disminución de 3 tokens para usted.</li>
+                </ol>
+            </div>
+        </div>
+    {% else %}
+        <div class="container-fluid">
+            <div class="row">
+                <p class="h2">Servidor Público</p>
+                <p class="text-justify">Usted ha sido elegido para el papel de un servidor público encargado de asignar un proyecto de obra pública. Durante las x rondas usted estará emparejado con otro jugador elegido al azar que desempeñará el papel de una firma que busca la concesión (ser la empresa encargada de llevar el proyecto). En cada ronda, usted recibirá una dotación inicial de 25 tokens.</p>
+                <p class="text-justify">Usted debe esperar la decisión de la firma sobre enviarle o no, un mensaje ofreciendo una cantidad de tokens para resultar beneficiada de la decisión de asignación del proyecto. En caso de que decida no enviarle el mensaje, se le informará a usted y ambos pasarán a la siguiente ronda conservando los 25 tokens que se añadirán a su pago total.</p>
+                <p class="text-justify">Si la firma decide enviarle el mensaje, usted tendrá que tomar una de tres posibles opciones:</p>
+            </div>
+            <div class="row">
+                <ol>
+                    <li value="1">Reporta el mensaje a su agencia. Aunque no puede mantener el pago, recibe un bono de 2 tokens. La firma tendrá que pagar una penalización de 5 tokens que se reducirán de sus ganancias.</li>
+                    <li>Recibe los tokens, pero no favorece a la firma. Por el contrario, adjudica el contrato a otra firma más eficiente. En este caso, antes asignar los tokens, existe una pequeña probabilidad de que el evento sea descubierto (4/1000). En caso de ser descubiertos, se confisca los tokens y se restan 5 a cada jugador, con lo cual pasan a la siguiente ronda; caso contrario, se añaden los tokens directamente a su cuenta.</li>
+                    <li>Recibo los tokens y doy una parte del mismo (25%) a mis colegas para asegurar que la firma realmente gane el contrato. Nuevamente, existe una pequeña probabilidad (4/1000) de ser descubiertos, en ese caso, se confisca los tokens y se le restan 5 a cada participante; caso contrario, se le sumarán a usted los tokens recibidos y se le aumentarán el 15 tokens a la firma.</li>
+                </ol>
+            </div>
+        </div>
+    {% endif %}
+    <div class="row">
+        {% next_button %}
+    </div>
+{% endblock %}
+
+{% block styles %}
+  <style type="text/css">
+    #otree-body {
+      width: 85%;
+    }
+    .row{
+      margin-right: 1%;
+    }
+
+    .page-header{
+        margin-top: 0%;
+    }
+  </style>
+
+{% endblock %}

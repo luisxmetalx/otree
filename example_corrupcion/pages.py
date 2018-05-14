@@ -3,6 +3,15 @@ from ._builtin import Page, WaitPage
 from .models import Constants
 from random import choice,random
 
+class reglas_experimento(Page):
+    form_model = 'group'
+    def is_displayed(self):
+        return self.round_number == 1
+
+    def vars_for_template(self):
+
+        return {'id_player_1': self.player.id_in_group
+                }
 
 class player1(Page):
     form_model = 'group'
@@ -84,7 +93,10 @@ class ResultsWaitPage(WaitPage):
     def after_all_players_arrive(self):
         group = self.group
         p1 = group.get_player_by_id(1)
+        print("el jugador es ",p1)
+        print("el id del jugador es ",p1.id_in_group)
         p2 = group.get_player_by_id(2)
+        print("el jugador es ",p2)
         if(self.round_number == 1):
             if(group.aceptarCoima == 1):
                 p1.payoff = (Constants.tokens1)+ (group.monto*2) - group.coinsJ1 + int(group.coinsJ1*Constants.tasa)
@@ -133,6 +145,7 @@ class Results(Page):
 
 
 page_sequence = [
+    reglas_experimento,
     player1,
     coima,
     WaitForP1,
