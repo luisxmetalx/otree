@@ -134,7 +134,7 @@ SESSION_CONFIGS = [
     'display_name': "experiemnto de corrupcion",
     'num_demo_participants': 4,
     'app_sequence': [
-        'Bienvenida_v2','example_corrupcion',
+        'example_corrupcion',
         ],
     },
     {

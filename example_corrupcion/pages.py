@@ -34,9 +34,7 @@ class coima(Page):
     form_fields =['coinsJ1','opcionTokens']
     def is_displayed(self):
         return self.player.id_in_group == 1 and self.group.opciones == 1
-    
-    def before_next_page(self):
-        self.group.opcionCoima == ''
+
 
 class player2(Page):
     form_model = 'group'
@@ -77,7 +75,11 @@ class noReparticion(Page):
     def is_displayed(self):
         return self.player.id_in_group== 1 and self.group.aceptarCoima == 3
 
+class mensajes(Page):
+    form_model = 'group'
 
+    def is_displayed(self):
+        return self.group.opciones == 2
 
 
 class WaitForP1(WaitPage):
@@ -145,9 +147,10 @@ class Results(Page):
 
 
 page_sequence = [
-    reglas_experimento,
     player1,
     coima,
+    WaitForP2,
+    mensajes,
     WaitForP1,
     player2,
     WaitForP1,
