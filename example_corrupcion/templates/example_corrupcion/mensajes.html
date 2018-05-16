@@ -9,7 +9,7 @@
     
     <div class="container-fluit">
         {% if player.id_in_group == 2 %}
-            {% if group.opciones == 2 %}
+            {% if group.opciones == 0 %}
                 <div class="row">
                     <p>
                         No ha recibido ninguna donación de token de parte de la firma.
@@ -18,7 +18,7 @@
             {% endif %}
         {% endif %}
         {% if player.id_in_group == 1 %}
-            {% if group.opciones == 2 %}
+            {% if group.opciones == 0 %}
                 <div class="row">
                     <p>no ha dado token al servidor público</p>
                 </div>

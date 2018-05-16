@@ -19,7 +19,7 @@ class Constants(BaseConstants):
     tokens1=25
     tokens2=25
     monto=0
-    tasa=0.25
+    #tasa=0.25
 
 
 
@@ -30,10 +30,10 @@ class Subsession(BaseSubsession):
 class Group(BaseGroup):
     
     opciones = models.IntegerField(
-        choices=[[1,'Asignar Tokens'],[2,'No Asignar Tokens']], widget=widgets.RadioSelect,blank=True,initial=0
+        choices=[[1,'Asignar Tokens'],[0,'No Asignar Tokens']], widget=widgets.RadioSelect,blank=True,initial=0
     )
 
-    coinsJ1= models.IntegerField(min=1, max=10, label="Con cuanto sobornará...")
+    coinsJ1= models.IntegerField(min=3, max=25, label="Con cuanto sobornará...")
 
     aceptarCoima = models.IntegerField(
         choices=[[1,'aceptar'],[2,'Denunciar'],[3,'Cogerse el dinero']], widget=widgets.RadioSelect,blank=True,initial=0,label="Elija su opcion...:"
@@ -41,8 +41,8 @@ class Group(BaseGroup):
 
     porcentaje = models.IntegerField()
 
-    opcionTokens = models.StringField(
-        choices = ['Regalo','Soborno'], widget=widgets.RadioSelect,blank=True,initial=0,label="Como desea enviarlo?..."
+    opcionTokens = models.IntegerField(
+        choices = [[0,'Regalo'],[1,'Soborno']], widget=widgets.RadioSelect,blank=True,initial=0,label="Como desea enviarlo?..."
     )
 
     opcionCoima = models.StringField(
