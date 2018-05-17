@@ -12,10 +12,12 @@
         <p>tienes un <b>{{group.opcionTokens}}</b>, el monto a recibir es de <b>{{monto}}</b> de los <b>{{group.coinsJ1}} tokens</b>, la diferencia fue donada a una fundacion</p>
         <div class="row">
             {% formfield group.aceptarCoima %}
+            {{form.aceptarCoima.errors}}
         </div>
         <div class="row">
             {% next_button %}
         </div>
+        
         <!-- Modal -->
         <div id="myModal" class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
@@ -37,18 +39,20 @@
         </div>
     {% else %}
         <div class="row">
-            <p><b>tienes un {{group.opcionTokens}} ¿Quieres aceptar el monto de {{group.coinsJ1}} tokens?</b></p>    
+            <p>El porcentaje de exito de la tranaccion es muy por debajo, por lo tanto ambas partes han sido penalizados.</p>    
         </div>
+        {{form.aceptarCoima.errors}}
         <div class="row">
-            {% next_button %}
+            <div>
+                <button name="aceptarCoima" value="0" class="btn btn-primary btn-large">Siguiente</button>
+            </div>
         </div>
     {% endif %}
-
     {% block app_styles %}
 
         <style type="text/css">
             ul#id_aceptarCoima > li:last-child{
-                visibility: visible;
+                visibility: hidden;
             }
         </style>
 

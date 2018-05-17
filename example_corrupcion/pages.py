@@ -21,28 +21,29 @@ class player1(Page):
         return self.player.id_in_group == 1
     
     def vars_for_template(self):
+        #choice(range(1000))
+        self.group.porcentaje =  choice(range(1000))
         if(self.round_number==1):
             token=Constants.tokens1
         else:
             p1=self.group.get_player_by_id(1)
             token=p1.in_round(self.round_number - 1).payoff
-        return{'token':token}
+        return{'token':token,
+        'porcentaje':self.group.porcentaje}
 
 class coima(Page):
-
     form_model = 'group'
     form_fields =['coinsJ1','opcionTokens']
     def is_displayed(self):
         return self.player.id_in_group == 1 and self.group.opciones == 1
-
 
 class player2(Page):
     form_model = 'group'
     form_fields = ['aceptarCoima']
 
     def is_displayed(self):
-        self.group.porcentaje =  choice(range(1000))
-        return self.player.id_in_group == 2 and self.group.opciones == 1
+        
+        return self.player.id_in_group == 2 and self.group.opciones == 1 
     
     def vars_for_template(self):
 
@@ -60,10 +61,9 @@ class player2(Page):
 
 class reparticion(Page):
     form_model = 'group'
-    form_fields = ['opcionCoima']
 
     def is_displayed(self):
-        return self.group.opciones == 1 and self.player.id_in_group== 2 and self.group.aceptarCoima <= 2
+        return self.group.opciones == 1 and self.player.id_in_group== 2 and self.group.aceptarCoima <= 2 and self.group.porcentaje > 4
     
     def vars_for_template(self):
         return {}
@@ -73,13 +73,13 @@ class noReparticion(Page):
     form_fields = ['opcionesCogerDinero']
 
     def is_displayed(self):
-        return self.player.id_in_group== 1 and self.group.aceptarCoima == 3
+        return self.player.id_in_group== 1 and self.group.aceptarCoima == 3 and self.group.porcentaje > 4
 
 class mensajes(Page):
     form_model = 'group'
 
     def is_displayed(self):
-        return self.group.opciones == 0
+        return self.group.opciones == 0 or self.group.porcentaje < 4
 
 
 class WaitForP1(WaitPage):
@@ -108,9 +108,9 @@ class ResultsWaitPage(WaitPage):
                 p1.payoff = Constants.tokens1
                 p2.payoff = Constants.tokens2
 
-        if(self.round_number > 1):
-            if(group.aceptarCoima == 1):
-                if(group.porcentaje < 3):
+        if(self.round_number >= 1):
+            if(group.aceptarCoima == 1 or group.aceptarCoima == 0):
+                if(group.porcentaje < 4):
                     p1.payoff = (Constants.tokens1)-5
                     p2.payoff = (Constants.tokens1)-5
                 else:
@@ -121,43 +121,29 @@ class ResultsWaitPage(WaitPage):
             elif(group.aceptarCoima == 2):
                 p1.payoff = (Constants.tokens1)-group.coinsJ1-5
                 p2.payoff = (Constants.tokens2)+2 
-            elif(group.aceptarCoima == 3):
+            elif(group.aceptarCoima == 3 or group.aceptarCoima == 0 ):
                 if(group.opcionesCogerDinero == 1):
                     p1.payoff = (Constants.tokens1)-(group.coinsJ1)-2
                     p2.payoff = (Constants.tokens2)-5
-                elif(group.porcentaje < 3):
+                elif(group.porcentaje < 4):
                     p1.payoff = (Constants.tokens1)-5
                     p2.payoff = (Constants.tokens1)-5
                 else:
                     p1.payoff = (Constants.tokens1)-group.coinsJ1
                     p2.payoff = Constants.tokens2+group.coinsJ1
-        else:
-            if(group.aceptarCoima == 1):
-                if(group.porcentaje < 3):
-                    p1.payoff = (p1.in_round(self.round_number - 1).payoff)-5
-                    p2.payoff = (p2.in_round(self.round_number - 1).payoff)-5
-                else:
-                    p1.payoff = (p1.in_round(self.round_number - 1).payoff-2)+ (group.monto*2) - group.coinsJ1 +2
-                    p2.payoff = p2.in_round(self.round_number - 1).payoff + (group.monto)
-            elif(group.aceptarCoima == 2):
-                p1.payoff = (p1.in_round(self.round_number - 1).payoff)-group.coinsJ1-5
-                p2.payoff = p2.in_round(self.round_number - 1).payoff+2 
-            elif(group.aceptarCoima == 3):
-                if(group.opcionesCogerDinero == 1):
-                    p1.payoff = (p1.in_round(self.round_number - 1).payoff)-(group.coinsJ1)-2
-                    p2.payoff = (p2.in_round(self.round_number - 1).payoff)-3
-                elif(group.porcentaje < 3):
-                    p1.payoff = (p1.in_round(self.round_number - 1).payoff)-5
-                    p2.payoff = (p2.in_round(self.round_number - 1).payoff)-5
-                else:
-                    p1.payoff = (p1.in_round(self.round_number - 1).payoff)-group.coinsJ1
-                    p2.payoff = p2.in_round(self.round_number - 1).payoff+group.coinsJ1
-                
+        
 
 class Results(Page):
     form_model = 'group'
     def is_displayed(self):
-        return self.round_number == Constants.num_rounds
+        return self.player.id_in_group== 1 or self.player.id_in_group== 2
+    
+    def vars_for_template(self):
+        self.group.total_pagar= sum([p.payoff for p in self.player.in_all_rounds()])
+        return {
+            'total_pagar': sum([p.payoff for p in self.player.in_all_rounds()]),
+            'player_in_all_rounds': self.player.in_all_rounds(),
+        }
 
 
 page_sequence = [

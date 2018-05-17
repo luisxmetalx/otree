@@ -36,7 +36,7 @@ class Group(BaseGroup):
     coinsJ1= models.IntegerField(min=3, max=25, label="Con cuanto sobornará...")
 
     aceptarCoima = models.IntegerField(
-        choices=[[1,'aceptar'],[2,'Denunciar'],[3,'Cogerse el dinero']], widget=widgets.RadioSelect,blank=True,initial=0,label="Elija su opcion...:"
+        choices=[[1,'aceptar'],[2,'Denunciar'],[3,'Cogerse el dinero'],[0,'']], widget=widgets.RadioSelect,blank=True,initial=0,label="Elija su opcion...:"
     )
 
     porcentaje = models.IntegerField()
@@ -45,9 +45,7 @@ class Group(BaseGroup):
         choices = [[0,'Regalo'],[1,'Soborno']], widget=widgets.RadioSelect,blank=True,initial=0,label="Como desea enviarlo?..."
     )
 
-    opcionCoima = models.StringField(
-        choices = ['A','B',''], widget=widgets.RadioSelect,blank=True,initial=0,label="Cual es su eleccion?..."
-    )
+    total_pagar = models.IntegerField()
 
     opcionesCogerDinero = models.IntegerField(
         choices=[[1,'Denunciar'],[2,'No hacer Nada']], widget=widgets.RadioSelect,blank=True,initial=0,label="cual es la opcion a escoger"

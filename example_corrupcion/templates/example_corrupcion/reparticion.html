@@ -12,7 +12,7 @@
             <p> se acepto el <b>{{group.opcionTokens}}</b>, cierto porcentaje del mismo fue donado a una fundacion, con lo que le queda un saldo de <b>{{group.monto}} tokens</b></p>
         </div>
         <div class="row">
-            <button name="opcionCoima" value="" class="btn btn-primary btn-large">Yes</button>
+            <button name="opcionCoima" value="" class="btn btn-primary btn-large">Siguiente</button>
         </div>
     {% endif %}
     {% if group.aceptarCoima == 2 %}
@@ -20,13 +20,10 @@
             <p>
                 has denunciado la coima de <b>{{group.coinsJ1}} token</b>, que le ha dado la firma, dicha coima fue enviada como <b>{{group.opcionTokens}}</b>.
             </p>
-            <p>
-                {{ form.opcionCoima.errors }} 
-            </p>
         </div>
         <div class="row">
             <div>
-                <button name="opcionCoima" value="" class="btn btn-primary btn-large">Yes</button>
+                <button name="opcionCoima" value="" class="btn btn-primary btn-large">Siguiente</button>
             </div>
         </div>
     {% endif %}
@@ -34,7 +31,7 @@
         <p class="h1"> Aun no estan las condiciones....</p>
         <div class="row">
             <div>
-                <button name="opcionCoima" value="" class="btn btn-primary btn-large">Yes</button>
+                <button name="opcionCoima" value="" class="btn btn-primary btn-large">Siguiente</button>
             </div>
         </div>
     {% endif %}
