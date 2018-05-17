@@ -1,0 +1,22 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+    Firma
+    Round {{ subsession.round_number }} of {{ Constants.num_rounds }}
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <p>
+            El servidor público se cogio el monto de <b>{{group.coinsJ1}} Token</b>, 
+        </p>
+    </div>
+    <div class="row">
+        {% formfield group.opcionesCogerDinero %}
+    </div>
+    
+
+    {% next_button %}
+
+{% endblock %}

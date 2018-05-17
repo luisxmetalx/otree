@@ -1,0 +1,55 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+        Firma
+{% endblock %}
+
+{% block content %}
+
+        <div class="container-fluit">
+            <div class="row">
+                <p class="h2">
+                    Round {{ subsession.round_number }} of {{ Constants.num_rounds }}
+                </p>
+            </div>
+            {% if subsession.round_number == 1 %}
+                <div class="row">
+                    <p class="text-justify">
+                            Usted ha sido elegido para el papel de gerente de una firma (empresa) que busca la concesión de un proyecto de obra pública. Durante las {{Constants.num_rounds}} rondas usted estará emparejado con otro jugador elegido al azar que desempeñará el papel de un servidor público encargado de asignar la firma que llevará a cabo el proyecto. En cada ronda, usted recibirá una dotación inicial de {{Constants.tokens1}} tokens.
+                    </p>
+                </div>
+                <div class="row">
+                    {% formfield group.opciones label="¿Qué opción desea escoger? " %}
+                </div>
+                <div class="row">{% next_button %}</div>
+            {% else %}
+                <p>
+                    tu eres el participante A, tienes estos puntos {{Constants.tokens1}}.
+                </p>
+                {% formfield group.opciones label="cuanto quieres dar al participante B" %}
+        
+                {% next_button %}
+            {% endif %}
+        </div>
+   
+
+{% endblock %}
+{% block styles %}
+  <style type="text/css">
+    #otree-body {
+      width: 85%;
+    }
+    .row{
+      margin-right: 1%;
+    }
+
+    .page-header{
+        margin-top: 0%;
+    }
+    ul#id_opciones > li {
+        display:inline;
+    }
+  </style>
+
+{% endblock %}

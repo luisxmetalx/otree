@@ -1,0 +1,30 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+    DAR TOKENS
+{% endblock %}
+
+{% block content %}
+    
+    <div class="container-fluit">
+        {% if group.opciones == 1 %}
+            <div class="row">
+                <p>
+                    Has aceptado en dar tokens.
+                </p>
+            </div>
+            <div class="row">
+                {{ form.errors }}
+                {% for field in form %}
+                    {% formfield field %}
+                {% endfor %}
+            </div>
+        {% endif %}
+        <div class="row">
+            {% next_button %}
+        </div>
+    </div>
+    
+    
+{% endblock %}

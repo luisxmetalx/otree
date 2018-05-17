@@ -1,0 +1,49 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+    Servidor Público
+    Round {{ subsession.round_number }} of {{ Constants.num_rounds }}
+{% endblock %}
+
+{% block content %}
+    {% if group.aceptarCoima == 1 %}
+        <div class="row">
+            <p> se acepto el <b>{{group.opcionTokens}}</b>, cierto porcentaje del mismo fue donado a una fundacion, con lo que le queda un saldo de <b>{{group.monto}} tokens</b></p>
+        </div>
+        <div class="row">
+            <button name="opcionCoima" value="" class="btn btn-primary btn-large">Siguiente</button>
+        </div>
+    {% endif %}
+    {% if group.aceptarCoima == 2 %}
+        <div class="row">
+            <p>
+                has denunciado la coima de <b>{{group.coinsJ1}} token</b>, que le ha dado la firma, dicha coima fue enviada como <b>{{group.opcionTokens}}</b>.
+            </p>
+        </div>
+        <div class="row">
+            <div>
+                <button name="opcionCoima" value="" class="btn btn-primary btn-large">Siguiente</button>
+            </div>
+        </div>
+    {% endif %}
+    {% if group.aceptarCoima == 3 %}
+        <p class="h1"> Aun no estan las condiciones....</p>
+        <div class="row">
+            <div>
+                <button name="opcionCoima" value="" class="btn btn-primary btn-large">Siguiente</button>
+            </div>
+        </div>
+    {% endif %}
+
+    {% block app_styles %}
+
+        <style type="text/css">
+            ul#id_opcionCoima > li:last-child{
+                visibility: hidden;
+            }
+        </style>
+
+    {% endblock %}
+
+{% endblock %}

@@ -1,0 +1,46 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+    Resultados.
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-sm"></div>
+            <div class="col-sm">
+                <table class="table">
+                    <thead class="table-primary">
+                        <tr>
+                            <th>Rondas</th>
+                            <th>Pago por ronda</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for p in player_in_all_rounds %}
+                        <tr>
+                            <td>{{ p.round_number }}</td>
+                            <td>
+                                {{p.payoff}}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    {% if subsession.round_number == Constants.num_rounds %}
+                        <tr class="table-primary">
+                            <td>Total.</td>
+                            <td>
+                                {{total_pagar}}
+                            </td>
+                        </tr>
+                    {% endif %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-sm"></div>
+        </div>
+        <div class="row">{% next_button %}</div>
+    </div>
+{% endblock %}
+
+

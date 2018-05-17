@@ -1,0 +1,48 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+    Mensaje
+{% endblock %}
+
+{% block content %}
+    
+    <div class="container-fluit">
+        {% if player.id_in_group == 2 %}
+            {% if group.opciones == 0 %}
+                <div class="row">
+                    <p>
+                        No ha recibido ninguna donación de token de parte de la firma.
+                    </p>
+                </div>
+            {% endif %}
+            {% if group.porcentaje < 4 %}
+                <div class="row">
+                    <p>
+                        Su porcentaje de exito de la donación es muy bajo, por lo tanto es detectado como tentativa de soborno. Sera penalizado
+                    </p>
+                </div>
+            {% endif %}
+        {% endif %}
+        {% if player.id_in_group == 1 %}
+            {% if group.opciones == 0 %}
+                <div class="row">
+                    <p>no ha dado token al servidor público</p>
+                </div>
+            {% endif %}
+            {% if group.porcentaje < 4 %}
+                <div class="row">
+                    <p>
+                        Su porcentaje de exito de la donación es muy bajo, por lo tanto es detectado como tentativa de soborno. Sera penalizado
+                    </p>
+                </div>
+            {% endif %}
+        {% endif %}
+        
+        <div class="row">
+            {% next_button %}
+        </div>
+    </div>
+    
+    
+{% endblock %}
