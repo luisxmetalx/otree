@@ -10,11 +10,14 @@
 {% block content %}
     <div class="row">
         <p class="h2">
-            Round {{ subsession.round_number }} of {{ Constants.num_rounds }}
+            Ronda {{ subsession.round_number }} de {{ Constants.num_rounds }}
         </p>
     </div>
     {% if group.porcentaje >= 4 %}
         <div class="row">
+            <div class="row">
+                <p class="text-justify">La firma menos eficiente ha decidido enviarle <b>{{group.coinsJ1}} tokens</b> como un <b>"soborno o regalo"</b>. Usted debe tomar una de las siguientes decisiones:</p>
+            </div>
             {% formfield group.aceptarCoima %}
             {{form.aceptarCoima.errors}}
         </div>

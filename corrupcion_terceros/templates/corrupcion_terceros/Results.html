@@ -25,13 +25,18 @@
                             <td>
                                 {{p.payoff}}
                             </td>
-                            <td>{{group.ganancia_espol}}</td>
+                            {% if p.id_in_group == 1 %}
+                                <td>{{group.espol_firma}}</td>
+                            {% endif %}
+                            {% if p.id_in_group == 2 %}
+                                <td>{{group.espol_sp}}</td>
+                            {% endif %}
                         </tr>
                     {% endfor %}
                     {% if subsession.round_number == Constants.num_rounds %}
                         <tr class="table-primary">
                             <td>Total.</td>
-                            <td>
+                            <td colspan="2">
                                 {{total_pagar}}
                             </td>
                         </tr>

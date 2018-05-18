@@ -1,0 +1,16 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+        Auditoria
+{% endblock %}
+
+{% block content %}
+    <div class="container-fluit">
+        <div class="row">
+            <p>Se han auditado <b>{{aditados}} Grupos</b>, de los cuales <b>{{gAuditados}} Grupos</b> han sido cachados con sobornos</p>
+            <p>por ende la siguiente auditoria sera hecha para <b>{{group.grupos_auditado}} Grupos</b></p>
+        </div>
+    </div>
+    {% next_button %}
+{% endblock %}

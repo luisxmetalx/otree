@@ -9,9 +9,17 @@
     <div class="row">
         <h2>Round {{ subsession.round_number }} of {{ Constants.num_rounds }}</h2>
     </div>
+    {% if group.opciones == 0 %}
+        <div class="row">
+            <p>El resultado de la ronda va a ser procesado. Dele al botón siguiente</p>
+        </div>
+        <div class="row">
+            <button name="opcionCoima" value="" class="btn btn-primary btn-large">Siguiente</button>
+        </div>
+    {% endif %}
     {% if group.aceptarCoima == 3 %}
         <div class="row">
-            <p> se acepto el <b>{{group.opcionTokens}}</b>, cierto porcentaje del mismo fue donado a una fundacion, con lo que le queda un saldo de <b>{{group.monto}} tokens</b></p>
+            <p>El servidor público acepto su envio de tokens para lo cual se hara efectivo lo pactado.</p>
         </div>
         <div class="row">
             <button name="opcionCoima" value="" class="btn btn-primary btn-large">Siguiente</button>
@@ -21,7 +29,7 @@
         {% if player.id_in_group == 2 %}
             <div class="row">
                 <p>
-                    Usted a <b>Denunciado</b>, por lo tanto, no podrá retener los tokens, sin embargo, usted recibe un bono de 2 tokens por su buena conducta y se añadirá a su salario
+                    Usted a decidio <b>denunciar</b> el envio de tokens por parte de la empresa menos eficiente. Por lo tanto, no podrá retener los tokens, sin embargo, usted recibe un bono de 2 tokens por su buena conducta y se añadirá a su salario. Finalmente, el contrato se asigna a la empresa mas eficiente y ESPOL obtiene un beneficio de 20 tokens.
                 </p>
             </div>
             <div class="row">
@@ -32,7 +40,7 @@
         {% else %}
             <div class="row">
                 <p>
-                   El Servidor público a optado por <b>denunciar</b> el envio de tokens.
+                   El Servidor público ha decidido <b>denunciar</b> el envio de tokens. Por lo tanto, el contrato se asigna a la empresa mas eficiente y ESPOL recibe una penalización de 5 tokens, los cuales serán descontados de su salario.
                 </p>
             </div>
             <div class="row">
@@ -44,14 +52,14 @@
     {% endif %}
     {% if group.aceptarCoima == 2 %}
         {% if player.id_in_group == 2 %}
-            <p class="h1"> usted adjudica el contrato a la firma más eficiente con lo cual ESPOL obtiene un beneficio de 20 tokens</p>
+            <p> usted adjudica el contrato a la firma más eficiente con lo cual ESPOL obtiene un beneficio de 20 tokens</p>
             <div class="row">
                 <div>
                     <button name="opcionCoima" value="" class="btn btn-primary btn-large">Siguiente</button>
                 </div>
             </div>
         {% else %}
-            <p class="h1"> El servidor público opto por cogerse el dinero y no beneficiarlo en nada.</p>
+            <p> El servidor público opto por cogerse el dinero y no beneficiarlo en nada.</p>
             <div class="row">
                 <div>
                     <button name="opcionCoima" value="" class="btn btn-primary btn-large">Siguiente</button>

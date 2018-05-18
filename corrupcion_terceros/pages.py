@@ -2,6 +2,7 @@ from otree.api import Currency as c, currency_range
 from ._builtin import Page, WaitPage
 from .models import Constants
 from random import choice,random
+import random
 
 class reglas_experimento(Page):
     form_model = 'group'
@@ -66,7 +67,7 @@ class mensaje_token(Page):
     form_model = 'group'
 
     def is_displayed(self):
-        return self.group.opciones == 1 and self.player.id_in_group== 2 and self.group.aceptarCoima <= 2 and self.group.porcentaje > 4 or self.player.id_in_group== 1
+        return self.group.opciones == 1 and self.player.id_in_group== 2 and self.group.aceptarCoima <= 2 and self.group.porcentaje > 4 or self.player.id_in_group== 1 and self.group.opciones != 0
     
     def vars_for_template(self):
         return {}
@@ -103,49 +104,65 @@ class ResultsWaitPage(WaitPage):
         #jugador servidor público p2
         p2 = group.get_player_by_id(2)
         print("el jugador es ",p2.id_in_group)
+        
+        '''
+        No Enviar coima ya sea como soborno o como regalo
+        '''
         if(group.opciones == 0):
-            if(self.round_number == 1):
+            if(self.round_number >= 1):
                 p1.payoff = Constants.tokens1
                 p2.payoff = Constants.tokens2
-                self.group.ganancia_espol = 0
-            else:
-                p1.payoff = Constants.tokens1
-                p2.payoff = Constants.tokens2
-                self.group.ganancia_espol = 0
-
+                self.group.espol_firma = 0
+                self.group.espol_sp = 20
+        '''
+        Enviar coima ya sea como soborno o como regalo
+        '''
         if(self.round_number >= 1 and group.opciones == 1 ):
+            """
+            Cuando se acepta el soborno.
+            """
             if(group.aceptarCoima == 3 or group.aceptarCoima == 0):
                 if(group.porcentaje < 4):
                     p1.payoff = (Constants.tokens1)-5
                     p2.payoff = (Constants.tokens1)-5
-                    self.group.ganancia_espol = 0
+                    self.group.espol_firma = 0
+                    self.group.espol_sp = 20
 
                 else:
-                    #formula
-                    p1.payoff = (Constants.tokens1)- group.coinsJ1 - 2
-                    p2.payoff = Constants.tokens2 + (group.monto)
-                    self.group.ganancia_espol = 20
+                    p1.payoff = (Constants.tokens1)+ group.coinsJ1 - 2
+                    p2.payoff = Constants.tokens2 + group.coinsJ1 - 2
+                    self.group.espol_firma = Constants.token_Espol - (2*group.coinsJ1)
+                    self.group.espol_sp = 0
             elif(group.aceptarCoima == 1):
-                p1.payoff = (Constants.tokens1)-group.coinsJ1-5
+                """
+                Denuncia el soborno.
+                """
+                p1.payoff = (Constants.tokens1)-5
                 p2.payoff = (Constants.tokens2)+2 
-                self.group.ganancia_espol=20
+                self.group.espol_firma = 0
+                self.group.espol_sp = 20
             elif(group.aceptarCoima == 2 or group.aceptarCoima == 0 ):
-                self.group.ganancia_espol = 20
+                """
+                cuando la firma denucia al servidor publico
+                """
                 if(group.opcionesCogerDinero == 0):
-                    p1.payoff = (Constants.tokens1)-group.coinsJ1
-                    p2.payoff = (Constants.tokens2)+group.coinsJ1
-                    #no se el valor
-                    self.group.ganancia_espol = 0
+                    p1.payoff = (Constants.tokens1)-group.coinsJ1-2
+                    p2.payoff = (Constants.tokens2)-3
+                    self.group.espol_firma = 0
+                    self.group.espol_sp = 20
                 elif(group.porcentaje < 4):
                     p1.payoff = (Constants.tokens1)-5
                     p2.payoff = (Constants.tokens1)-5
-                    #no se el valor
-                    self.group.ganancia_espol = 0
+                    self.group.espol_firma = 0
+                    self.group.espol_sp = 20
                 else:
-                    p1.payoff = (Constants.tokens1)-2
-                    p2.payoff = Constants.tokens2-3
-                    #no se el valor
-                    self.group.ganancia_espol = 0
+                    """
+                    cuando la firma no hace nada al respecto
+                    """
+                    p1.payoff = (Constants.tokens1)-group.coinsJ1
+                    p2.payoff = Constants.tokens2+group.coinsJ1
+                    self.group.espol_firma = 0
+                    self.group.espol_sp = 20
         
 
 class Results(Page):
@@ -160,6 +177,45 @@ class Results(Page):
             'player_in_all_rounds': self.player.in_all_rounds(),
         }
 
+class auditoria(Page):
+    form_model = 'group'
+
+    def is_displayed(self):
+        return self.player.id_in_group== 1 or self.player.id_in_group== 2
+
+    def vars_for_template(self):
+        
+        lista_grupo=[]
+        grupos_auditados=[]
+        lista_all=self.subsession.get_groups()
+
+        #operaciones
+        if(self.round_number == 1):
+            lista_grupo=random.sample(lista_all,k=5)
+            #lista_grupo=choice(lista_all)
+            for grupo in lista_grupo:
+                if(grupo.aceptarCoima == 3):
+                    grupos_auditados.append(grupo)
+
+            if(len(grupos_auditados)>=3):
+                self.group.grupos_auditado=8
+            elif(len(grupos_auditados)==2):
+                self.group.grupos_auditado=5
+            elif(len(grupos_auditados)<=1):
+                self.group.grupos_auditado=3
+        else:
+            self.player.in_round(self.round_number - 1).payoff
+        
+
+        return{
+            
+            'grupos':grupos_auditados,
+            'aditados':len(lista_grupo),
+            'gAuditados':len(grupos_auditados),
+        }
+
+class  AllGroupsWaitPage ( WaitPage ): 
+    wait_for_all_groups  =  True
 
 page_sequence = [
     reglas_experimento,
@@ -174,5 +230,5 @@ page_sequence = [
     WaitForP2,
     noReparticion,
     ResultsWaitPage,
-    Results
+    Results,
 ]
