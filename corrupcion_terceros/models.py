@@ -31,13 +31,13 @@ class Subsession(BaseSubsession):
 class Group(BaseGroup):
     
     opciones = models.IntegerField(
-        choices=[[1,'1) Enviar un mensaje ofreciéndole una cantidad de tokens (entre 3 y 15) al servidor público'],[0,'2)	No enviar ningún mensaje al servidor público']], widget=widgets.RadioSelect,blank=True,initial=0
+        choices=[[1,'1) Enviar un mensaje ofreciéndole una cantidad de tokens (entre 3 y 10) al servidor público'],[0,'2)	No enviar ningún mensaje al servidor público']], widget=widgets.RadioSelect,blank=True,initial=0
     )
 
     coinsJ1= models.IntegerField(min=3, max=10, label="Con cuanto sobornará...")
 
     aceptarCoima = models.IntegerField(
-        choices=[[1,'1)	Acepta los tokens '],[2,'2) Reportar el mensaje a su agencia.'],[3,'3)	Recibe los tokens, pero no favorece a su firma'],[0,'']], widget=widgets.RadioSelect,blank=True,initial=0,label="Elija su opcion...:"
+        choices=[[1,'1)	Reportar el mensaje a la entidad reguladora de compras públicas. '],[2,'2) Recibe los tokens, pero no favorece a ESPOL.'],[3,'3)	Acepta los tokens.'],[0,'']], widget=widgets.RadioSelect,blank=True,initial=0,label="Elija su opcion...:"
     )
 
     porcentaje = models.IntegerField()
@@ -49,10 +49,10 @@ class Group(BaseGroup):
     total_pagar = models.IntegerField()
 
     opcionesCogerDinero = models.IntegerField(
-        choices=[[1,'Denunciar'],[2,'No hacer Nada']], widget=widgets.RadioSelect,blank=True,initial=0,label="cual es la opcion a escoger"
+        choices=[[1,'No hacer nada y pasar a la siguiente ronda.'],[0,'Denunciar al servidor público.']], widget=widgets.RadioSelect,blank=True,initial=0,label="¿Qué decide hacer al respecto?"
     )
 
-    ganancia_espol=models.IntegerField()   
+    ganancia_espol=models.CurrencyField()   
     
     monto=models.IntegerField()
 

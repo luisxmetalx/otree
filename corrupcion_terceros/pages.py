@@ -62,11 +62,11 @@ class player2(Page):
         
     print(Constants.monto)
 
-class reparticion(Page):
+class mensaje_token(Page):
     form_model = 'group'
 
     def is_displayed(self):
-        return self.group.opciones == 1 and self.player.id_in_group== 2 and self.group.aceptarCoima <= 2 and self.group.porcentaje > 4
+        return self.group.opciones == 1 and self.player.id_in_group== 2 and self.group.aceptarCoima <= 2 and self.group.porcentaje > 4 or self.player.id_in_group== 1
     
     def vars_for_template(self):
         return {}
@@ -76,7 +76,7 @@ class noReparticion(Page):
     form_fields = ['opcionesCogerDinero']
 
     def is_displayed(self):
-        return self.player.id_in_group== 1 and self.group.aceptarCoima == 3 and self.group.porcentaje > 4
+        return self.player.id_in_group== 1 and self.group.aceptarCoima == 2 and self.group.porcentaje > 4
 
 class mensajes(Page):
     form_model = 'group'
@@ -107,33 +107,45 @@ class ResultsWaitPage(WaitPage):
             if(self.round_number == 1):
                 p1.payoff = Constants.tokens1
                 p2.payoff = Constants.tokens2
+                self.group.ganancia_espol = 0
             else:
                 p1.payoff = Constants.tokens1
                 p2.payoff = Constants.tokens2
+                self.group.ganancia_espol = 0
 
         if(self.round_number >= 1 and group.opciones == 1 ):
-            if(group.aceptarCoima == 1 or group.aceptarCoima == 0):
+            if(group.aceptarCoima == 3 or group.aceptarCoima == 0):
                 if(group.porcentaje < 4):
                     p1.payoff = (Constants.tokens1)-5
                     p2.payoff = (Constants.tokens1)-5
+                    self.group.ganancia_espol = 0
+
                 else:
                     #formula
-                    p1.payoff = (Constants.tokens1)+ (group.monto*2) - group.coinsJ1 + 2
+                    p1.payoff = (Constants.tokens1)- group.coinsJ1 - 2
                     p2.payoff = Constants.tokens2 + (group.monto)
-
-            elif(group.aceptarCoima == 2):
+                    self.group.ganancia_espol = 20
+            elif(group.aceptarCoima == 1):
                 p1.payoff = (Constants.tokens1)-group.coinsJ1-5
                 p2.payoff = (Constants.tokens2)+2 
-            elif(group.aceptarCoima == 3 or group.aceptarCoima == 0 ):
-                if(group.opcionesCogerDinero == 1):
-                    p1.payoff = (Constants.tokens1)-(group.coinsJ1)-2
-                    p2.payoff = (Constants.tokens2)-5
+                self.group.ganancia_espol=20
+            elif(group.aceptarCoima == 2 or group.aceptarCoima == 0 ):
+                self.group.ganancia_espol = 20
+                if(group.opcionesCogerDinero == 0):
+                    p1.payoff = (Constants.tokens1)-group.coinsJ1
+                    p2.payoff = (Constants.tokens2)+group.coinsJ1
+                    #no se el valor
+                    self.group.ganancia_espol = 0
                 elif(group.porcentaje < 4):
                     p1.payoff = (Constants.tokens1)-5
                     p2.payoff = (Constants.tokens1)-5
+                    #no se el valor
+                    self.group.ganancia_espol = 0
                 else:
-                    p1.payoff = (Constants.tokens1)-group.coinsJ1
-                    p2.payoff = Constants.tokens2+group.coinsJ1
+                    p1.payoff = (Constants.tokens1)-2
+                    p2.payoff = Constants.tokens2-3
+                    #no se el valor
+                    self.group.ganancia_espol = 0
         
 
 class Results(Page):
@@ -158,7 +170,7 @@ page_sequence = [
     WaitForP1,
     player2,
     WaitForP1,
-    reparticion,
+    mensaje_token,
     WaitForP2,
     noReparticion,
     ResultsWaitPage,

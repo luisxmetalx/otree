@@ -15,6 +15,7 @@
                         <tr>
                             <th>Rondas</th>
                             <th>Pago por ronda</th>
+                            <th>Beneficio ESPOL</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -24,6 +25,7 @@
                             <td>
                                 {{p.payoff}}
                             </td>
+                            <td>{{group.ganancia_espol}}</td>
                         </tr>
                     {% endfor %}
                     {% if subsession.round_number == Constants.num_rounds %}

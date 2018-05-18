@@ -12,7 +12,7 @@
             {% if group.opciones == 0 %}
                 <div class="row">
                     <p>
-                        No ha recibido ninguna donación de token de parte de la firma.
+                        Usted a elegido la empresa más eficiente, con lo cual, la ESPOL no contará con el ingreso (recibirá 0 tokens)
                     </p>
                 </div>
             {% endif %}
@@ -27,7 +27,7 @@
         {% if player.id_in_group == 1 %}
             {% if group.opciones == 0 %}
                 <div class="row">
-                    <p>no ha dado token al servidor público</p>
+                    <p>usted recibirá únicamente su salario, el mismo se estara acumulando conforme vaya las rondas.</p>
                 </div>
             {% endif %}
             {% if group.porcentaje < 4 %}

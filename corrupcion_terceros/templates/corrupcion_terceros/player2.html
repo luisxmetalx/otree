@@ -4,12 +4,16 @@
 
 {% block title %}
     Servidor Público
-    Round {{ subsession.round_number }} of {{ Constants.num_rounds }}
+    
 {% endblock %}
 
 {% block content %}
+    <div class="row">
+        <p class="h2">
+            Round {{ subsession.round_number }} of {{ Constants.num_rounds }}
+        </p>
+    </div>
     {% if group.porcentaje >= 4 %}
-        <p>tienes un <b>{{group.opcionTokens}}</b>, el monto a recibir es de <b>{{monto}}</b> de los <b>{{group.coinsJ1}} tokens</b>, la diferencia fue donada a una fundacion</p>
         <div class="row">
             {% formfield group.aceptarCoima %}
             {{form.aceptarCoima.errors}}
@@ -61,7 +65,7 @@
     {% block scripts %}
         <script>
             $(document).ready(function(){
-                $('#id_aceptarCoima_0').click(function(){
+                $('#id_aceptarCoima').click(function(){
                     $('#myModal').modal('show')
                 });
             });

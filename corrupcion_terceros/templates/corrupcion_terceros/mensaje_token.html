@@ -1,0 +1,74 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+    Mensaje
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <h2>Round {{ subsession.round_number }} of {{ Constants.num_rounds }}</h2>
+    </div>
+    {% if group.aceptarCoima == 3 %}
+        <div class="row">
+            <p> se acepto el <b>{{group.opcionTokens}}</b>, cierto porcentaje del mismo fue donado a una fundacion, con lo que le queda un saldo de <b>{{group.monto}} tokens</b></p>
+        </div>
+        <div class="row">
+            <button name="opcionCoima" value="" class="btn btn-primary btn-large">Siguiente</button>
+        </div>
+    {% endif %}
+    {% if group.aceptarCoima == 1 %}
+        {% if player.id_in_group == 2 %}
+            <div class="row">
+                <p>
+                    Usted a <b>Denunciado</b>, por lo tanto, no podrá retener los tokens, sin embargo, usted recibe un bono de 2 tokens por su buena conducta y se añadirá a su salario
+                </p>
+            </div>
+            <div class="row">
+                <div>
+                    <button name="opcionCoima" value="" class="btn btn-primary btn-large">Siguiente</button>
+                </div>
+            </div>
+        {% else %}
+            <div class="row">
+                <p>
+                   El Servidor público a optado por <b>denunciar</b> el envio de tokens.
+                </p>
+            </div>
+            <div class="row">
+                <div>
+                    <button name="opcionCoima" value="" class="btn btn-primary btn-large">Siguiente</button>
+                </div>
+            </div>
+        {% endif %}
+    {% endif %}
+    {% if group.aceptarCoima == 2 %}
+        {% if player.id_in_group == 2 %}
+            <p class="h1"> usted adjudica el contrato a la firma más eficiente con lo cual ESPOL obtiene un beneficio de 20 tokens</p>
+            <div class="row">
+                <div>
+                    <button name="opcionCoima" value="" class="btn btn-primary btn-large">Siguiente</button>
+                </div>
+            </div>
+        {% else %}
+            <p class="h1"> El servidor público opto por cogerse el dinero y no beneficiarlo en nada.</p>
+            <div class="row">
+                <div>
+                    <button name="opcionCoima" value="" class="btn btn-primary btn-large">Siguiente</button>
+                </div>
+            </div>
+        {% endif %}
+            
+    {% endif %}
+
+    {% block app_styles %}
+
+        <style type="text/css">
+            ul#id_opcionCoima > li:last-child{
+                visibility: hidden;
+            }
+        </style>
+
+    {% endblock %}
+
+{% endblock %}
