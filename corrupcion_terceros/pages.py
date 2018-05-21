@@ -33,7 +33,9 @@ class player1(Page):
             'num_grupo': len(self.subsession.get_groups()),
             'num_player_gruop':len(self.subsession.get_players()),
             'token':token,
-        'porcentaje':self.group.porcentaje}
+        'porcentaje':self.group.porcentaje,
+        #'matricula':self.participant.vars['matricula'],
+        'id_grupo':self.group.id_in_subsession}
 
 class coima(Page):
     form_model = 'group'
@@ -51,17 +53,11 @@ class player2(Page):
     
     def vars_for_template(self):
 
-        valor = int(self.group.coinsJ1)
-        if(valor >1):
-            self.group.monto = valor
-        else:
-            self.group.monto = (valor +1)
+    
         return {
-                'monto': self.group.monto,
-                'valor': valor,  
+                'monto': self.group.coinsJ1,
                 }
         
-    print(Constants.monto)
 
 class mensaje_token(Page):
     form_model = 'group'
@@ -184,17 +180,39 @@ class auditoria(Page):
         return self.player.id_in_group== 1 or self.player.id_in_group== 2
 
     def vars_for_template(self):
-        
+        cachados=[]
+        if(self.round_number == 1):
+            auditados=5
+        else:
+            auditados=self.group.auditado
+        lista_all=self.subsession.get_groups()
+        for grupo in lista_all:
+            if(grupo.auditado == True):
+                cachados.append(grupo)
+        return{
+            'auditados': auditados,
+            'gAuditados':self.group.grupos_auditado,
+            'detenidos': len(cachados)
+        }
+
+class  AllGroupsWaitPage ( WaitPage ): 
+    wait_for_all_groups  =  True
+
+class Resulado_auditoria(WaitPage):
+    form_model = 'group'
+
+    def after_all_players_arrive(self):
         lista_grupo=[]
         grupos_auditados=[]
         lista_all=self.subsession.get_groups()
 
         #operaciones
         if(self.round_number == 1):
-            lista_grupo=random.sample(lista_all,k=5)
+            lista_grupo=random.sample(lista_all,k=2)
             #lista_grupo=choice(lista_all)
             for grupo in lista_grupo:
                 if(grupo.aceptarCoima == 3):
+                    grupo.auditado = True
                     grupos_auditados.append(grupo)
 
             if(len(grupos_auditados)>=3):
@@ -204,21 +222,27 @@ class auditoria(Page):
             elif(len(grupos_auditados)<=1):
                 self.group.grupos_auditado=3
         else:
-            self.player.in_round(self.round_number - 1).payoff
-        
+            '''
+            k siempre ira cambiando en las rondas, ya que va a depender de las auditorias que se esten haciendo presentes.
+            '''
+            #self.player.in_round(self.round_number - 1).payoff
+            lista_grupo=random.sample(lista_all,k=self.group.in_round(self.round_number - 1).grupos_auditado)
+            #lista_grupo=choice(lista_all)
+            for grupo in lista_grupo:
+                if(grupo.aceptarCoima == 3):
+                    grupo.auditado = True
+                    grupos_auditados.append(grupo)
 
-        return{
-            
-            'grupos':grupos_auditados,
-            'aditados':len(lista_grupo),
-            'gAuditados':len(grupos_auditados),
-        }
+            if(len(grupos_auditados)>=3):
+                self.group.grupos_auditado=8
+            elif(len(grupos_auditados)==2):
+                self.group.grupos_auditado=5
+            elif(len(grupos_auditados)<=1):
+                self.group.grupos_auditado=3
 
-class  AllGroupsWaitPage ( WaitPage ): 
-    wait_for_all_groups  =  True
 
 page_sequence = [
-    reglas_experimento,
+    #reglas_experimento,
     player1,
     coima,
     WaitForP2,
@@ -231,4 +255,7 @@ page_sequence = [
     noReparticion,
     ResultsWaitPage,
     Results,
+    AllGroupsWaitPage,
+    Resulado_auditoria,
+    auditoria
 ]

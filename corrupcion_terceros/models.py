@@ -55,10 +55,10 @@ class Group(BaseGroup):
     espol_firma=models.CurrencyField()
     espol_sp=models.CurrencyField()   
     
-    monto=models.IntegerField()
+    
 
     grupos_auditado=models.IntegerField()
-    #auditado=models.BooleanField()
+    auditado=models.BooleanField()
 
 
 
