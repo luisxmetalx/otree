@@ -3,25 +3,29 @@
 
 {% block title %}
     Firma
-    Round {{ subsession.round_number }} of {{ Constants.num_rounds }}
 {% endblock %}
 
 {% block content %}
-    <div class="row">
-        <p class="h2">
-            Ronda {{ subsession.round_number }} de {{ Constants.num_rounds }}
-        </p>
+    <div class="container-fluid">
+        <div class="row">
+            <p class="h2">
+                Ronda {{ subsession.round_number }} de {{ Constants.num_rounds }}
+            </p>
+        </div>
+        <div class="row">
+            <p>
+                el servidor público decidió recibir los tokens pero no favorecer a ESPOL</b> 
+            </p>
+        </div>
+        <div class="row">
+            {% formfield group.opcionesCogerDinero %}
+        </div>
     </div>
-    <div class="row">
-        <p>
-            el servidor público decidió recibir los tokens pero no favorecer a ESPOL</b>, 
-        </p>
+    <div class="row align-items-end">
+        <div class="col-10"></div>
+        <div class="col-2">
+            {% next_button %}
+        </div>
     </div>
-    <div class="row">
-        {% formfield group.opcionesCogerDinero %}
-    </div>
-    
-
-    {% next_button %}
 
 {% endblock %}

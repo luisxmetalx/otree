@@ -140,7 +140,7 @@ SESSION_CONFIGS = [
     {
     'name': 'corrupcion_terceros',
     'display_name': "Corrupcion agente externo",
-    'num_demo_participants': 8,
+    'num_demo_participants': 8 ,
     'app_sequence': [
         'corrupcion_terceros',
         ],

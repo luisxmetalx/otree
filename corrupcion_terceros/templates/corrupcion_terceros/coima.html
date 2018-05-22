@@ -6,7 +6,7 @@
 {% endblock %}
 
 {% block content %}
-    <div class="container-fluit">
+    <div class="container-fluid">
         <div class="row">
             <p class="h2">
                 Ronda {{ subsession.round_number }} de {{ Constants.num_rounds }}
@@ -25,8 +25,11 @@
                 {% endfor %}
             </div>
         {% endif %}
-        <div class="row">
-            {% next_button %}
+        <div class="row align-items-end">
+            <div class="col-11"></div>
+            <div class="col-1">
+                {% next_button %}
+            </div>
         </div>
     </div>
     

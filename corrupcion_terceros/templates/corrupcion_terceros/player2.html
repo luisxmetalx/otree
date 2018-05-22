@@ -8,53 +8,56 @@
 {% endblock %}
 
 {% block content %}
-    <div class="row">
-        <p class="h2">
-            Ronda {{ subsession.round_number }} de {{ Constants.num_rounds }}
-        </p>
-    </div>
-    {% if group.porcentaje >= 4 %}
+    <div class="container-fluid">
         <div class="row">
+            <p class="h2">
+                Ronda {{ subsession.round_number }} de {{ Constants.num_rounds }}
+            </p>
+        </div>
+        {% if group.porcentaje >= 4 %}
             <div class="row">
-                <p class="text-justify">La firma menos eficiente ha decidido enviarle <b>{{group.coinsJ1}} tokens</b> como un <b>"soborno o regalo"</b>. Usted debe tomar una de las siguientes decisiones:</p>
+                <div class="col-13">
+                    <p class="text-justify">La firma menos eficiente ha decidido enviarle <b>{{group.coinsJ1}} tokens</b> como un <b>"soborno o regalo"</b>. Usted debe tomar una de las siguientes decisiones:</p>
+                </div>
+                {% formfield group.aceptarCoima %}
+                {{form.aceptarCoima.errors}}
             </div>
-            {% formfield group.aceptarCoima %}
-            {{form.aceptarCoima.errors}}
-        </div>
-        <div class="row">
-            {% next_button %}
-        </div>
-        
-        <!-- Modal -->
-        <div id="myModal" class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">probabilidad de ser atrapado</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <p >tienes una probabilidad alta de que no seas atrapado... tu probabilidad es <b>{{group.porcentaje}}</b></p>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+            <div class="row">
+                {% next_button %}
+            </div>
+            
+            <!-- Modal -->
+            <div id="myModal" class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">probabilidad de ser atrapado</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <p >tienes una probabilidad alta de que no seas atrapado... tu probabilidad es <b>{{group.porcentaje}}</b></p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    {% else %}
-        <div class="row">
-            <p>El porcentaje de exito de la tranaccion es muy por debajo, por lo tanto ambas partes han sido penalizados.</p>    
-        </div>
-        {{form.aceptarCoima.errors}}
-        <div class="row">
-            <div>
-                <button name="aceptarCoima" value="0" class="btn btn-primary btn-large">Siguiente</button>
+        {% else %}
+            <div class="row">
+                <p>El porcentaje de exito de la tranaccion es muy por debajo, por lo tanto ambas partes han sido penalizados.</p>    
             </div>
-        </div>
-    {% endif %}
+            {{form.aceptarCoima.errors}}
+            <div class="row">
+                <div>
+                    <button name="aceptarCoima" value="0" class="btn btn-primary btn-large">Siguiente</button>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}
     {% block app_styles %}
 
         <style type="text/css">
@@ -67,15 +70,11 @@
 
     {% block scripts %}
     <script>
-        $("#id_aceptarCoima").each(function(index){
-            if (index > 0 ){ // ignorando el primer elemento cuando index es igual 0
-                var element = $(this); // <-- en la variable element tienes tu elemento
-                console.log(element.text());
-            }
+        $('ul#id_aceptarCoima li:gt(0)').click(function(){
+            $('#myModal').modal('show');
         });
     </script>
     {% endblock %}
         
     
 
-{% endblock %}

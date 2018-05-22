@@ -63,7 +63,7 @@ class mensaje_token(Page):
     form_model = 'group'
 
     def is_displayed(self):
-        return self.group.opciones == 1 and self.player.id_in_group== 2 and self.group.aceptarCoima <= 2 and self.group.porcentaje > 4 or self.player.id_in_group== 1 and self.group.opciones != 0
+        return self.group.opciones == 1 and self.player.id_in_group== 2 and self.group.aceptarCoima <= 2 and self.group.aceptarCoima >0  and self.group.porcentaje > 4 or self.player.id_in_group== 1 
     
     def vars_for_template(self):
         return {}
@@ -168,12 +168,12 @@ class Results(Page):
     
     def vars_for_template(self):
         self.group.total_pagar= sum([p.payoff for p in self.player.in_all_rounds()])
-        self.group.total_pagar_firma= sum([p.total_pagar_firma for p in self.group.in_all_rounds()])
-        self.group.total_pagar_sp= sum([p.total_pagar_sp for p in self.group.in_all_rounds()])
+        #self.group.total_pagar_firma= sum([p.total_pagar_firma for p in self.group.in_all_rounds()])
+        #self.group.total_pagar_sp= sum([p.total_pagar_sp for p in self.group.in_all_rounds()])
         return {
             'total_pagar': sum([p.payoff for p in self.player.in_all_rounds()]),
-            'total_pagar_firma': sum([p.total_pagar_firma for p in self.group.in_all_rounds()]),
-            'total_pagar_sp': sum([p.total_pagar_sp for p in self.group.in_all_rounds()]),
+            #'total_pagar_firma': sum([p.total_pagar_firma for p in self.group.in_all_rounds()]),
+            #'total_pagar_sp': sum([p.total_pagar_sp for p in self.group.in_all_rounds()]),
             'player_in_all_rounds': self.player.in_all_rounds(),
         }
 
@@ -192,11 +192,15 @@ class auditoria(Page):
         lista_all=self.subsession.get_groups()
         for grupo in lista_all:
             if(grupo.auditado == True):
+                idGrupo=grupo.id_in_subsession
                 cachados.append(grupo)
         return{
             'auditados': auditados,
             'gAuditados':self.group.grupos_auditado,
-            'detenidos': len(cachados)
+            'detenidos': len(cachados),
+            #'grupos_pasados': self.group.in_round(self.round_number - 1).grupos_auditado,
+            #'id_auditado':idGrupo,
+            
         }
 
 class  AllGroupsWaitPage ( WaitPage ): 
@@ -205,17 +209,19 @@ class  AllGroupsWaitPage ( WaitPage ):
 class Resulado_auditoria(WaitPage):
     form_model = 'group'
 
-    def is_displayed(self):
+    def after_all_players_arrive(self):
         lista_grupo=[]
         grupos_auditados=[]
         lista_all=self.subsession.get_groups()
 
         #operaciones
         if(self.round_number == 1):
-            lista_grupo=random.sample(lista_all,k=2)
+            lista_grupo=random.sample(lista_all,k=5)
             #lista_grupo=choice(lista_all)
             for grupo in lista_grupo:
+                print("\n el id del grupo escogido es : ", grupo.id_in_subsession)                
                 if(grupo.aceptarCoima == 3):
+                    print("\n el id del grupo auditado es : ", grupo.id_in_subsession)
                     grupo.auditado = True
                     grupos_auditados.append(grupo)
 
@@ -231,9 +237,12 @@ class Resulado_auditoria(WaitPage):
             '''
             #self.player.in_round(self.round_number - 1).payoff
             lista_grupo=random.sample(lista_all,k=self.group.in_round(self.round_number - 1).grupos_auditado)
+            print("el numero de participantes a auditar: ",self.group.in_round(self.round_number - 1).grupos_auditado)
             #lista_grupo=choice(lista_all)
             for grupo in lista_grupo:
+                print("\n el id del grupo escogido es : ", grupo.id_in_subsession) 
                 if(grupo.aceptarCoima == 3):
+                    print("\n el id del grupo auditado es : ", grupo.id_in_subsession)
                     grupo.auditado = True
                     grupos_auditados.append(grupo)
 
@@ -243,7 +252,8 @@ class Resulado_auditoria(WaitPage):
                 self.group.grupos_auditado=5
             elif(len(grupos_auditados)<=1):
                 self.group.grupos_auditado=3
-        
+
+    def is_displayed(self):
         return self.group.id_in_subsession == 2
 
 

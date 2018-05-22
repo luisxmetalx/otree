@@ -7,7 +7,7 @@
 
 {% block content %}
 
-        <div class="container-fluit">
+        <div class="container-fluid">
             <div class="row">
                 <p class="h2">
                     Ronda {{ subsession.round_number }} de {{ Constants.num_rounds }}
@@ -22,7 +22,12 @@
             <div class="row">
                 {% formfield group.opciones label="" %}
             </div>
-            <div class="row">{% next_button %}</div>
+            <div class="row align-items-end">
+                <div class="col-10"></div>
+                <div class="col-2">
+                    {% next_button %}
+                </div>
+            </div>
         </div>
    
 

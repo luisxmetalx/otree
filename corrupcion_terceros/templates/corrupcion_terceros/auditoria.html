@@ -6,7 +6,7 @@
 {% endblock %}
 
 {% block content %}
-    <div class="container-fluit">
+    <div class="container-fluid">
         <div class="row">
             <p class="h2">
                 Ronda {{ subsession.round_number }} de {{ Constants.num_rounds }}
@@ -16,6 +16,16 @@
             <p>Se han auditado <b>{{auditados}} Grupos</b>, de los cuales <b>{{detenidos}} Grupos</b> han sido cachados con sobornos</p>
             <p>por ende la siguiente auditoria sera hecha para <b>{{group.grupos_auditado}} Grupos</b></p>
         </div>
+        {% if group.auditado == 1 %}
+            <div class="row">
+                <h1 class="display-4">Descubierto</h1>
+            </div>
+        {% endif %}
+        <div class="row align-items-end">
+            <div class="col-10"></div>
+            <div class="col-2">
+                {% next_button %}
+            </div>
+        </div>
     </div>
-    {% next_button %}
 {% endblock %}
