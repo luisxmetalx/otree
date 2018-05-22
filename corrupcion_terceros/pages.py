@@ -168,8 +168,12 @@ class Results(Page):
     
     def vars_for_template(self):
         self.group.total_pagar= sum([p.payoff for p in self.player.in_all_rounds()])
+        self.group.total_pagar_firma= sum([p.total_pagar_firma for p in self.group.in_all_rounds()])
+        self.group.total_pagar_sp= sum([p.total_pagar_sp for p in self.group.in_all_rounds()])
         return {
             'total_pagar': sum([p.payoff for p in self.player.in_all_rounds()]),
+            'total_pagar_firma': sum([p.total_pagar_firma for p in self.group.in_all_rounds()]),
+            'total_pagar_sp': sum([p.total_pagar_sp for p in self.group.in_all_rounds()]),
             'player_in_all_rounds': self.player.in_all_rounds(),
         }
 
@@ -201,7 +205,7 @@ class  AllGroupsWaitPage ( WaitPage ):
 class Resulado_auditoria(WaitPage):
     form_model = 'group'
 
-    def after_all_players_arrive(self):
+    def is_displayed(self):
         lista_grupo=[]
         grupos_auditados=[]
         lista_all=self.subsession.get_groups()
@@ -239,6 +243,8 @@ class Resulado_auditoria(WaitPage):
                 self.group.grupos_auditado=5
             elif(len(grupos_auditados)<=1):
                 self.group.grupos_auditado=3
+        
+        return self.group.id_in_subsession == 2
 
 
 page_sequence = [
@@ -255,7 +261,7 @@ page_sequence = [
     noReparticion,
     ResultsWaitPage,
     Results,
-    AllGroupsWaitPage,
     Resulado_auditoria,
+    AllGroupsWaitPage,
     auditoria
 ]

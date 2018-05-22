@@ -8,8 +8,13 @@
 {% block content %}
     
     <div class="container-fluit">
+        <div class="row">
+            <p class="h2">
+                Ronda {{ subsession.round_number }} de {{ Constants.num_rounds }}
+            </p>
+        </div>
         {% if player.id_in_group == 1 %}
-            {% if group.opciones == 0 %}
+            {% if group.opciones == 0 and group.porcentaje > 4 %}
                 <div class="row">
                     <p>
                         La firma menos eficiente decidió no enviar mensaje. Por lo tanto, el contrato se asigna a la firma mas eficiente.
@@ -25,7 +30,7 @@
             {% endif %}
         {% endif %}
         {% if player.id_in_group == 2 %}
-            {% if group.opciones == 0 %}
+            {% if group.opciones == 0 and group.porcentaje > 4%}
                 <div class="row">
                     <p>Usted ha decidido no enviar mensaje. El servidor público ha elegido a la firma mas eficinete.</p>
                 </div>

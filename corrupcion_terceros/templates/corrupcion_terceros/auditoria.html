@@ -8,6 +8,11 @@
 {% block content %}
     <div class="container-fluit">
         <div class="row">
+            <p class="h2">
+                Ronda {{ subsession.round_number }} de {{ Constants.num_rounds }}
+            </p>
+        </div>
+        <div class="row">
             <p>Se han auditado <b>{{auditados}} Grupos</b>, de los cuales <b>{{detenidos}} Grupos</b> han sido cachados con sobornos</p>
             <p>por ende la siguiente auditoria sera hecha para <b>{{group.grupos_auditado}} Grupos</b></p>
         </div>

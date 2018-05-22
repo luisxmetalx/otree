@@ -66,13 +66,14 @@
     {% endblock %}
 
     {% block scripts %}
-        <script>
-            $(document).ready(function(){
-                $('#id_aceptarCoima').click(function(){
-                    $('#myModal').modal('show')
-                });
-            });
-        </script>
+    <script>
+        $("#id_aceptarCoima").each(function(index){
+            if (index > 0 ){ // ignorando el primer elemento cuando index es igual 0
+                var element = $(this); // <-- en la variable element tienes tu elemento
+                console.log(element.text());
+            }
+        });
+    </script>
     {% endblock %}
         
     

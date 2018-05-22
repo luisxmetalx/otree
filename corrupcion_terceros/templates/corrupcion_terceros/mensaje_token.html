@@ -7,7 +7,9 @@
 
 {% block content %}
     <div class="row">
-        <h2>Round {{ subsession.round_number }} of {{ Constants.num_rounds }}</h2>
+        <p class="h2">
+            Ronda {{ subsession.round_number }} de {{ Constants.num_rounds }}
+        </p>
     </div>
     {% if group.opciones == 0 %}
         <div class="row">

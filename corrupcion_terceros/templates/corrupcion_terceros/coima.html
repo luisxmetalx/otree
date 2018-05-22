@@ -6,8 +6,12 @@
 {% endblock %}
 
 {% block content %}
-    
     <div class="container-fluit">
+        <div class="row">
+            <p class="h2">
+                Ronda {{ subsession.round_number }} de {{ Constants.num_rounds }}
+            </p>
+        </div>
         {% if group.opciones == 1 %}
             <div class="row">
                 <p>

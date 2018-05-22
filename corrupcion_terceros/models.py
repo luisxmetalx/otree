@@ -47,6 +47,8 @@ class Group(BaseGroup):
     )
 
     total_pagar = models.IntegerField()
+    total_pagar_firma = models.IntegerField()
+    total_pagar_sp = models.IntegerField()
 
     opcionesCogerDinero = models.IntegerField(
         choices=[[1,'No hacer nada y pasar a la siguiente ronda.'],[0,'Denunciar al servidor público.']], widget=widgets.RadioSelect,blank=True,initial=0,label="¿Qué decide hacer al respecto?"
