@@ -18,7 +18,46 @@
         </div>
         {% if group.auditado == 1 %}
             <div class="row">
-                <h1 class="display-4">Descubierto</h1>
+                <div class="col-4"></div>
+                <div class="col-4">
+                    <div class="row"><h1 class="display-4">Descubierto</h1></div>
+                    <div class="row">
+                        <table class="table">
+                            <thead class="table-primary">
+                                <tr>
+                                    <th>Rondas</th>
+                                    <th>Pago por ronda</th>
+                                    <th>Beneficio ESPOL</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            {% for p in player_in_all_rounds %}
+                                <tr>
+                                    <td>{{ p.round_number }}</td>
+                                    <td>
+                                        {{p.payoff}}
+                                    </td>
+                                    {% if p.id_in_group == 1 %}
+                                        <td>{{group.espol_firma}}</td>
+                                    {% endif %}
+                                    {% if p.id_in_group == 2 %}
+                                        <td>{{group.espol_sp}}</td>
+                                    {% endif %}
+                                </tr>
+                            {% endfor %}
+                            {% if subsession.round_number == Constants.num_rounds %}
+                                <tr class="table-primary">
+                                    <td>Total.</td>
+                                    <td colspan="2">
+                                        {{total_pagar}}
+                                    </td>
+                                </tr>
+                            {% endif %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-4"></div>
             </div>
         {% endif %}
         <div class="row align-items-end">

@@ -2,7 +2,7 @@
 {% load otree static %}
 
 {% block title %}
-    Mensaje
+    Mensaje 2
 {% endblock %}
 
 {% block content %}
@@ -83,6 +83,14 @@
                     </div>
                 </div>
             {% endif %}
+            <div class="col-2">
+                    <button name="opcionCoima" value="" class="btn btn-primary btn-large">Siguiente</button>
+                </div>
+        {% endif %}
+        {% if group.aceptarCoima <= 0 and group.aceptarCoima > 3 %}
+            <div class="col-2">
+                <button name="opcionCoima" value="" class="btn btn-primary btn-large">Siguiente</button>
+            </div>
         {% endif %}
 {% endblock %}
     {% block app_styles %}

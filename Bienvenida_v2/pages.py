@@ -4,7 +4,7 @@ from .models import Constants
 from . import models
 
 
-class bienvenida(Page):
+class Bienvenida(Page):
     
     form_model = models.Player
     form_fields = ['matricula']
@@ -20,5 +20,5 @@ class bienvenida(Page):
 
 
 page_sequence = [
-    bienvenida
+    Bienvenida
 ]

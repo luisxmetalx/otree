@@ -15,7 +15,7 @@ if environ.get('OTREE_PRODUCTION') not in {None, '', '0'}:
 else:
     DEBUG = True
 
-ADMIN_USERNAME = 'admin'
+#ADMIN_USERNAME = 'admin'
 
 # for security, best to set admin password in an environment variable
 ADMIN_PASSWORD = environ.get('OTREE_ADMIN_PASSWORD')
@@ -71,7 +71,7 @@ INSTALLED_APPS = ['otree']
 # SENTRY_DSN = ''
 
 DEMO_PAGE_INTRO_HTML = """
-oTree games
+Demos - L.E.E. - Laboratorio de Economía Experimental y del Comportamiento.
 """
 
 mturk_hit_settings = {
@@ -140,7 +140,7 @@ SESSION_CONFIGS = [
     {
     'name': 'corrupcion_terceros',
     'display_name': "Corrupcion agente externo",
-    'num_demo_participants': 8 ,
+    'num_demo_participants': 24 ,
     'app_sequence': [
         'corrupcion_terceros',
         ],
@@ -148,7 +148,7 @@ SESSION_CONFIGS = [
     {
     'name': 'Bienvenida_v2',
     'display_name': "bienvenida de experimentos",
-    'num_demo_participants': 2,
+    'num_demo_participants':24,
     'app_sequence': [
         'Bienvenida_v2',
         ],
