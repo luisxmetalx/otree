@@ -16,14 +16,17 @@
         </div>
         {% if group.porcentaje >= 4 %}
             <div class="row">
-                <div class="col-13">
+            <div class="row">
                     <p class="text-justify">La firma menos eficiente ha decidido enviarle <b>{{group.coinsJ1}} tokens</b> como un <b>"soborno o regalo"</b>. Usted debe tomar una de las siguientes decisiones:</p>
                 </div>
                 {% formfield group.aceptarCoima %}
                 {{form.aceptarCoima.errors}}
             </div>
-            <div class="row">
-                {% next_button %}
+            <div class="row align-items-end">
+                <div class="col-11"></div>
+                <div class="col-1">
+                    {% next_button %}
+                </div>
             </div>
             
             <!-- Modal -->
@@ -50,8 +53,9 @@
                 <p>El porcentaje de exito de la tranaccion es muy por debajo, por lo tanto ambas partes han sido penalizados.</p>    
             </div>
             {{form.aceptarCoima.errors}}
-            <div class="row">
-                <div>
+            <div class="row align-items-end">
+                <div class="col-10"></div>
+                <div class="col-2">
                     <button name="aceptarCoima" value="0" class="btn btn-primary btn-large">Siguiente</button>
                 </div>
             </div>
@@ -70,11 +74,12 @@
 
     {% block scripts %}
     <script>
-        $('ul#id_aceptarCoima li:gt(0)').click(function(){
+         $('ul#id_aceptarCoima li:gt(0)').click(function(){
             $('#myModal').modal('show');
         });
     </script>
     {% endblock %}
+
         
     
 

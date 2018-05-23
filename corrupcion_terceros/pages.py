@@ -168,12 +168,12 @@ class Results(Page):
     
     def vars_for_template(self):
         self.group.total_pagar= sum([p.payoff for p in self.player.in_all_rounds()])
-        #self.group.total_pagar_firma= sum([p.total_pagar_firma for p in self.group.in_all_rounds()])
-        #self.group.total_pagar_sp= sum([p.total_pagar_sp for p in self.group.in_all_rounds()])
+        #self.group.total_pagar_firma= sum([p.total_pagar_firma for p in self.subsession.get_groups()])
+        #self.group.total_pagar_sp= sum([p.total_pagar_sp for p in self.subsession.get_groups()])
         return {
             'total_pagar': sum([p.payoff for p in self.player.in_all_rounds()]),
-            #'total_pagar_firma': sum([p.total_pagar_firma for p in self.group.in_all_rounds()]),
-            #'total_pagar_sp': sum([p.total_pagar_sp for p in self.group.in_all_rounds()]),
+            #'total_pagar_firma': sum([p.total_pagar_firma for p in self.subsession.get_groups()]),
+            #'total_pagar_sp': sum([p.total_pagar_sp for p in self.subsession.get_groups()]),
             'player_in_all_rounds': self.player.in_all_rounds(),
         }
 
@@ -185,10 +185,13 @@ class auditoria(Page):
 
     def vars_for_template(self):
         cachados=[]
+        self.group.total_pagar= sum([p.payoff for p in self.player.in_all_rounds()])
+        #self.group.total_pagar_firma= sum([p.total_pagar_firma for p in self.subsession.get_groups()])
+        #self.group.total_pagar_sp= sum([p.total_pagar_sp for p in self.subsession.get_groups()])
         if(self.round_number == 1):
             auditados=5
         else:
-            auditados=self.group.auditado
+            auditados=self.group.grupos_auditado
         lista_all=self.subsession.get_groups()
         for grupo in lista_all:
             if(grupo.auditado == True):
@@ -200,7 +203,10 @@ class auditoria(Page):
             'detenidos': len(cachados),
             #'grupos_pasados': self.group.in_round(self.round_number - 1).grupos_auditado,
             #'id_auditado':idGrupo,
-            
+            'total_pagar': sum([p.payoff for p in self.player.in_all_rounds()]),
+            #'total_pagar_firma': sum([p.total_pagar_firma for p in self.subsession.get_groups()]),
+            #'total_pagar_sp': sum([p.total_pagar_sp for p in self.subsession.get_groups()]),
+            'player_in_all_rounds': self.player.in_all_rounds(),
         }
 
 class  AllGroupsWaitPage ( WaitPage ): 
@@ -227,10 +233,16 @@ class Resulado_auditoria(WaitPage):
 
             if(len(grupos_auditados)>=3):
                 self.group.grupos_auditado=8
+                for grupo in lista_all:
+                    grupo.grupos_auditado=8
             elif(len(grupos_auditados)==2):
                 self.group.grupos_auditado=5
+                for grupo in lista_all:
+                    grupo.grupos_auditado=5
             elif(len(grupos_auditados)<=1):
                 self.group.grupos_auditado=3
+                for grupo in lista_all:
+                    grupo.grupos_auditado=3
         else:
             '''
             k siempre ira cambiando en las rondas, ya que va a depender de las auditorias que se esten haciendo presentes.
@@ -248,13 +260,38 @@ class Resulado_auditoria(WaitPage):
 
             if(len(grupos_auditados)>=3):
                 self.group.grupos_auditado=8
+                for grupo in lista_all:
+                    grupo.grupos_auditado=8
             elif(len(grupos_auditados)==2):
                 self.group.grupos_auditado=5
+                for grupo in lista_all:
+                    grupo.grupos_auditado=5
             elif(len(grupos_auditados)<=1):
                 self.group.grupos_auditado=3
+                for grupo in lista_all:
+                    grupo.grupos_auditado=3
 
     def is_displayed(self):
         return self.group.id_in_subsession == 2
+
+class Multa_Auditoria(WaitPage):
+    form_model = 'group'
+
+    def after_all_players_arrive(self):
+        p1 = self.group.get_player_by_id(1)
+        p2 = self.group.get_player_by_id(2)
+
+        #multa
+        p1.payoff = p1.payoff - 8
+        p2.payoff = p2.payoff - 8
+        if(p1.payoff <0):
+            p1.payoff = 0
+        if(p2.payoff < 0):
+            p2.payoff = 0
+
+    def is_displayed(self):
+        return self.group.auditado == 1
+
 
 
 page_sequence = [
@@ -273,5 +310,6 @@ page_sequence = [
     Results,
     Resulado_auditoria,
     AllGroupsWaitPage,
+    Multa_Auditoria,
     auditoria
 ]
