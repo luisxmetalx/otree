@@ -31,27 +31,27 @@ class Subsession(BaseSubsession):
 class Group(BaseGroup):
     
     opciones = models.IntegerField(
-        choices=[[1,'1) Enviar un mensaje ofreciéndole una cantidad de tokens (entre 3 y 10) al servidor público'],[0,'2)	No enviar ningún mensaje al servidor público']], widget=widgets.RadioSelect,blank=True
+        choices=[[1,'1) Enviar un mensaje ofreciéndole una cantidad de tokens (entre 3 y 10) al servidor público'],[0,'2)	No enviar ningún mensaje al servidor público']], widget=widgets.RadioSelect
     )
 
     coinsJ1= models.IntegerField(min=3, max=10, label="Con cuanto sobornará...")
 
     aceptarCoima = models.IntegerField(
-        choices=[[1,'1)	Reportar el mensaje a la entidad reguladora de compras públicas. '],[2,'2) Recibe los tokens, pero no favorece a ESPOL.'],[3,'3)	Acepta los tokens. Entrega 2 tokens a sus colegas y  garantiza el contrato a la firma menos eficiente'],[0,'']], widget=widgets.RadioSelect,blank=True
+        choices=[[1,'1)	Reportar el mensaje a la entidad reguladora de compras públicas. '],[2,'2) Recibe los tokens, pero no favorece a ESPOL.'],[3,'3)	Acepta los tokens. Entrega 2 tokens a sus colegas y  garantiza el contrato a la firma menos eficiente'],[0,'']], widget=widgets.RadioSelect
     )
 
     porcentaje = models.IntegerField()
 
     opcionTokens = models.IntegerField(
-        choices = [[0,'Regalo'],[1,'Soborno']], widget=widgets.RadioSelect,blank=True
+        choices = [[0,'Regalo'],[1,'Soborno']], widget=widgets.RadioSelect
     )
 
-    total_pagar = models.IntegerField()
+    total_pagar = models.CurrencyField()
     total_pagar_firma = models.IntegerField()
     total_pagar_sp = models.IntegerField()
 
     opcionesCogerDinero = models.IntegerField(
-        choices=[[1,'No hacer nada y pasar a la siguiente ronda.'],[0,'Denunciar al servidor público.']], widget=widgets.RadioSelect,blank=True,label="¿Qué decide hacer al respecto?"
+        choices=[[1,'No hacer nada y pasar a la siguiente ronda.'],[0,'Denunciar al servidor público.']], widget=widgets.RadioSelect,label="¿Qué decide hacer al respecto?"
     )
     #Ganancias para la ESPOL
     espol_firma=models.CurrencyField()

@@ -1,7 +1,7 @@
 from otree.api import Currency as c, currency_range
 from ._builtin import Page, WaitPage
 from .models import Constants
-from random import choice,random
+from random import choice
 import random
 
 class reglas_experimento(Page):
@@ -63,7 +63,7 @@ class mensaje_token(Page):
     form_model = 'group'
 
     def is_displayed(self):
-        return self.group.opciones == 1 and self.player.id_in_group== 2 and self.group.aceptarCoima <= 2 and self.group.aceptarCoima >0  and self.group.porcentaje > 4 or self.player.id_in_group== 1 
+        return self.group.opciones == 1 and self.player.id_in_group== 2 and self.group.aceptarCoima <= 2 and self.group.aceptarCoima >0  and self.group.porcentaje > 4  
     
     def vars_for_template(self):
         return {}
@@ -80,6 +80,9 @@ class mensajes(Page):
 
     def is_displayed(self):
         return self.group.opciones == 0 or self.group.porcentaje < 4
+    
+    def vars_for_template(self):        
+        return {}
 
 
 class WaitForP1(WaitPage):
@@ -204,8 +207,8 @@ class auditoria(Page):
             #'grupos_pasados': self.group.in_round(self.round_number - 1).grupos_auditado,
             #'id_auditado':idGrupo,
             'total_pagar': sum([p.payoff for p in self.player.in_all_rounds()]),
-            'total_pagar_firma': self.group.total_pagar_firma,
-            'total_pagar_sp': self.group.total_pagar_sp,
+            'total_pagar_firma': sum([p.espol_firma for p in self.group.in_all_rounds()]),
+            'total_pagar_sp': sum([p.espol_sp for p in self.group.in_all_rounds()]),
             'player_in_all_rounds': self.player.in_all_rounds(),
         }
 
@@ -263,28 +266,41 @@ class Resulado_auditoria(WaitPage):
                     print("\n el id del grupo auditado es : ", grupo.id_in_subsession)
                     grupo.auditado = True
                     grupos_auditados.append(grupo)
-
+            print(len(grupos_auditados))
             if(len(grupos_auditados)>=3):
                 self.group.grupos_auditado=8
                 for grupo in lista_all:
-                    grupo.total_pagar_firma= grupo.espol_firma + grupo.in_round(self.round_number - 1).total_pagar_firma
+                    print("grupo espol",grupo.espol_firma)
+                    print("grupo espol anterior", grupo.in_round(self.round_number - 1).total_pagar_firma)
+                    subtotal= grupo.espol_firma + grupo.in_round(self.round_number - 1).total_pagar_firma
+                    grupo.total_pagar_firma=subtotal
+                    print("total: ", subtotal)
+                    print("........................")
                     grupo.total_pagar_sp= grupo.espol_sp + grupo.in_round(self.round_number - 1).total_pagar_sp
                     grupo.grupos_auditado=8
             elif(len(grupos_auditados)==2):
                 self.group.grupos_auditado=5
                 for grupo in lista_all:
+                    print("grupo espol",grupo.espol_firma)
+                    print("grupo espol anterior", grupo.in_round(self.round_number - 1).total_pagar_firma)
                     grupo.total_pagar_firma= grupo.espol_firma + grupo.in_round(self.round_number - 1).total_pagar_firma
+                    print("total: ", grupo.total_pagar_firma)
+                    print("........................")
                     grupo.total_pagar_sp= grupo.espol_sp + grupo.in_round(self.round_number - 1).total_pagar_sp
                     grupo.grupos_auditado=5
             elif(len(grupos_auditados)<=1):
                 self.group.grupos_auditado=3
                 for grupo in lista_all:
+                    print("grupo espol",grupo.espol_firma)
+                    print("grupo espol anterior", grupo.in_round(self.round_number - 1).total_pagar_firma)
                     grupo.total_pagar_firma= grupo.espol_firma + grupo.in_round(self.round_number - 1).total_pagar_firma
+                    print("total: ", grupo.total_pagar_firma)
+                    print("........................")
                     grupo.total_pagar_sp= grupo.espol_sp + grupo.in_round(self.round_number - 1).total_pagar_sp
                     grupo.grupos_auditado=3
 
     def is_displayed(self):
-        return self.group.id_in_subsession == 2
+        return self.group.id_in_subsession == int(choice(range(len(self.subsession.get_players())))) and self.group.get_player_by_id(1) == 1
 
 class Multa_Auditoria(WaitPage):
     form_model = 'group'
@@ -307,7 +323,7 @@ class Multa_Auditoria(WaitPage):
 
 
 page_sequence = [
-    reglas_experimento,
+    #reglas_experimento,
     player1,
     coima,
     WaitForP2,
@@ -325,3 +341,4 @@ page_sequence = [
     Multa_Auditoria,
     auditoria
 ]
+

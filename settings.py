@@ -15,7 +15,7 @@ if environ.get('OTREE_PRODUCTION') not in {None, '', '0'}:
 else:
     DEBUG = True
 
-#ADMIN_USERNAME = 'admin'
+ADMIN_USERNAME = 'admin'
 
 # for security, best to set admin password in an environment variable
 ADMIN_PASSWORD = environ.get('OTREE_ADMIN_PASSWORD')
@@ -152,6 +152,12 @@ SESSION_CONFIGS = [
     'app_sequence': [
         'Bienvenida_v2',
         ],
+    },
+    {
+        'name': 'ips',
+        'display_name': "saber la ip otree",
+        'num_demo_participants': 1,
+        'app_sequence': ['ips'], 
     },
     # other session configs ...
     # other session configs go here ...

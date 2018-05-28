@@ -12,17 +12,7 @@
                 Ronda {{ subsession.round_number }} de {{ Constants.num_rounds }}
             </p>
         </div>
-        {% if group.opciones == 0 %}
-            <div class="row">
-                <p>El resultado de la ronda va a ser procesado. Dele al botón siguiente</p>
-            </div>
-            <div class="row align-items-end">
-                <div class="col-10"></div>
-                <div class="col-2">
-                    <button name="opcionCoima" value="" class="btn btn-primary btn-large">Siguiente</button>
-                </div>
-            </div>
-        {% endif %}
+        
         {% if group.aceptarCoima == 3 %}
             <div class="row">
                 <p>El servidor público acepto su envio de tokens para lo cual se hara efectivo lo pactado.</p>

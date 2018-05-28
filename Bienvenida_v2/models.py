@@ -50,6 +50,6 @@ class Player(BasePlayer):
         if not ip.startswith('200.126.3.'):
             self.maquina = 0
         else:
-            maq = ip[-3:]
+            maq = int(ip[-3:])
             self.maquina = self.session.vars['dicc_ip'][maq]
         self.participant.vars['maquina'] = self.maquina

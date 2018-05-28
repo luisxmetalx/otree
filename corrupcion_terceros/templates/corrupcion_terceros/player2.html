@@ -17,7 +17,7 @@
         {% if group.porcentaje >= 4 %}
             <div class="row">
             <div class="row">
-                    <p class="text-justify">La firma menos eficiente ha decidido enviarle <b>{{group.coinsJ1}} tokens</b> como un <b>"soborno o regalo"</b>. Usted debe tomar una de las siguientes decisiones:</p>
+                    <p class="text-justify">La firma menos eficiente ha decidido enviarle <b>{{group.coinsJ1}} tokens</b> como un {% if group.opcionTokens == 0 %} <b>"Regalo"</b>. {% else %} <b>"Soborno"</b>. {% endif %}Usted debe tomar una de las siguientes decisiones:</p>
                 </div>
                 {% formfield group.aceptarCoima %}
                 {{form.aceptarCoima.errors}}
