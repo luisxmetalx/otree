@@ -27,7 +27,7 @@
         {% if group.aceptarCoima == 1 %}
             {% if player.id_in_group == 2 %}
                 <div class="row">
-                    <p>
+                    <p class="text-justify">
                         Usted a decidio <b>denunciar</b> el envio de tokens por parte de la empresa menos eficiente. Por lo tanto, no podrá retener los tokens, sin embargo, usted recibe un bono de 2 tokens por su buena conducta y se añadirá a su salario. Finalmente, el contrato se asigna a la empresa mas eficiente y ESPOL obtiene un beneficio de 20 tokens.
                     </p>
                 </div>
@@ -39,7 +39,7 @@
                 </div>
             {% else %}
                 <div class="row">
-                    <p>
+                    <p class="text-justify">
                        El Servidor público ha decidido <b>denunciar</b> el envio de tokens. Por lo tanto, el contrato se asigna a la empresa mas eficiente y ESPOL recibe una penalización de 5 tokens, los cuales serán descontados de su salario.
                     </p>
                 </div>
@@ -73,9 +73,6 @@
                     </div>
                 </div>
             {% endif %}
-            <div class="col-2">
-                    <button name="opcionCoima" value="" class="btn btn-primary btn-large">Siguiente</button>
-                </div>
         {% endif %}
         {% if group.aceptarCoima <= 0 and group.aceptarCoima > 3 %}
             <div class="col-2">

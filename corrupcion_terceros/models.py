@@ -66,4 +66,5 @@ class Group(BaseGroup):
 
 
 class Player(BasePlayer):
-    pass
+    Beneficio_espol=models.CurrencyField()
+    
