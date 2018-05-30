@@ -314,8 +314,7 @@ class Multa_Auditoria(WaitPage):
         p2 = self.group.get_player_by_id(2)
 
         #multa
-        p1.payoff = p1.payoff - 8
-        p2.payoff = p2.payoff - 8
+        p2.payoff = Constants.tokens2 - 8
         if(p1.payoff <0):
             p1.payoff = 0
         if(p2.payoff < 0):

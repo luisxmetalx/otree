@@ -14,10 +14,19 @@
                 Ronda {{ subsession.round_number }} de {{ Constants.num_rounds }}
             </p>
         </div>
+        <div class="row align-items-end">
+            <div class="col-10"></div>
+            <div class="col-2">
+                <button id="modal" class="btn btn-warning btn-large" type="button">
+                    Instrucciones
+                </button>
+            </div>
+        </div>
         {% if group.porcentaje >= 4 %}
+            <br>
+            <br>
             <div class="row">
-            <div class="row">
-                    <p class="text-justify">La firma menos eficiente ha decidido enviarle <b>{{group.coinsJ1}} tokens</b> como un {% if group.opcionTokens == 0 %} <b>"Regalo"</b>. {% else %} <b>"Soborno"</b>. {% endif %}Usted debe tomar una de las siguientes decisiones:</p>
+                    <p class="text-justify">La empresa menos eficiente ha decidido enviarle <b>{{group.coinsJ1}} tokens</b> como un {% if group.opcionTokens == 0 %} <b>"Regalo"</b>. {% else %} <b>"Soborno"</b>. {% endif %}Usted debe tomar una de las siguientes decisiones:</p>
                 </div>
                 {% formfield group.aceptarCoima %}
                 {{form.aceptarCoima.errors}}
@@ -34,13 +43,16 @@
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">probabilidad de ser atrapado</h5>
+                            <h5 class="modal-title" id="exampleModalLabel">Probabilidad de ser descubierto.</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
                         <div class="modal-body">
-                            <p >tienes una probabilidad alta de que no seas atrapado... tu probabilidad es <b>{{group.porcentaje}}</b></p>
+                            <p class="text-justify">Aleatoriamente se elige un número entre CERO y MIL, si el número es menor o igual a CUATRO, el evento se descubre, caso contrario; el evento no se descubre. </p>
+                            <p class="text-justify">
+                                Su resultado es :  <b>{{group.porcentaje}}</b>
+                            </p>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
@@ -61,6 +73,55 @@
             </div>
         {% endif %}
     </div>
+
+    <!-- Modal -->
+    <div id="instruccion" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">probabilidad de ser atrapado</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <p class="h2">Servidor Público: ESPOL</p>
+                            <p class="text-justify">La actual rectora de la ESPOL pretende mejorar la calidad y satisfacción de los estudiantes y docentes construyendo un nuevo albergue para los animales que pasean por todo el campus. Para lo cual, decide destinar 50 tokens en la construcción de esta obra.  </p>
+                            <p class="text-justify">Usted trabaja en el departamento de compras públicas de ESPOL y recibe un salario de 15 tokens. A usted se le encarga elegir la empresa (firma) que realizará la obra requerida por la institución (ESPOL). </p>
+                            <p class="text-justify">Existen dos propuestas de empresas que desean quedarse con el contrato; una empresa eficiente que ofrece el servicio por un costo total de 30 tokens y una menos eficiente que ofrece el servicio por 50 tokens.</p>
+                            <p class="text-justify">Este esquema se mantendrá durante 10 rondas. </p>
+                            <p class="text-justify">En cada ronda, usted debe esperar la decisión de la firma menos eficiente sobre si le envía o no un mensaje a usted, ofreciéndole una cantidad determinada de tokens para salir beneficiado en la asignación del proyecto. En el caso de que la firma menos eficiente decida no enviarle mensaje, esto se le informará a usted y automáticamente se asignará el contrato a la firma eficiente. Por lo tanto, ESPOL obtendrá un beneficio de 20 tokens (Presupuesto - costo) y usted obtiene una ganancia de 15 tokens (salario). Las recompensas de cada ronda, tanto para ESPOL como para usted, se guardarán automáticamente y se presentarán al finalizar las 10 rondas.</p>
+                            <p class="text-justify">Si la firma menos eficiente decide enviar el mensaje, usted tendrá que tomar una decisión de tres posibles:</p>
+                        </div>
+                        <div class="row alert-primary">
+                            <ol>
+                                <li value="1"><p class="text-justify"><b>Reportar el mensaje a la entidad reguladora de compras públicas</b>. Usted no podrá retener los tokens, sin embargo, usted recibe un bono de 2 tokens por su buena conducta y se añadirá a su salario (15 tokens) para el pago de la ronda.  La firma tendrá que pagar una penalización de 5 tokens que se reducirán de sus ganancias. Finalmente, el contrato se asigna a la empresa eficiente y ESPOL recibe un beneficio de 20 tokens (presupuesto menos costo).</p></li>
+                                <li><p class="text-justify"><b>Recibe los tokens, pero no favorece a la firma</b>. Por el contrario, usted adjudica el contrato a la firma más eficiente con lo cual ESPOL obtiene un beneficio de 20 tokens (presupuesto menos costo). Existe una probabilidad de que la entidad reguladora descubra el evento (<b>de cada mil casos, cuatro son descubiertos</b>). En caso de ser descubierto, se confisca los tokens enviados por la firma y se restan 5 tokens a su salario. Además, se penaliza con 5 tokens a la firma menos eficiente. </p> </li>
+                                <li><p class="text-justify"><b>Acepta los tokens</b> y da a sus colegas 2 tokens para asegurar que el contrato se le entregue a la empresa menos eficiente. En este caso, ESPOL no recibe beneficios (presupuesto menos costo igual a cero) y usted recibe su salario más los tokens que le envió la empresa menos eficiente menos los dos tokens que entrego a sus colegas. Sin embargo, nuevamente existe una probabilidad de que el evento sea descubierto por la entidad reguladora de compras públicas (<b>de cada mil casos, cuatro son descubiertos</b>). En caso de ser descubierto, se confisca los tokens y tanto usted como la empresa menos eficiente deberán pagar una penalización de 5 tokens, los cuales serán descontado de su salario. Finalmente, el contrato se asigna a la empresa mas eficiente y ESPOL recibe un beneficio de 20 tokens (presupuesto menos costo) .</p></li>
+                            </ol>
+                        </div>
+                        <div class="row">
+                            <p class="text-justify">Si usted decide 1 o 3, automáticamente se les asigna sus premios y pasan a la siguiente ronda. Si usted decide 2, su decisión se informará a la empresa menos eficiente y el tendrá que tomar una decisión adicional entre dos opciones:</p>
+                        </div>
+                        <div class="row">
+                            <ol>
+                                <li value="1"><p class="text-justify"><b>No hacer nada y pasar a la siguiente ronda.</b> En este caso las ganancias no sufren cambios.</p></li>
+                                <li><p class="text-justify"><b>Denunciar al servidor público.</b> En este caso, la denuncia tiene un costo para la empresa menos eficiente de 2 tokens. Usted no podra conservar los tokens y adicionalmente recibira una sancion de 3 tokens que seran descontado de su salario.</p></li>
+                            </ol>
+                        </div>
+                        <div class="row">
+                            <p class="text-justify">Para garantizar la credibilidad de los incentivos, todos los tokens acumulados en el fondo de ESPOL (con su respectiva transformación a dólares), serán donados al grupo protector de animales de la universidad y la evidencia será puesta a conocimiento público en la página del Laboratorio de Economía Experimental y del Comportamiento (L.E.E).</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
     {% block app_styles %}
 
@@ -77,9 +138,12 @@
          $('ul#id_aceptarCoima li:gt(0)').click(function(){
             $('#myModal').modal('show');
         });
+        $('#modal').click(function(){
+            $('#instruccion').modal('show');
+        });
     </script>
     {% endblock %}
-
+    
         
     
 

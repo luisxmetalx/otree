@@ -16,9 +16,7 @@
         {% if player.id_in_group == 1 %}
             {% if group.opciones == 0 and group.porcentaje > 4 %}
                 <div class="row">
-                    <p>
-                        La firma menos eficiente decidió no enviar mensaje. Por lo tanto, el contrato se asigna a la firma mas eficiente.
-                    </p>
+                    <p>Usted ha decidido no enviar mensaje. El servidor público asigna el contrato a la empresa mas eficinete.</p>
                 </div>
             {% endif %}
             {% if group.porcentaje < 4 %}
@@ -32,13 +30,15 @@
         {% if player.id_in_group == 2 %}
             {% if group.opciones == 0 and group.porcentaje > 4%}
                 <div class="row">
-                    <p>Usted ha decidido no enviar mensaje. El servidor público ha elegido a la firma mas eficinete.</p>
+                    <p>
+                        La empresa menos eficiente decidió no enviar mensaje. Por lo tanto, el contrato se asigna a la empresa mas eficiente.
+                    </p>
                 </div>
             {% endif %}
             {% if group.porcentaje < 4 %}
                 <div class="row">
-                    <p>
-                        <b>EL EVENTO HA SIDO DESCUBIERTO POR LA ENTIDAD REGULADORA</b>. En este caso, tanto ESPOL como el servidor público reciben una penalización de 5 tokens. Los cuales serán descontado de su salario.
+                    <p class="text-justify">
+                        <b>EL EVENTO HA SIDO DESCUBIERTO POR LA ENTIDAD REGULADORA</b>. En este caso, tanto ESPOL como el servidor público reciben una penalización de 5 tokens. Los cuales serán descontado de su salario y avanzan a la siguiente ronda.
                     </p>
                 </div>
             {% endif %}
