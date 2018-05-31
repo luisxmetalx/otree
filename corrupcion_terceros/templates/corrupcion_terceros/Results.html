@@ -12,6 +12,20 @@
                 Ronda {{ subsession.round_number }}
             </p>
         </div>
+        {% if group.aceptarCoima == 1 and player.id_in_group == 1 %}
+            <div class="row">
+                <p class="text-justify">
+                    algo q aun no se 
+                </p>
+            </div>
+        {% endif %}
+        {% if group.opcionesCogerDinero == 0 and player.id_in_group == 2 %}
+            <div class="row">
+                <p class="text-justify">
+                    La Empresa menos eficiente ha <b>DENUNCIADO</b> que usted ha recibido <b>{{group.coinsJ1}} TOKENS</b> y no la ha favorecido el contrato. Por lo tanto, a usted se le confizcaran los tokens enviados y se le agregara una multa de <b>TRES ROKENS</b>
+                </p>
+            </div>
+        {% endif %}
         <div class="row">
             <div class="col-sm"></div>
             <div class="col-sm">

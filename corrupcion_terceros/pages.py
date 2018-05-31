@@ -214,6 +214,8 @@ class auditoria(Page):
 
 class  AllGroupsWaitPage ( WaitPage ): 
     wait_for_all_groups  =  True
+    title_text = "Custom title text"
+    body_text = "Custom body text"
 
 class Resulado_auditoria(WaitPage):
     form_model = 'group'
