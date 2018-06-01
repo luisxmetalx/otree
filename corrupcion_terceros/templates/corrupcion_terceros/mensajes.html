@@ -18,7 +18,7 @@
                 <div class="col-10"></div>
                 <div class="col-2">
                     <button id="modalEmpresa" class="btn btn-warning btn-large" type="button" >
-                        Instrucciones
+                        <b>Instrucciones</b>
                     </button>
                 </div>
             </div>
@@ -31,8 +31,8 @@
             {% endif %}
             {% if group.porcentaje < 4 %}
                 <div class="row">
-                    <p>
-                        <b>EL EVENTO HA SIDO DESCUBIERTO POR LA ENTIDAD REGULADORA</b>. En este caso, tanto usted como la firma menos eficiente, reciben una penalización de 5 tokens. Los cuales serán descontado de su salario.
+                    <p class="text-justify">
+                        <b>El evento ha sido descubierto por la entidad reguladora de compras públicas</b>. En este caso, los tokens no son devueltos a ESPOL. Además, deben pagar una penalización de 2 tokens. Tanto la penalizacion como los tokens enviados, serán descontados de su salario.
                     </p>
                 </div>
             {% endif %}
@@ -58,7 +58,7 @@
             {% if group.porcentaje < 4 %}
                 <div class="row">
                     <p class="text-justify">
-                        <b>EL EVENTO HA SIDO DESCUBIERTO POR LA ENTIDAD REGULADORA</b>. En este caso, tanto ESPOL como el servidor público reciben una penalización de 5 tokens. Los cuales serán descontado de su salario y avanzan a la siguiente ronda.
+                        <b>El evento ha sido descubierto por la entidad reguladora de compras públicas</b>. En este caso, usted recibe una penalización de <b>5 tokens</b>. Los cuales serán descontado de su salario y avanzan a la siguiente ronda.
                     </p>
                 </div>
             {% endif %}

@@ -15,14 +15,14 @@
         {% if group.aceptarCoima == 1 and player.id_in_group == 1 %}
             <div class="row">
                 <p class="text-justify">
-                    algo q aun no se 
+                    El servidor público ha <b>denunciado</b> a la entidad reguladora de compras públicas que ESPOL a enviado un <b>{% if group.opcionTokens == 0 %} <b>regalo</b> {% else %} <b>soborno</b> {% endif %}</b> para salir beneficiado en la adjudicación del contrato. A ESPOL no se le devuelven los tokens enviados, ademas deberá pagar una multa de 5 tokens, los cuales serán descontado de su salario.
                 </p>
             </div>
         {% endif %}
         {% if group.opcionesCogerDinero == 0 and player.id_in_group == 2 %}
             <div class="row">
                 <p class="text-justify">
-                    La Empresa menos eficiente ha <b>DENUNCIADO</b> que usted ha recibido <b>{{group.coinsJ1}} TOKENS</b> y no la ha favorecido el contrato. Por lo tanto, a usted se le confizcaran los tokens enviados y se le agregara una multa de <b>TRES ROKENS</b>
+                    La Empresa menos eficiente ha <b>denunciado</b> que usted ha recibido <b>{{group.coinsJ1}} tokens</b> y no la ha favorecido el contrato. Por lo tanto, a usted se le confizcaran los tokens enviados y se le agregara una multa de <b>3 tokens</b>
                 </p>
             </div>
         {% endif %}

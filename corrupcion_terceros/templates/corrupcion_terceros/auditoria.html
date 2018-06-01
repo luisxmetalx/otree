@@ -48,8 +48,8 @@
             </div>
         {% else %}
             <div class="row">
-                <p>Se han auditado <b>{{auditados}} Grupos</b>, de los cuales <b>{{detenidos}} Grupos</b> han sido cachados con sobornos</p>
-                <p>por ende la siguiente auditoria sera hecha para <b>{{group.grupos_auditado}} Grupos</b></p>
+                <p class="text-justify">Se han auditado <b>{{auditados}} servidores públicos</b>, de los cuales <b>{{detenidos}} servidores públicos</b> han <b>favorecido</b> a empresas menos eficientes por tokens que les han sido enviados.</p>
+                <p class="text-justify">Por lo tanto, para la siguiente ronda, se auditarán <b>{{group.grupos_auditado}} servidores públicos, elegidos aleatoriamente</b></p>
             </div>
             {% if group.auditado == 1 %}
                 <div class="row">
@@ -75,14 +75,13 @@
                                         <td>{{p.Beneficio_espol}}</td>
                                     </tr>
                                 {% endfor %}
-                                {% if subsession.round_number == Constants.num_rounds %}
                                     <tr class="table-primary">
                                         <td>Total.</td>
-                                        <td colspan="2">
+                                        <td >
                                             {{total_pagar}}
                                         </td>
+                                        <td>{{total_pagar_benficio}}</td>
                                     </tr>
-                                {% endif %}
                                 </tbody>
                             </table>
                         </div>

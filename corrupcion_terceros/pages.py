@@ -122,8 +122,8 @@ class ResultsWaitPage(WaitPage):
             """
             if(group.aceptarCoima == 3 or group.aceptarCoima == 0):
                 if(group.porcentaje < 4):
-                    p1.payoff = (Constants.tokens1)-5
-                    p2.payoff = (Constants.tokens1)-5
+                    p1.payoff = (Constants.tokens1)-2-group.coinsJ1
+                    p2.payoff = (Constants.tokens1)-2
                     p1.Beneficio_espol = 0
                     p2.Beneficio_espol = 20
 
@@ -136,7 +136,7 @@ class ResultsWaitPage(WaitPage):
                 """
                 Denuncia el soborno.
                 """
-                p1.payoff = (Constants.tokens1)-5
+                p1.payoff = (Constants.tokens1)-2-group.coinsJ1
                 p2.payoff = (Constants.tokens2)+2 
                 p1.Beneficio_espol = 0
                 p2.Beneficio_espol = 20
@@ -150,7 +150,7 @@ class ResultsWaitPage(WaitPage):
                     p1.Beneficio_espol = 0
                     p2.Beneficio_espol = 20
                 elif(group.porcentaje < 4):
-                    p1.payoff = (Constants.tokens1)-5
+                    p1.payoff = (Constants.tokens1)-2-group.coinsJ1
                     p2.payoff = (Constants.tokens1)-5
                     p1.Beneficio_espol = 0
                     p2.Beneficio_espol = 20
@@ -178,6 +178,7 @@ class Results(Page):
             #'total_pagar_firma': self.group.total_pagar_firma,
             'total_pagar_benficio': sum([p.Beneficio_espol for p in self.player.in_all_rounds()]),
             'player_in_all_rounds': self.player.in_all_rounds(),
+            'coima': self.group.opcionTokens,
         }
 
 class auditoria(Page):
@@ -197,7 +198,7 @@ class auditoria(Page):
             auditados=self.group.in_round(self.round_number - 1).grupos_auditado
         lista_all=self.subsession.get_groups()
         for grupo in lista_all:
-            if(grupo.auditado == True):
+            if(grupo.auditado == 1):
                 idGrupo=grupo.id_in_subsession
                 cachados.append(grupo)
         return{
@@ -214,8 +215,8 @@ class auditoria(Page):
 
 class  AllGroupsWaitPage ( WaitPage ): 
     wait_for_all_groups  =  True
-    title_text = "Custom title text"
-    body_text = "Custom body text"
+    title_text = "Sistema de Auditoría en proceso."
+    body_text = "Por favor, espere."
 
 class Resulado_auditoria(WaitPage):
     form_model = 'group'
@@ -229,10 +230,12 @@ class Resulado_auditoria(WaitPage):
         group = self.group
         p1 = group.get_player_by_id(1)
         p2 = group.get_player_by_id(2)
-
         #operaciones
-        if(self.round_number == 1):
-            lista_grupo=random.sample(lista_all,k=5)
+        if(self.round_number == 1 and self.group.auditador == None):
+            print("-------------")
+            print("grupo q entra: ", self.group.id_in_subsession)
+            print("-------------")
+            lista_grupo=random.sample(lista_all,k=3)
             #lista_grupo=choice(lista_all)
             for grupo in lista_grupo:
                 print("\n el id del grupo escogido es : ", grupo.id_in_subsession)                
@@ -244,6 +247,7 @@ class Resulado_auditoria(WaitPage):
             if(len(grupos_auditados)>=3):
                 self.group.grupos_auditado=8
                 for grupo in lista_all:
+                    grupo.auditador = 0
                     for p in grupo.get_players():
                         if(p.id_in_group == 1):
                             p1.Beneficio_espol = p1.Beneficio_espol
@@ -253,6 +257,7 @@ class Resulado_auditoria(WaitPage):
             elif(len(grupos_auditados)==2):
                 self.group.grupos_auditado=5
                 for grupo in lista_all:
+                    grupo.auditador = 0
                     for p in grupo.get_players():
                         if(p.id_in_group == 1):
                             p1.Beneficio_espol = p1.Beneficio_espol
@@ -262,17 +267,21 @@ class Resulado_auditoria(WaitPage):
             elif(len(grupos_auditados)<=1):
                 self.group.grupos_auditado=3
                 for grupo in lista_all:
+                    grupo.auditador = 0
                     for p in grupo.get_players():
                         if(p.id_in_group == 1):
                             p1.Beneficio_espol = p1.Beneficio_espol
                         else:
                             p2.Beneficio_espol = p2.Beneficio_espol
                     grupo.grupos_auditado=3
-        else:
+        elif(self.round_number > 1 and self.group.auditador == None):
             '''
             k siempre ira cambiando en las rondas, ya que va a depender de las auditorias que se esten haciendo presentes.
             '''
             #self.player.in_round(self.round_number - 1).payoff
+            print("-------------")
+            print("grupo q entra: ", self.group.id_in_subsession)
+            print("-------------")
             lista_grupo=random.sample(lista_all,k=self.group.in_round(self.round_number - 1).grupos_auditado)
             print("el numero de participantes a auditar: ",self.group.in_round(self.round_number - 1).grupos_auditado)
             #lista_grupo=choice(lista_all)
@@ -286,6 +295,7 @@ class Resulado_auditoria(WaitPage):
             if(len(grupos_auditados)>=3):
                 self.group.grupos_auditado=8
                 for grupo in lista_all:
+                    grupo.auditador = 0
                     for p in grupo.get_players():
                         if(p.id_in_group == 1):
                             p.Beneficio_espol = p.Beneficio_espol 
@@ -293,6 +303,7 @@ class Resulado_auditoria(WaitPage):
             elif(len(grupos_auditados)==2):
                 self.group.grupos_auditado=5
                 for grupo in lista_all:
+                    grupo.auditador = 0
                     for p in grupo.get_players():
                         if(p.id_in_group == 1):
                             p.Beneficio_espol = p.Beneficio_espol 
@@ -300,18 +311,25 @@ class Resulado_auditoria(WaitPage):
             elif(len(grupos_auditados)<=1):
                 self.group.grupos_auditado=3
                 for grupo in lista_all:
+                    grupo.auditador = 0
                     for p in grupo.get_players():
                         if(p.id_in_group == 1):
                             p.Beneficio_espol = p.Beneficio_espol 
                     grupo.grupos_auditado=3
-
-    def is_displayed(self):
-        return self.group.id_in_subsession == 3 or self.player.id_in_group == 1
+    
 
 class Multa_Auditoria(WaitPage):
     form_model = 'group'
 
+    def is_displayed(self):
+        return self.group.auditado == 1 and self.player.id_in_group == 2
+
     def after_all_players_arrive(self):
+        print("-------------")
+        print("grupo multado: ", self.group.id_in_subsession)
+        print("-------------")
+        #operaciones
+
         p1 = self.group.get_player_by_id(1)
         p2 = self.group.get_player_by_id(2)
 
@@ -322,8 +340,7 @@ class Multa_Auditoria(WaitPage):
         if(p2.payoff < 0):
             p2.payoff = 0
 
-    def is_displayed(self):
-        return self.group.auditado == 1
+    
 
 
 
@@ -341,6 +358,7 @@ page_sequence = [
     noReparticion,
     ResultsWaitPage,
     Results,
+    AllGroupsWaitPage,
     Resulado_auditoria,
     AllGroupsWaitPage,
     Multa_Auditoria,
