@@ -159,6 +159,12 @@ SESSION_CONFIGS = [
         'num_demo_participants': 1,
         'app_sequence': ['ips'], 
     },
+    {
+        'name': 'bret',
+        'display_name': "bret v2",
+        'num_demo_participants': 1,
+        'app_sequence': ['bret'], 
+    },
     # other session configs ...
     # other session configs go here ...
 ]

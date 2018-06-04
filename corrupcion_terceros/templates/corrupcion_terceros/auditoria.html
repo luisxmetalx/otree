@@ -51,11 +51,36 @@
                 <p class="text-justify">Se han auditado <b>{{auditados}} servidores públicos</b>, de los cuales <b>{{detenidos}} servidores públicos</b> han <b>favorecido</b> a empresas menos eficientes por tokens que les han sido enviados.</p>
                 <p class="text-justify">Por lo tanto, para la siguiente ronda, se auditarán <b>{{group.grupos_auditado}} servidores públicos, elegidos aleatoriamente</b></p>
             </div>
-            {% if group.auditado == 1 %}
+            
+            {% if group.auditado == 0 and player.id_in_group == 2 %}
+                <div class="row">
+                    <div class="col-2"></div>
+                    <div class="col-8 info"><p class="text-justify">Usted ha sido escogido por la auditoria, pero <b>no ha sido encontrado</b> en ningún acto de soborno.</p></div>
+                    <div class="col-2"></div>
+                </div>
+            {% endif %}
+
+            {% if group.auditado == null and player.id_in_group == 2 %}
+                <div class="row">
+                    <div class="col-2"></div>
+                    <div class="col-8">
+                        <div class="row success"><p class="text-justify">Usted no ha sido escogido por la auditoria.</p></div>
+                    </div>
+                    <div class="col-2"></div>
+                </div>
+            {% endif %}
+
+            {% if group.auditado == 1 and player.id_in_group == 2 %}
+                <div class="row">
+                    <div class="col-2"></div>
+                    <div class="col-8">
+                        <div class="row warning"><p class="text-justify center">Usted ha sido escogido por la auditoria, y lamentablemente <b>ha sido encontrado</b> en acto de soborno. Por lo tanto será multado con <b>8 tokens</b> de su salario.</p></div>
+                    </div>
+                    <div class="col-2"></div>
+                </div>
                 <div class="row">
                     <div class="col-4"></div>
                     <div class="col-4">
-                        <div class="row"><h1 class="display-4">Descubierto</h1></div>
                         <div class="row">
                             <table class="table">
                                 <thead class="table-primary">
@@ -97,4 +122,37 @@
             </div>
         </div>
     </div>
+{% endblock %}
+
+{% block styles %}
+    <style type="text/css">
+        .info, .success, .warning, .error, .validation {
+            border: 1px solid;
+            margin: 10px 0px;
+            padding:15px 10px 15px 50px;
+            background-repeat: no-repeat;
+            background-position: 10px center;
+        }
+        .info {
+            color: #00529B;
+            background-color: #BDE5F8;
+            background-image: url('/static/corrupcion_terceros/icons/coins_add.png');
+        }
+        .success {
+            color: #4F8A10;
+            background-color: #BDE5F8;
+            background-image:url('/static/corrupcion_terceros/icons/thumb_up.png');
+            background-size: 25px;
+        }
+        .warning {
+            color: #9F6000;
+            background-color: #FEEFB3;
+            background-image: url('/static/corrupcion_terceros/icons/coins_delete.png');
+        }
+        .error {
+            color: #D8000C;
+            background-color: #FFBABA;
+            background-image: url('/static/corrupcion_terceros/icons/coins_delete.png');
+        }
+    </style>
 {% endblock %}

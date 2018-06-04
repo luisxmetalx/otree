@@ -23,7 +23,6 @@ class player1(Page):
     
     def vars_for_template(self):
         #choice(range(1000))
-        self.group.porcentaje =  choice(range(1000))
         if(self.round_number==1):
             token=Constants.tokens1
         else:
@@ -33,16 +32,23 @@ class player1(Page):
             'num_grupo': len(self.subsession.get_groups()),
             'num_player_gruop':len(self.subsession.get_players()),
             'token':token,
-        'porcentaje':self.group.porcentaje,
         #'matricula':self.participant.vars['matricula'],
         'id_grupo':self.group.id_in_subsession}
 
 class coima(Page):
     form_model = 'group'
     form_fields =['coinsJ1','opcionTokens']
+
     def is_displayed(self):
         return self.player.id_in_group == 1 and self.group.opciones == 1
 
+    def vars_for_template(self):
+        self.group.porcentaje =  choice(range(1000))
+
+        return{
+            'porcentaje':self.group.porcentaje,
+        }
+        
 class player2(Page):
     form_model = 'group'
     form_fields = ['aceptarCoima']
@@ -238,7 +244,8 @@ class Resulado_auditoria(WaitPage):
             lista_grupo=random.sample(lista_all,k=3)
             #lista_grupo=choice(lista_all)
             for grupo in lista_grupo:
-                print("\n el id del grupo escogido es : ", grupo.id_in_subsession)                
+                print("\n el id del grupo escogido es : ", grupo.id_in_subsession)
+                grupo.auditado = False          
                 if(grupo.aceptarCoima == 3):
                     print("\n el id del grupo auditado es : ", grupo.id_in_subsession)
                     grupo.auditado = True
@@ -287,6 +294,7 @@ class Resulado_auditoria(WaitPage):
             #lista_grupo=choice(lista_all)
             for grupo in lista_grupo:
                 print("\n el id del grupo escogido es : ", grupo.id_in_subsession) 
+                grupo.auditado = False
                 if(grupo.aceptarCoima == 3):
                     print("\n el id del grupo auditado es : ", grupo.id_in_subsession)
                     grupo.auditado = True
