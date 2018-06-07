@@ -9,43 +9,71 @@
     {% if id_player_1 == 1 %}
         <div class="container-fluid">
             <div class="row">
-                <p class="h2">Firma:</p>
-                <p class="text-justify">Usted ha sido elegido para el papel de gerente de una firma (empresa) que busca la concesión de un proyecto de obra pública. Durante las x rondas usted estará emparejado con otro jugador elegido al azar que desempeñará el papel de un servidor público encargado de asignar la firma que llevará a cabo el proyecto. En cada ronda, usted recibirá una dotación inicial de 25 tokens.</p>
-                <p class="text-justify">En primer lugar, usted debe decidir entre enviar o no un mensaje ofreciendo una cantidad de tokens al servidor público para que se le adjudique el contrato.</p>
-                <p class="text-justify">Si usted decide no enviar el mensaje, se le informará al otro jugador y pasarán a la siguiente ronda conservado los 25 tokens.</p>
-                <p class="text-justify">Si usted decide no enviar el mensaje, se le informará al otro jugador y pasarán a la siguiente ronda conservado los 25 tokens.</p>
+                <p class="h2">Empresa: ESPOL</p>
+                <p class="text-justify">Como parte de los servicios que ofrece ESPOL se encuentran las consultorías hacia las instituciones públicas. Usted es jefe del departamento de consultorías de ESPOL y recibe un salario de 15 tokens. Actualmente, uno de los ministerios del estado requiere contratar una consultoría y la rectora de la universidad (su jefa) ha manifestado que es necesario que su departamento genere más ingresos para continuar con el desarrollo de la institución. </p>
+                <p class="text-justify">Luego de realizar la evaluación respectiva, se determina un precio de 50 tokens para cobrar por la consultoría. Sin embargo, otra institución, más eficiente, ofrece el mismo servicio por un costo total de 30 tokens. Este esquema se desarrollará durante 10 rondas. En cada ronda, usted, sabiendo que solo existen las dos ofertas y que tiene gran probabilidad de no recibir el contrato, debe decidir, en primer lugar:</p>
             </div>
-            <div class="row">
+            <div class="row alert-primary">
                 <ol>
-                    <li value="1"><p class="text-justify">Reportar el mensaje a su agencia. Aunque no puede mantener el pago, el servidor público recibe un bono de 2 tokens y usted tendrá que pagar una penalización de 5 tokens que se reducirán de sus ganancias.</p></li>
-                    <li><p class="text-justify">Recibe los tokens, pero no favorece a su firma. Por el contrario, adjudica el contrato a otra más eficiente. En este caso, antes asignar los tokens, existe una pequeña probabilidad de que el evento sea descubierto (4/1000). En caso de ser descubierto, se confisca los tokens y se restan 5 a cada jugador, con lo cual pasan a la siguiente ronda; caso contrario, a usted se le restan los tokens enviados que son sumados a la cuenta del servidor público.</p> </li>
-                    <li><p class="text-justify">Recibe los tokens y da una parte del mismo (25%) a sus colegas para asegurar que la su firma realmente gane el contrato. Nuevamente, existe una pequeña probabilidad (4/1000) de ser descubiertos, en ese caso, se confisca los tokens y se le restan 5 a cada participante; caso contrario, se le sumarán al servidor público los tokens enviados menos el 25%, y a usted se le adjudicará el contrato obteniendo una ganancia de 35 tokens.</p></li>
+                    <li value="1"><p class="text-justify"><b>Enviar un mensaje</b> ofreciéndole una cantidad de tokens (entre 3 y 10) al servidor público encargado de asignar el contrato para tener más probabilidades de ser elegido</p></li>
+                    <li><p class="text-justify"><b>No enviar mensaje</b> y dejar que el servidor público asigne el contrato a la institución más eficiente.</p> </li>
                 </ol>
             </div>
             <div class="row">
-                <p class="text-justify">Si usted decide 1 o 3, automáticamente se les asigna sus premios y pasan a la siguiente ronda. Si usted decide 2, su decisión se informará al otro jugador y el tendrá que decidir entre dos opciones:</p>
+                <p class="text-justify">Si usted decide no enviar el mensaje, el servidor público elegirá la empresa más eficiente, con lo cual, la ESPOL no contará con el ingreso (recibirá 0 tokens) y usted recibirá únicamente su salario, que se acumulará y se presentará al finalizar las 10 rondas.</p>
+                <p class="text-justify">Si usted decide enviar el mensaje, usted deberá ingresar la cantidad a enviar, la misma que debe estar entre 3 y 10 tokens. Además, deberá especificar si desea que el mensaje se reciba como un regalo o como un soborno. <b>Luego, usted deberá esperar que el servidor público tome una decisión entre tres posibles alternativas</b>:</p>
+
             </div>
             <div class="row">
                 <ol>
-                    <li value="1">No hacer nada y pasar a la siguiente ronda.</li>
-                    <li>Denunciar que usted recibió los tokens, lo cual le costará la firma 2 tokens y le representará una disminución de 3 tokens para usted.</li>
+                    <li value="1"><p class="text-justify"><b>Reportar el mensaje a la entidad reguladora de compras públicas.</b>  El servidor público no puede retener los tokens enviados, sin embargo, recibe un bono de 2 tokens por buena conducta y ESPOL tendrá que pagar una penalización de 5 tokens por el mensaje, los cuales se reducirán de su salario. Finalmente, el contrato se entrega a la institución más eficiente y ESPOL no recibe ningún beneficio (0 tokens).</p></li>
+                    <li><p class="text-justify"><b>Recibe los tokens, pero no favorece a ESPOL.</b> Por el contrario, el servidor público adjudica el contrato a la institución más eficiente. Existe una probabilidad de que el evento sea descubierto por la entidad reguladora de compras públicas (<b></b>de cada mil casos, cuatro son descubiertos</b>). En caso de ser descubierto, se confisca los tokens y tanto el servidor público como ESPOL, deberán pagar una penalización de 5 tokens. Se le reducirán los 5 tokens de su salario y ESPOL no recibe ningún beneficio (0 tokens).</p> </li>
+                    <li><p class="text-justify"><b>Acepta los tokens</b> y da a sus colegas 2 tokens para asegurar que el contrato se le entregue a ESPOL. En este caso, ESPOL recibe el ingreso total de <b>50 tokens</b> menos <b>el doble de la cantidad enviada</b>. Usted recibe su salario <b>mas un BONO adicional</b> que es igual a la cantidad enviada menos DOS. Sin embargo, nuevamente existe una probabilidad de que el evento sea descubierto por la entidad reguladora de compras públicas (<b>de cada mil casos, cuatro son descubiertos</b>). En caso de ser descubierto, se confisca los tokens y tanto el servidor público como ESPOL deberán pagar una penalización de 5 tokens. Se le reducirán los 5 tokens de su salario y ESPOL no recibe ningún beneficio (0 tokens).</p></li>
                 </ol>
+            </div>
+
+            <div class="row">
+                <p class="text-justify"><b>Si el servidor público elige las opciones 1 o 3</b>, la ronda termina con los pagos respectivos y pasan a la siguiente. <b>Si el servidor público elige la opción 2, entonces usted podrá tomar una decisión adicional.</b> Si el servidor público decide recibir los tokens pero no favorecer a ESPOL, usted tendrá que decidir entre:</p>
+            </div>
+            <div class="row alert-primary">
+                <ol>
+                    <li value="1"><p class="text-justify"><b>No hacer nada y pasar a la siguiente ronda.</b> En este caso las ganancias no sufren cambios.</p></li>
+                    <li><p class="text-justify"><b>Denunciar al servidor público.</b> En este caso, la denuncia tiene un costo de 2 tokens para ESPOL, que serán descontados de su salario, adicionalmente, el servidor público no podrá conservar los tokens enviados y recibirá una sanción de 3 tokens.</p></li>
+                </ol>
+            </div>
+            <div class="row">
+                <p class="text-justify">Para garantizar la credibilidad de los incentivos, todos los tokens acumulados en el fondo de ESPOL (con su respectiva transformación a dólares), serán donados al grupo protector de animales de la universidad y la evidencia será puesta a conocimiento público en la página del Laboratorio de Economía Experimental y del Comportamiento (L.E.E).</p>
             </div>
         </div>
     {% else %}
         <div class="container-fluid">
             <div class="row">
-                <p class="h2">Servidor Público</p>
-                <p class="text-justify">Usted ha sido elegido para el papel de un servidor público encargado de asignar un proyecto de obra pública. Durante las x rondas usted estará emparejado con otro jugador elegido al azar que desempeñará el papel de una firma que busca la concesión (ser la empresa encargada de llevar el proyecto). En cada ronda, usted recibirá una dotación inicial de 25 tokens.</p>
-                <p class="text-justify">Usted debe esperar la decisión de la firma sobre enviarle o no, un mensaje ofreciendo una cantidad de tokens para resultar beneficiada de la decisión de asignación del proyecto. En caso de que decida no enviarle el mensaje, se le informará a usted y ambos pasarán a la siguiente ronda conservando los 25 tokens que se añadirán a su pago total.</p>
-                <p class="text-justify">Si la firma decide enviarle el mensaje, usted tendrá que tomar una de tres posibles opciones:</p>
+                <p class="h2">Servidor Público: ESPOL</p>
+                <p class="text-justify">La actual rectora de la ESPOL pretende mejorar la calidad y satisfacción de los estudiantes y docentes construyendo un nuevo albergue para los animales que pasean por todo el campus. Para lo cual, decide destinar 50 tokens en la construcción de esta obra.  </p>
+                <p class="text-justify">Usted trabaja en el departamento de compras públicas de ESPOL y recibe un salario de 15 tokens. A usted se le encarga elegir la empresa (firma) que realizará la obra requerida por la institución (ESPOL). </p>
+                <p class="text-justify">Existen dos propuestas de empresas que desean quedarse con el contrato; una empresa eficiente que ofrece el servicio por un costo total de 30 tokens y una menos eficiente que ofrece el servicio por 50 tokens.</p>
+                <p class="text-justify">Este esquema se mantendrá durante 10 rondas. </p>
+                <p class="text-justify">En cada ronda, usted debe esperar la decisión de la firma menos eficiente sobre si le envía o no un mensaje a usted, ofreciéndole una cantidad determinada de tokens para salir beneficiado en la asignación del proyecto. En el caso de que la firma menos eficiente decida no enviarle mensaje, esto se le informará a usted y automáticamente se asignará el contrato a la firma eficiente. Por lo tanto, ESPOL obtendrá un beneficio de 20 tokens (Presupuesto - costo) y usted obtiene una ganancia de 15 tokens (salario). Las recompensas de cada ronda, tanto para ESPOL como para usted, se guardarán automáticamente y se presentarán al finalizar las 10 rondas.</p>
+                <p class="text-justify">Si la firma menos eficiente decide enviar el mensaje, usted tendrá que tomar una decisión de tres posibles:</p>
+            </div>
+            <div class="row alert-primary">
+                <ol>
+                    <li value="1"><p class="text-justify"><b>Reportar el mensaje a la entidad reguladora de compras públicas</b>. Usted no podrá retener los tokens, sin embargo, usted recibe un bono de 2 tokens por su buena conducta y se añadirá a su salario (15 tokens) para el pago de la ronda.  La firma tendrá que pagar una penalización de 5 tokens que se reducirán de sus ganancias. Finalmente, el contrato se asigna a la empresa eficiente y ESPOL recibe un beneficio de 20 tokens (presupuesto menos costo).</p></li>
+                    <li><p class="text-justify"><b>Recibe los tokens, pero no favorece a la empresa menos eficiente</b>. Por el contrario, usted adjudica el contrato a la empresa más eficiente con lo cual ESPOL obtiene un beneficio de 20 tokens (presupuesto menos costo). Existe una probabilidad de que la entidad reguladora descubra el evento (<b>de cada mil casos, cuatro son descubiertos</b>). En caso de ser descubierto, se confisca los tokens enviados por la empresa y se restan 5 tokens a su salario. Además, se penaliza con 5 tokens a la empresa menos eficiente. </p> </li>
+                    <li><p class="text-justify"><b>Acepta los tokens</b> y da a sus colegas 2 tokens para asegurar que el contrato se le entregue a la empresa menos eficiente. En este caso, ESPOL no recibe beneficios (presupuesto menos costo igual a cero) y usted recibe su salario más los tokens que le envió la empresa menos eficiente, menos los dos tokens que entregó a sus colegas. Sin embargo, nuevamente existe una probabilidad de que el evento sea descubierto por la entidad reguladora de compras públicas (<b>de cada mil casos, cuatro son descubiertos</b>). En caso de ser descubierto, se confisca los tokens y tanto usted como la empresa menos eficiente deberán pagar una penalización de 5 tokens, los cuales serán descontado de su salario. Finalmente, el contrato se asigna a la empresa mas eficiente y ESPOL recibe un beneficio de 20 tokens (presupuesto menos costo) .</p></li>
+                </ol>
+            </div>
+            <div class="row">
+                <p class="text-justify">Si usted decide 1 o 3, automáticamente se les asigna sus premios y pasan a la siguiente ronda. Si usted decide 2, su decisión se informará a la empresa menos eficiente y el tendrá que tomar una decisión adicional entre dos opciones:</p>
             </div>
             <div class="row">
                 <ol>
-                    <li value="1">Reporta el mensaje a su agencia. Aunque no puede mantener el pago, recibe un bono de 2 tokens. La firma tendrá que pagar una penalización de 5 tokens que se reducirán de sus ganancias.</li>
-                    <li>Recibe los tokens, pero no favorece a la firma. Por el contrario, adjudica el contrato a otra firma más eficiente. En este caso, antes asignar los tokens, existe una pequeña probabilidad de que el evento sea descubierto (4/1000). En caso de ser descubiertos, se confisca los tokens y se restan 5 a cada jugador, con lo cual pasan a la siguiente ronda; caso contrario, se añaden los tokens directamente a su cuenta.</li>
-                    <li>Recibo los tokens y doy una parte del mismo (25%) a mis colegas para asegurar que la firma realmente gane el contrato. Nuevamente, existe una pequeña probabilidad (4/1000) de ser descubiertos, en ese caso, se confisca los tokens y se le restan 5 a cada participante; caso contrario, se le sumarán a usted los tokens recibidos y se le aumentarán el 15 tokens a la firma.</li>
+                    <li value="1"><p class="text-justify"><b>No hacer nada y pasar a la siguiente ronda.</b> En este caso las ganancias no sufren cambios.</p></li>
+                    <li><p class="text-justify"><b>Denunciar al servidor público.</b> En este caso, la denuncia tiene un costo para la empresa menos eficiente de 2 tokens. Usted no podra conservar los tokens y adicionalmente recibira una sancion de 3 tokens que seran descontado de su salario.</p></li>
                 </ol>
+            </div>
+            <div class="row">
+                <p class="text-justify">Para garantizar la credibilidad de los incentivos, todos los tokens acumulados en el fondo de ESPOL (con su respectiva transformación a dólares), serán donados al grupo protector de animales de la universidad y la evidencia será puesta a conocimiento público en la página del Laboratorio de Economía Experimental y del Comportamiento (L.E.E).</p>
             </div>
         </div>
     {% endif %}
@@ -56,8 +84,9 @@
 
 {% block styles %}
   <style type="text/css">
-    #otree-body {
-      width: 85%;
+    .otree-body {
+      max-width: 95%;
+      margin-top: -20px
     }
     .row{
       margin-right: 1%;

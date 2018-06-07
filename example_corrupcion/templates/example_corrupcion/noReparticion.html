@@ -2,21 +2,104 @@
 {% load otree static %}
 
 {% block title %}
-    Firma
-    Round {{ subsession.round_number }} of {{ Constants.num_rounds }}
+    Empresa
 {% endblock %}
 
 {% block content %}
-    <div class="row">
-        <p>
-            El servidor público se cogio el monto de <b>{{group.coinsJ1}} Token</b>, 
-        </p>
+    <div class="container-fluid">
+        <div class="row">
+            <p class="h2">
+                Ronda {{ subsession.round_number }} de {{ Constants.num_rounds }}
+            </p>
+        </div>
+        <div class="row align-items-end">
+            <div class="col-10"></div>
+            <div class="col-2">
+                <button id="modalEmpresa" class="btn btn-warning btn-large" type="button" >
+                    <b>Instrucciones</b>
+                </button>
+            </div>
+        </div>
+        <br>
+        <br>
+        <div class="row">
+            <p class="text-justify">
+                El servidor público recibió los tokens, pero no favoreció a ESPOL. 
+            </p>
+        </div>
+        <div class="row">
+            {% formfield group.opcionesCogerDinero %}
+        </div>
     </div>
-    <div class="row">
-        {% formfield group.opcionesCogerDinero %}
+    <div class="row align-items-end">
+        <div class="col-10"></div>
+        <div class="col-2">
+            {% next_button %}
+        </div>
     </div>
-    
 
-    {% next_button %}
+    <!-- Modal -->
+    <div id="empresa" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Instrucciones.</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <p class="h2">Empresa: ESPOL</p>
+                            <p class="text-justify">Como parte de los servicios que ofrece ESPOL se encuentran las consultorías hacia las instituciones públicas. Usted es jefe del departamento de consultorías de ESPOL y recibe un salario de 15 tokens. Actualmente, uno de los ministerios del estado requiere contratar una consultoría y la rectora de la universidad (su jefa) ha manifestado que es necesario que su departamento genere más ingresos para continuar con el desarrollo de la institución. </p>
+                            <p class="text-justify">Luego de realizar la evaluación respectiva, se determina un precio de 50 tokens para cobrar por la consultoría. Sin embargo, otra institución, más eficiente, ofrece el mismo servicio por un costo total de 30 tokens. Este esquema se desarrollará durante 10 rondas. En cada ronda, usted, sabiendo que solo existen las dos ofertas y que tiene gran probabilidad de no recibir el contrato, debe decidir, en primer lugar:</p>
+                        </div>
+                        <div class="row alert-primary">
+                            <ol>
+                                <li value="1"><p class="text-justify"><b>Enviar un mensaje</b> ofreciéndole una cantidad de tokens (entre 3 y 10) al servidor público encargado de asignar el contrato para tener más probabilidades de ser elegido</p></li>
+                                <li><p class="text-justify"><b>No enviar mensaje</b> y dejar que el servidor público asigne el contrato a la institución más eficiente.</p> </li>
+                            </ol>
+                        </div>
+                        <div class="row">
+                            <p class="text-justify">Si usted decide no enviar el mensaje, el servidor público elegirá la empresa más eficiente, con lo cual, la ESPOL no contará con el ingreso (recibirá 0 tokens) y usted recibirá únicamente su salario, que se acumulará y se presentará al finalizar las 10 rondas.</p>
+                            <p class="text-justify">Si usted decide enviar el mensaje, usted deberá ingresar la cantidad a enviar, la misma que debe estar entre 3 y 10 tokens. Además, deberá especificar si desea que el mensaje se reciba como un regalo o como un soborno. <b>Luego, usted deberá esperar que el servidor público tome una decisión entre tres posibles alternativas</b>:</p>
 
+                        </div>
+                        <div class="row">
+                            <ol>
+                                <li value="1"><p class="text-justify"><b>Reportar el mensaje a la entidad reguladora de compras públicas.</b>  El servidor público no puede retener los tokens enviados, sin embargo, recibe un bono de 2 tokens por buena conducta y ESPOL tendrá que pagar una penalización de 5 tokens por el mensaje, los cuales se reducirán de su salario. Finalmente, el contrato se entrega a la institución más eficiente y ESPOL no recibe ningún beneficio (0 tokens).</p></li>
+                                <li><p class="text-justify"><b>Recibe los tokens, pero no favorece a ESPOL.</b> Por el contrario, el servidor público adjudica el contrato a la institución más eficiente. Existe una probabilidad de que el evento sea descubierto por la entidad reguladora de compras públicas (<b></b>de cada mil casos, cuatro son descubiertos</b>). En caso de ser descubierto, se confisca los tokens y tanto el servidor público como ESPOL, deberán pagar una penalización de 5 tokens. Se le reducirán los 5 tokens de su salario y ESPOL no recibe ningún beneficio (0 tokens).</p> </li>
+                                <li><p class="text-justify"><b>Acepta los tokens</b> y da a sus colegas 2 tokens para asegurar que el contrato se le entregue a ESPOL. En este caso, ESPOL recibe el ingreso total de 50 tokens menos la cantidad enviada. Usted recibe su salario. Sin embargo, nuevamente existe una probabilidad de que el evento sea descubierto por la entidad reguladora de compras públicas (<b>de cada mil casos, cuatro son descubiertos</b>). En caso de ser descubierto, se confisca los tokens y tanto el servidor público como ESPOL deberán pagar una penalización de 5 tokens. Se le reducirán los 5 tokens de su salario y ESPOL no recibe ningún beneficio (0 tokens).</p></li>
+                            </ol>
+                        </div>
+
+                        <div class="row">
+                            <p class="text-justify"><b>Si el servidor público elige las opciones 1 o 3</b>, la ronda termina con los pagos respectivos y pasan a la siguiente. <b>Si el servidor público elige la opción 2, entonces usted podrá tomar una decisión adicional.</b> Si el servidor público decide recibir los tokens pero no favorecer a ESPOL, usted tendrá que decidir entre:</p>
+                        </div>
+                        <div class="row alert-primary">
+                            <ol>
+                                <li value="1"><p class="text-justify"><b>No hacer nada y pasar a la siguiente ronda.</b> En este caso las ganancias no sufren cambios.</p></li>
+                                <li><p class="text-justify"><b>Denunciar al servidor público.</b> En este caso, la denuncia tiene un costo de 2 tokens para ESPOL, que serán descontados de su salario, adicionalmente, el servidor público no podrá conservar los tokens enviados y recibirá una sanción de 3 tokens.</p></li>
+                            </ol>
+                        </div>
+                        <div class="row">
+                            <p class="text-justify">Para garantizar la credibilidad de los incentivos, todos los tokens acumulados en el fondo de ESPOL (con su respectiva transformación a dólares), serán donados al grupo protector de animales de la universidad y la evidencia será puesta a conocimiento público en la página del Laboratorio de Economía Experimental y del Comportamiento (L.E.E).</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+{% block scripts %}
+    <script>
+        $('#modalEmpresa').click(function(){
+            $('#empresa').modal('show');
+        });
+    </script>
 {% endblock %}

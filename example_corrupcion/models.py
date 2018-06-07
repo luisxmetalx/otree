@@ -7,7 +7,7 @@ from otree.api import (
 author = 'Luis Andrade'
 
 doc = """
-Your app description
+experiemnto de control control
 """
 
 
@@ -16,48 +16,46 @@ class Constants(BaseConstants):
     players_per_group = 2
     num_rounds = 3
 
-    tokens1=25
-    tokens2=25
-    monto=0
+    tokens1=15
+    tokens2=15
+    token_Espol=50
     #tasa=0.25
 
 
 
 class Subsession(BaseSubsession):
-    pass
+    self.session.vars['pago'] = 0
 
 
 class Group(BaseGroup):
     
     opciones = models.IntegerField(
-        choices=[[1,'Asignar Tokens'],[0,'No Asignar Tokens']], widget=widgets.RadioSelect,blank=True,initial=0
+        choices=[[1,'1) Enviar un mensaje ofreciéndole una cantidad de tokens (entre 3 y 10) al servidor público.'],[0,'2)	No enviar ningún mensaje al servidor público.']], widget=widgets.RadioSelect
     )
 
-    coinsJ1= models.IntegerField(min=3, max=25, label="Con cuanto sobornará...")
+    coinsJ1= models.IntegerField(min=3, max=10, label="Cantidad de Tokens (3-10)")
 
     aceptarCoima = models.IntegerField(
-        choices=[[1,'aceptar'],[2,'Denunciar'],[3,'Cogerse el dinero'],[0,'']], widget=widgets.RadioSelect,blank=True,initial=0,label="Elija su opcion...:"
+        choices=[[1,'1)	Reportar el mensaje a la entidad reguladora de compras públicas. '],[2,'2) Recibe los tokens, pero no favorece a la empresa menos eficiente.'],[3,'3)	Acepta los tokens. Entrega 2 tokens a sus colegas y  garantiza el contrato a la empresa menos eficiente.'],[0,'']], widget=widgets.RadioSelect,label=""
     )
 
     porcentaje = models.IntegerField()
 
     opcionTokens = models.IntegerField(
-        choices = [[0,'Regalo'],[1,'Soborno']], widget=widgets.RadioSelect,blank=True,initial=0,label="Como desea enviarlo?..."
+        choices = [[0,'Regalo'],[1,'Soborno']], widget=widgets.RadioSelect, label=""
     )
 
-    total_pagar = models.IntegerField()
+    total_pagar = models.CurrencyField()
+    total_pagar_firma = models.IntegerField()
 
     opcionesCogerDinero = models.IntegerField(
-        choices=[[1,'Denunciar'],[2,'No hacer Nada']], widget=widgets.RadioSelect,blank=True,initial=0,label="cual es la opcion a escoger"
+        choices=[[1,'No hacer nada y pasar a la siguiente ronda.'],[0,'Denunciar al servidor público. Si decide denunciar al servidor público, a usted le costará 2 tokens que serán descontados de su ganancias, pero al servidor público se le confiscará los tokens enviados y se le castigará con una multa de 3 tokens.']], widget=widgets.RadioSelect,label="¿Qué decide hacer al respecto?"
     )
-
-    
-    
-    monto=models.IntegerField()
-
-
+    #Ganancias para la ESPOL
+    espol_firma=models.CurrencyField()
+    espol_sp=models.CurrencyField()   
 
 class Player(BasePlayer):
-    pass
+    Beneficio_espol=models.CurrencyField()
 
 
