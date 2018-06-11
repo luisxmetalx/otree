@@ -24,7 +24,10 @@ class Constants(BaseConstants):
 
 
 class Subsession(BaseSubsession):
-    self.session.vars['pago'] = 0
+    def creating_session(self):
+        self.session.vars['pago_firma'] = 0
+        self.session.vars['pago_sp'] = 0
+
 
 
 class Group(BaseGroup):
@@ -57,5 +60,6 @@ class Group(BaseGroup):
 
 class Player(BasePlayer):
     Beneficio_espol=models.CurrencyField()
+
 
 
