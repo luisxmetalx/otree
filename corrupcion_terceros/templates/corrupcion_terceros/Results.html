@@ -42,18 +42,18 @@
                         <tr>
                             <td>{{ p.round_number }}</td>
                             <td>
-                                {{p.payoff}}
+                                {{p.payoff|floatformat}} Puntos.
                             </td>
-                            <td>{{p.Beneficio_espol}}</td>
+                            <td>{{p.Beneficio_espol|floatformat}} Puntos.</td>
                         </tr>
                     {% endfor %}
                     {% if subsession.round_number == Constants.num_rounds %}
                         <tr class="table-primary">
                             <td>Total.</td>
                             <td >
-                                {{total_pagar}}
+                                {{total_pagar|floatformat}} Puntos.
                             </td>
-                            <td>{{total_pagar_benficio}}</td>
+                            <td>{{total_pagar_benficio|floatformat}} Puntos.</td>
                         </tr>
                     {% endif %}
                     </tbody>
