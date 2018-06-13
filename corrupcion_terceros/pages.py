@@ -241,7 +241,7 @@ class Resulado_auditoria(WaitPage):
             print("-------------")
             print("grupo q entra: ", self.group.id_in_subsession)
             print("-------------")
-            lista_grupo=random.sample(lista_all,k=3)
+            lista_grupo=random.sample(lista_all,k=5)
             #lista_grupo=choice(lista_all)
             for grupo in lista_grupo:
                 print("\n el id del grupo escogido es : ", grupo.id_in_subsession)

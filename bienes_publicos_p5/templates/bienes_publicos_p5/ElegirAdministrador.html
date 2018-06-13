@@ -1,0 +1,95 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree_tags %}
+
+{% block title %}
+
+    {% if group.tratamiento == 'leviatan' %}
+      Resumen de contribuciones de la primera fase
+    {% else %}
+      Votación
+    {% endif %}
+
+{% endblock %}
+
+{% block content %}
+
+    Ronda {{ subsession.round_number }} de {{ Constants.num_rounds }}
+    <div class="col-md-12 well">
+      <h4>Contribuciones de todos los participantes a la cuenta del grupo</h4>
+      <br>
+
+      <table class="table tabla">
+        <thead>
+          <th class="text-center">Ronda</th>
+          <th class="text-center">Usted</th>
+          {% for jugador in player.get_others_in_group %}
+              <th class="text-center">{{ jugador.role }}</th>
+          {% endfor %}
+        </thead>
+        <tbody>
+          {% for ronda, cont in contribuciones_por_ronda %}
+            <tr class="text-center">
+              <td>{{ ronda }}</td>
+              {% for c in cont %}
+                  <td>{{ c }}</td>
+              {% endfor %}
+            </tr>
+          {% endfor %}
+          <tr>
+            <td class="text-center"><b>Contribución acumulada (puntos totales)</b></td>
+            <td class="text-center"><b>{{ player.participant.vars.acumulado }}</b></td>
+            {% for otro in player.get_others_in_group %}
+              <td class="text-center"><b>{{ otro.participant.vars.acumulado }}</b></td>
+            {% endfor %}
+          </tr>
+          {% if group.tratamiento == 'democracia' %}
+          <tr>
+            <td colspan="2" class="text-center"><b>Elegir Administrador</b></td>
+            {% for p in player.get_others_in_group %}
+            <td class="text-center">
+              <label class="radio-inline">
+                <input name="voto" type="radio" value={{ p.id_in_group }} required>
+              </label>
+            </td>
+            {% endfor %}
+          </tr>
+          {% else %}
+            <input name="voto" type="hidden" value={{ player.id_in_group }} required>
+          {% endif %}
+
+        </tbody>
+      </table>
+
+      <br>
+
+      <div class="row">
+         {% next_button %}
+      </div>
+    </div>
+
+
+{% endblock %}
+
+{% block styles %}
+<style type="text/css">
+
+  .page-header{
+    margin-top: 0;
+  }
+
+  .row{
+    margin: 0 auto;
+  }
+  .elegir{
+    margin: 0 auto;
+  }
+
+  .tabla > thead > tr, .tabla > thead > tr > th{
+    border: 2px solid grey;
+  }
+  
+  .tabla > tbody > tr, .tabla > tbody > tr > td{
+    border: 2px solid grey;
+  }
+</style>
+{% endblock %}

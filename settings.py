@@ -139,11 +139,9 @@ SESSION_CONFIGS = [
     },
     {
     'name': 'corrupcion_terceros',
-    'display_name': "Corrupcion agente externo",
+    'display_name': "Sesión Corrupcion.",
     'num_demo_participants': 30 ,
-    'app_sequence': [
-        'corrupcion_terceros',
-        ],
+    'app_sequence': ['Bienvenida_v2','example_corrupcion','corrupcion_terceros','cuestionario_corrupcion'],
     },
     {
     'name': 'Bienvenida_v2',
@@ -152,6 +150,15 @@ SESSION_CONFIGS = [
     'app_sequence': [
         'Bienvenida_v2',
         ],
+    },
+    {
+        'name': 'bienes_publicos_p5',
+        'display_name': "bienes publicos 3 y 4",
+        'num_demo_participants': 10,
+        'app_sequence': ['bienes_publicos_p1','bienes_publicos_p2','bienes_publicos_p5'],
+        'grupos_leviatan': 0,
+        'grupos_democracia': 0,
+        'control': 0,
     },
     {
         'name': 'ips',
@@ -165,9 +172,18 @@ SESSION_CONFIGS = [
         'num_demo_participants': 1,
         'app_sequence': ['bret'], 
     },
+    {
+        'name': 'cuestionario_corrupcion',
+        'display_name': "Cuestionario para la sesion de corrupcion",
+        'num_demo_participants': 1,
+        'app_sequence': ['cuestionario_corrupcion'], 
+    },
+    
     # other session configs ...
     # other session configs go here ...
 ]
+
+ROOT_URLCONF = 'urls'
 
 # anything you put after the below line will override
 # oTree's default settings. Use with caution.

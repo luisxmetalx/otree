@@ -1,0 +1,37 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree_tags %}
+
+{% block title %}
+    Instrucciones 
+{% endblock %}
+
+{% block content %}
+
+      <div class="col-md-12 well">
+        <br>
+        {% if session.config.name == 'Sesion_bienes_publicos' %}
+          <p>Las siguientes instrucciones corresponden a la sección 1 y en ellas se describe cómo puede ganar dinero.</p>
+          <p>Por favor léalas cuidadosamente.</p>
+        {% endif %}
+        <p>Deberá responder algunas preguntas para verificar que comprende las instrucciones.</p>
+        <p>Si tiene alguna pregunta, levante la mano y el asistente se acercará a contestarla.</p>
+        <p>Durante la sesión es posible que tenga que esperar un momento antes de que el experimento continúe. Le agradecemos por su paciencia y cooperación.</p>
+        <p>Las ganacias de esta sección se calcularán en puntos. Los puntos se convertirán en dinero con la siguiente tasa de cambio:</p>
+        <p class="text-center"><b>1 punto = US$ 0.020</b></p>
+        <p>Esta sección tiene dos fases ( rondas cada una,  rondas en total). Las siguientes instrucciones explican los detalles de la fase 1.</p>
+        <p>Las instrucciones de la fase posterior se entregarán más adelante.</p>
+        <div class="row">
+          {% next_button %}
+        </div>
+      </div>
+
+{% endblock %}
+
+{% block styles %}
+<style type="text/css">
+.row{
+  margin-right: 1%;
+}
+</style>
+
+{% endblock %}

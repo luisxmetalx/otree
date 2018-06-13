@@ -1,0 +1,107 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree_tags %}
+
+{% block title %}
+    Instrucciones Fase 1
+{% endblock %}
+
+{% block content %}
+
+      <div class="col-md-12 well">
+        <p>Lea detenidamente estas instrucciones</p>
+        <br>
+        <p>En esta sección, todos los participantes se dividen aleatoriamente <b>en grupos de 5</b>. Es decir, usted formará parte de un grupo con otros 4 participantes.</p>
+        <p><b> Los integrantes del grupo serán los mismos durante toda la sección (fase 1 y fase 2).</b> Nadie conoce la composición del grupo, y nadie será informado de quién participó en qué grupo después del experimento.</p>
+        <br>
+        <p>
+          <b>SUS DECISIONES</b>
+        </p>
+        <p>La fase 1 incluye {{ rondas_fase1 }} rondas. En cada ronda usted y los otros 4 integrantes de su grupo deciden simultáneamente cómo asignar una dotación de {{ Constants.fondo }} puntos en dos cuentas:</p>
+        <ul>
+          <li>Cuenta Grupal</li>
+          <li>Cuenta Privada</li>
+        </ul>
+        <p> Usted <b>decidirá cuantos puntos asignar a la cuenta grupal</b>, empleando únicamente números enteros del 0 al 20. Los puntos restantes se asignan automáticamente a la <b>cuenta privada</b>.</p>
+
+        <br>
+        <p><b>SUS GANANCIAS</b></p>
+        <p>Sus ganancias dependen de la cantidad total de puntos en la cuenta grupal y la cantidad de puntos en su cuenta privada.</p>
+        <p>Su ganacia total en cada ronda se puede calcular con la siguiente fórmula:</p>
+        <br>
+        <div class="row">
+          <div class="col-md-2"></div>
+          <div class="col-md-8">
+            <p class="formula text-center">
+              <b>20 - (puntos que asignó a la cuenta grupal)
+                <br>+ 0.4 * (suma de puntos asignados por todos los integrantes del grupo a la cuenta grupal)</b>
+            </p>
+          </div>
+          <div class="col-md-2"></div>
+        </div>
+        <br>
+        <p><b> Por cada punto asignado a la cuenta privada usted obtiene 1 punto como ganancia.</b> Por ejemplo, si asigna 10 puntos a esta cuenta, su ganancia de la cuenta privada son 10 puntos.</p>
+        <p>Sus <b>ganancias de la cuenta grupal</b> equivalen a la suma total de puntos asignados a la cuenta por todos los integrantes, multiplicados por 0.4.</p>
+        <p><b>Por cada punto que asigne a la cuenta grupal, todos en su grupo (incluido usted) obtienen 0.4 puntos como ganancia.</b> Por ejemplo, si cada integrante del grupo, incluido usted, asigna 10 puntos a la cuenta grupal, la suma de puntos en la cuenta grupal es 50 y por lo tanto sus ganancias de esta cuenta son 20 puntos (20=0.4*50).</p>
+        <p>Tenga en cuenta que recibe 1 punto por cada punto que asigne a su cuenta privada. Por el contrario, usted, así como los demás miembros del grupo, recibe 0.4 puntos por cada punto asignado a la cuenta grupal. Note que los puntos agregados de la cuenta grupal se duplican y dividen en partes iguales para cada miembro del grupo.</p>
+        <p>Note también que usted obtiene ganancias de los puntos asignados por otros miembros a la cuenta grupal.</p>
+        <hr>
+        <div class="row">
+          <div class="col-md-2"></div>
+          <div class="col-md-8">
+            <div class="panel panel-default ejemplo">
+              <div class="panel-heading ejemplo-titulo">
+                <h3 class="panel-title text-center"><b>Ejemplo</b></h3>
+              </div>
+              <div class="panel-body">
+                <p>Supongamos que asigna 10 puntos a la cuenta grupal, el segundo y tercer integrante de su grupo asignan 20 puntos a la cuenta grupal, y los dos integrantes restantes asignan 0 puntos a la cuenta grupal.</p>
+                <p> Entonces la suma de los puntos a la cuenta grupal es:  <b>10 + 20 + 20 + 0 + 0 = 50 puntos</b></p>
+                <p>Cada integrante del grupo recibe ganancias de: <b>0.4*50 = 20 puntos de la cuenta grupal.</b></p>
+                <p>Sus ganancias totales son: <b>20 - 10 + (0.4*50) = 10 + 20 = 30 puntos.</b></p>
+                <p>Las ganancias del segundo y tercer integrante del grupo son: <b>20 - 20 + (0.4*50) = 0 + 20 = 20 puntos.</b></p>
+                <p>Las ganancias del cuarto y quinto integrante del grupo son: <b>20 - 0 + (0.4*50) = 20 + 20 = 40 puntos.</b></p>
+                <br>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-2"></div>
+        </div>
+        <p><b>Por favor levante la mano si tiene alguna pregunta</b>, si no, de clic en <b>Siguiente</b> para continuar.</p>
+
+        <div class="row">
+          {% next_button %}
+        </div>
+      </div>
+
+{% endblock %}
+
+
+{% block styles %}
+<style type="text/css">
+  .ejemplo{
+    background: #ccddff;
+  }
+  div.panel-heading.ejemplo-titulo{
+    background: #80aaff;
+  }
+  .row{
+    margin-right: 1%;
+  }
+  .otree-body{
+    width: 85%;
+  }
+  .page-header{
+    padding-top: 5px;
+    margin-top: 5px;
+  }
+  
+  .formula{
+    padding: 1%;
+    text-align: center;
+    background: bisque;
+    border: solid;
+    width: 100%;
+  }
+
+</style>
+
+{% endblock %}
