@@ -3,7 +3,7 @@ from . import models
 from ._builtin import Page, WaitPage
 from .models import Constants
 #rondas_fase2 = __import__('bienes_publicos_p4').models.Constants.num_rounds 
-import utils
+from bienes_publicos_p5 import utils
 import random
 
 class InstruccionesFase2(Page):
