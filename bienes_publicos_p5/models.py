@@ -16,7 +16,7 @@ integración de las apps bienes_publico_p3 y bienes_publico_p4
 class Constants(BaseConstants):
     name_in_url = 'bienes_publicos_p5'
     players_per_group = 5
-    num_rounds = 10
+    num_rounds = 12
     fondo = 20
     fondo_castigo = 10
     tao = 2    

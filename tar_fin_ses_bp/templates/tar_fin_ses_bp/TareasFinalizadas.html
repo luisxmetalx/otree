@@ -1,0 +1,67 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree_tags %}
+
+
+{% block title %}
+  Resultados de pagos
+
+{% endblock %}
+
+
+{% block content %}
+
+    <div class="row">
+      <div class="col-md-2">
+      </div>
+      <div class="col-md-8 text-center well">
+        <table class="table tabla">
+          <thead>
+            <th class="text-center">Descripción</th>
+            <th class="text-center">Valor</th>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Pago por participación</td>
+              <td>US$ {{ player.pago_de_sesion }}</td>
+            </tr>
+            <tr>
+              <td>Pago de la Sección 1</td>
+              <td>US$ {{ player.pago_bp }}</td>
+            </tr>
+            <tr>
+              <td>Pago de la Sección 2</td>
+              <td>US$ {{ player.pago_bret }}</td>
+            </tr>
+            <tr>
+              <td><b>Total</b></td>
+              <td><b>US$ {{ player.pago_total }}</b></td>
+            </tr>
+          </tbody>
+
+        </table>
+
+        <h4>A continuación, de clic en Siguiente y llene el cuestionario</h4>
+          {% next_button %}
+      </div>
+      <div class="col-md-2">
+      </div>
+
+    </div>
+
+{% endblock %}
+
+{% block styles %}
+  <style type="text/css">
+    .row{
+      margin: 0 auto
+    }
+    .tabla > thead > tr, .tabla > thead > tr > th{
+      border: 2px solid grey;
+    }
+  
+    .tabla > tbody > tr, .tabla > tbody > tr > td{
+      border: 2px solid grey;
+    }
+
+  </style>
+{% endblock %}

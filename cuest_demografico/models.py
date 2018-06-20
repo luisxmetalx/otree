@@ -12,7 +12,7 @@ Cuestionario demográfico
 
 
 class Constants(BaseConstants):
-    name_in_url = 'cuestionario_corrupcion'
+    name_in_url = 'cuest_demografico'
     players_per_group = None
     num_rounds = 1
 

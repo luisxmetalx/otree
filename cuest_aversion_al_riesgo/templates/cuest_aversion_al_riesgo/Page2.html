@@ -1,0 +1,65 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree %}
+
+{% block title %}
+    Cuestionario
+{% endblock %}
+
+{% block content %}
+
+
+<div class="col-md-12 well">
+
+    <h4>2. La gente puede comportarse de maneras distintas en diferentes situaciones.</h4>
+    <p>¿Cómo calificaría su disposición a tomar riesgos en las siguientes áreas?</p>
+    <p>Por favor seleccione una opción en la siguiente escala, en donde: el valor de uno (1) significa: “No, para nada. Yo no estoy dispuesto a tomar riesgos,” y el valor de diez (10) significa: “Si, estoy completamente dispuesto a tomar riesgos.”</p>
+
+    <div class="row">
+            <div class="col-md-12">
+                <table class="table table-bordered table-striped">
+                    <thead>
+                        <th>Opciones</th>
+                        {% for op in opciones %}
+                            <th>{{ op }}</th>
+                        {% endfor %}
+                    </thead>
+                    <tbody>
+                        {% for id, preg in mult %}
+                            <tr>
+                                <td>{{ preg }}</td>
+                                {% for op in opciones %}
+                                <td>
+                                     <input name="pregunta_{{ id }}" type="radio" value={{ op }} required>                       
+                                </td>
+                                {% endfor %}
+                            </tr>
+        
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+</div>
+{% next_button %}
+
+
+{% endblock %}
+
+{% block styles %}
+  <style type="text/css">
+    .page-header{
+        padding-top: 0;
+    }
+    .table td, th{
+        text-align: center;
+        background-color: lightblue;
+        
+    }
+    
+    .celda{
+        border: hidden;
+    }
+  </style>
+{% endblock %}
+
+

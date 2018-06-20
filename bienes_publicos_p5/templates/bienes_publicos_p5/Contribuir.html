@@ -40,7 +40,114 @@
         </div>
     </div>
 
-    
+<!-- Modal -->
+<div id="myModal" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modalInstrucciones modal-lg">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">SUS DECISIONES EN ESTA FASE</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Hay dos etapas en cada ronda. En la primera etapa, usted toma su decisión de asignación de puntos a la cuenta grupal y luego observa las decisiones de los otros integrantes del grupo, ordenados de manera aleatoria, junto con sus ganancias.</p>
+                <p>En la segunda etapa, se deducen automáticamente 2 puntos de cada integrante del grupo para la <b>cuenta del administrador</b>. Por lo tanto, cada administrador dispone de 10 puntos en cada ronda.</p>
+                <p> <b> El administrador tiene la oportunidad de usar los puntos de esta cuenta para reducir las ganancias de los participantes que él elija dentro de su grupo, excepto el mismo.</b> El administrador no puede reducir sus propias ganancias.</p>
+                <p>Suponga que usted es seleccionado como administrador. Después de la primera etapa de cada ronda, observará la cantidad asignada a la cuenta del grupo por cada integrante. Al mismo tiempo, recibirá 2 puntos de cada integrante del grupo incluyéndolo a usted.</p>
+                <p>Luego elegirá los miembros del grupo (uno o varios) y <b>cuántos puntos de los 10 disponibles desea utilizar para reducir las ganancias de los miembros seleccionados</b>.</p>
+                <p>Por cada punto que desee <b>asignar</b>, las ganancias de los participantes seleccionados se<b>reducen</b> según la siguiente tabla:</p>
+                <table class="table tabla">
+                    <tbody>
+                        <tr class="text-center">
+                            <td>
+                                <b>Puntos ASIGNADOS por el administrador</b>
+                            </td>
+                            {% for p in puntos_asignados %}
+                            <td>
+                                <b>{{ p }}</b>
+                            </td>
+                            {% endfor %}
+                        </tr>
+                        <tr class="text-center">
+                            <td>
+                                <b>Puntos REDUCIDOS en las ganancias</b>
+                                <br>(del individuo seleccionado)</td>
+                            {% for p in puntos_reducidos %}
+                            <td>
+                                <b>{{ p }}</b>
+                            </td>
+                            {% endfor %}
+                        </tr>
+                    </tbody>
+                </table>
+                <p>El administrador es libre de dejar las ganancias de todos los integrantes del grupo sin cambios, asignando cero (0) puntos o dejando vacía la celda correspondiente.</p>
+                <p><b>Los puntos de la cuenta del administrador</b>, que no se asignan para reducir los ganancias de los demás, <b>se devuelven a todos</b> los integrantes del grupo por igual. Mientras que <b>los puntos asignados</b> por el administrador se deducen de la cuenta, y por lo tanto <b> son puntos no recuperables</b> por los miembros del grupo.</p>
+                <p>Las ganancias en cada ronda corresponden al resultado de sus decisiones y las decisiones del grupo; no obstante, <b>en caso estas sean negativas</b>, usted asumirá el costo de los <b>puntos asignados</b> a usted por el administrador (no su equivalente en puntos reducidos) o el costo de su ganancia negativa (pérdida); el que sea menor en términos absolutos.</p>
+                <p>Por lo tanto, las ganancias en cada ronda se calculan de la siguiente manera:</p>
+                <br>
+                <div class="row">
+                    <div class="col-md-1"></div>
+                    <div class="col-md-10">
+                        <div class="formula">
+                            <h4><b>Total ganancias </b></h4>
+                            <p><b>Si ganancia &ge; 0:</b></p>
+                            <p>
+                                = 20 - (puntos que asigna a la cuenta grupal)+ 0.4*(suma de puntos asignados por todos los integrantes del grupo a la cuenta grupal)
+                                <br>
+                                - 2 - (puntos reducidos en sus ganancias por los puntos asignados del administrador, si es seleccionado)
+                                <br>
+                                + (1/5)*(puntos restantes no utilizados por el administrador)
+                            </p>
+                            <p><b>Si ganancia &lt; 0:</b></p>
+                            <p>= menor valor entre {(puntos asignados a usted por el administrador, si es seleccionado) o ganancia negativa (pérdida)}</p>
+                        </div>
+                    </div>
+                    <div class="col-md-1"></div>
+                </div>
+                <br>
+                <p><b>Note que sus ganancias en esta fase pueden ser negativas</b> si los puntos reducidos por el administrador son mayores a sus ganancias en la primera etapa.</p>
+                <p>Usted puede, sin embargo, evitar estas pérdidas <b>¡mediante sus decisiones!</b></p>
+                <div class="row">
+                    <div class="col-md-1"></div>
+                    <div class="col-md-10">
+                        <br>
+                        <div class="panel panel-default ejemplo">
+                            <div class="panel-heading ejemplo-titulo">
+                                <h3 class="panel-title text-center">
+                                    <b>Ejemplo</b>
+                                </h3>
+                            </div>
+                            <div class="panel-body">
+                                <p>Suponga que usted es el administrador de su grupo. En una ronda, asigna 20 puntos a la cuenta del grupo, el segundo y el tercer integrante de su grupo asignan 10 puntos a la cuenta del grupo, y los integrantes restantes asignan 5 puntos c/u a la cuenta grupal.</p>
+                                <p>En la <b>primera etapa</b>, las ganancias se obtienen de la siguiente forma:</p>
+                                <p> La suma de los puntos a la cuenta del grupo es: <b>20 + 10 + 10 + 5 + 5 = 50 puntos.</b></p>
+                                <p>Cada integrante del grupo recibe ganancias de: <b>0.4*50 = 20 puntos, de la cuenta del grupo.</b></p>
+                                <p>Sus ganancias brutas son: <b>20 - 20 + (0.4*50) = 0 + 20 = 20 puntos.</b></p>
+                                <p>Las ganancias del segundo y tercer integrante del grupo son: <b>20 - 10 + (0.4*50) = 10 + 20 = 30 puntos.</b>
+                                </p>
+                                <p>Las ganancias del cuarto y quinto integrante del grupo son: <b>20 - 5 + (0.4*50) = 15 + 20 = 35 puntos.</b></p>
+                                <hr>
+                                <p>En la <b> segunda etapa</b>, usted recibe como administrador 2 puntos de cada integrante del grupo, 10 puntos en total.</p>
+                                <p>Usted decide asignar 5 puntos para reducir las ganancias, únicamente del quinto integrante del grupo. Los 5 puntos restantes de la cuenta se devolverán a todos los integrantes del grupo, es decir, 1 punto para cada uno.</p>
+                                <p>Sus ganancias netas son: <b>20 (de la primera etapa) - 2 + 1 = 19 puntos.</b></p>
+                                <p>Las ganancias netas del segundo y tercer integrante son: <b>30 - 2 + 1 = 29 puntos.</b></p>
+                                <p>Las ganancias netas del cuarto integrante son: <b>35 - 2 + 1 = 34 puntos.</b></p>
+                                <p>Las ganancias netas del quinto integrante del grupo son: <b>35 - 2 - 9 + 1 = 25 puntos.</b><span class="glyphicon glyphicon-pushpin"></span></p>
+                                <p><span class="glyphicon glyphicon-pushpin"></span> Note que los 5 puntos asignados por el administrador reducen en 9 puntos las ganancias del participante seleccionado, según la tabla de conversión indicada en las instrucciones.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-1"></div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>    
 
 {% endblock %}
 
@@ -92,7 +199,26 @@
         font-size: large;
         color: blue;
     }
+    /*css del modal*/
+    .row {
+        margin: 0 auto;
+    }
+
+    .ejemplo {
+        background: #ccddff;
+    }
+
+    div.panel-heading.ejemplo-titulo {
+        background: #80aaff;
+    }
 </style>
+{% endblock %}
+{% block scripts %}
+    <script>
+         $('#myModal').click(function(){
+            $('#sp').modal('show');
+        });
+    </script>
 {% endblock %}
 
 

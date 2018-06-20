@@ -1,0 +1,92 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree_tags %}
+
+
+{% block content %}
+     
+    {% if session.config.name == 'Sesion_Preferencias_Riesgo' %}
+        <div class="row">
+          <div class="col-md-2">
+          </div>
+          <div class="col-md-8 text-center">
+            {% if matricula == 0 %}
+              <p>No ha participado</p>
+            {% else %}
+              <p>¡Gracias por participar en el experimento y contribuir con la ciencia!</p>
+              <hr>
+              {% if tipo == 1 %}
+                <p>Por favor espere a ser llamado para recibir su pago.</p>
+              {% endif %}
+            {% endif %}
+          </div>
+          <div class="col-md-2">
+          </div>
+        </div>
+    {% endif %}
+    {% if session.config.name == 'Casa_Abierta' %}
+    <div class="row">
+      <div class="col-md-2">
+      </div>
+      <div class="col-md-8 text-center">
+          <p>¡Gracias por participar en el experimento y contribuir con la ciencia!</p>
+          <hr>
+      </div>
+      <div class="col-md-2">
+      </div>
+    </div>
+    {% endif %}
+    
+    {% if session.config.name == 'Sesion_Inaguracion' %}
+        <div class="row">
+          <div class="col-md-2">
+          </div>
+          <div class="col-md-8 text-center">
+              <p>¡Gracias por participar en el experimento y contribuir con la ciencia!</p>
+              <hr>
+              <p>Pase al salón y disfrute del coctel.</p>
+              <img class="img-responsive" alt="..." src="{% static ruta_imagen %}" width="70%" height="60%"/>
+
+          </div>
+          <div class="col-md-2">
+          </div>
+        </div>
+    {% endif %}
+    
+    {% if session.config.name == 'Sesion_bienes_publicos' %}
+    <div class="row">
+      <div class="col-md-2"></div>
+      
+      <div class="col-md-8 well">
+        <br>
+        <h2>¡Gracias por participar en el experimento y contribuir con la ciencia!</h2>
+        <br>
+        <h4>Por favor espere a ser llamado para recibir su pago.</h4>
+        <h4>Puede presionar <b>Alt + F4</b> para salir de esta pantalla y usar la computadora mientras espera.</h4>
+      </div>
+      <div class="col-md-2"></div>
+    </div>
+    {% endif %}
+
+      
+    
+
+{% endblock %}
+
+{% block styles %}
+  <style type="text/css">
+    
+    .img-responsive{
+      margin: 0 auto;
+    }
+    .page-header{
+      display: none;
+    }
+    p{
+      font-size: 40px;
+    }
+    .row{
+      margin-top: 10%;
+    }
+
+  </style>
+{% endblock %}

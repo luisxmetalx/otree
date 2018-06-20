@@ -1,0 +1,88 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree_tags %}
+
+{% block title %}
+  Final de la Sección 2
+{% endblock %}
+
+{% block content %}
+
+  <div class="row">
+    <div class="col-md-2"></div>
+    <div class="col-md-8 well">
+      <br>
+      <h4>La sección 2 ha finalizado.</h4>
+      <h4>Por favor de clic en siguiente para ver la tabla de resultados de pagos.</h4>
+      <br>
+      <div class="row">
+        {% next_button %}
+      </div>
+    </div>
+    <div class="col-md-2"></div>
+        
+  </div>
+  
+
+
+{% endblock %}
+
+
+
+{% block styles %}
+<style type="text/css">
+
+  .row{
+    margin: 0 auto;
+  }
+
+  .ejemplo{
+    background: #ccddff;
+  }
+  
+  div.panel-heading.ejemplo-titulo{
+    background: #80aaff;
+  }
+    
+  .otree-body{
+    width: 85%;
+  }
+  
+  .page-header{
+    padding-top: 5px;
+    margin-top: 5px;
+  }
+
+  .formula{
+    padding: 1%;
+    text-align: center;
+    background: bisque;
+    border: solid;
+    width: 100%;
+  }
+
+  .tabla > tbody > tr, .tabla > tbody > tr > td{
+    border: 2px solid;
+    vertical-align: middle;
+  }
+
+  div.horizontal {
+    display: flex;
+    justify-content: center;
+  }
+  div.vertical {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  img{
+    width: 300px;
+    height: 300px;
+  }
+
+  .page-header{
+    margin-top: 10%;
+  }
+</style>
+
+{% endblock %}

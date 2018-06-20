@@ -1,0 +1,61 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree %}
+
+{% block title %}
+    Cuestionario
+{% endblock %}
+
+{% block content %}
+
+
+<div class="col-md-12 well">
+    <h4>1. ¿Cómo se ve a usted mismo?</h4>
+    <p>¿Es usted generalmente una persona que está completamente preparada a tomar riesgos o trata de evitar tomar riesgos?</p>
+    <p>Por favor seleccione una opción en la siguiente escala, en donde: el valor de uno (1) significa: “No, para nada. Yo no estoy dispuesto a tomar riesgos,” y el valor de diez (10) significa: “Sí, estoy completamente dispuesto a tomar riesgos.”</p>
+
+    <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-8">
+            <table class="table table-bordered table-striped">
+                <thead>
+                    {% for op in opciones %}
+                        <th>{{ op }}</th>
+                    {% endfor %}
+                </thead>
+                <tbody>
+                    {% for op in opciones %}
+                        <td>
+                            <input name="pregunta_1" type="radio" value={{ op }} required>                       
+                        </td>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-2"></div>
+    </div>
+
+    
+</div>
+{% next_button %}
+
+
+{% endblock %}
+
+{% block styles %}
+  <style type="text/css">
+    .page-header{
+        padding-top: 0;
+    }
+    .table td, th{
+        text-align: center;
+        background-color: lightblue;
+        
+    }
+    
+    .celda{
+        border: hidden;
+    }
+  </style>
+{% endblock %}
+
+

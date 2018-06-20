@@ -9,14 +9,14 @@ import random
 class InstruccionesFase2(Page):
     #timeout_seconds = 15
     def is_displayed(self):
-        return self.subsession.round_number == Constants.num_rounds
+        return self.subsession.round_number == 1
     
     def vars_for_template(self):
         puntos_asignados = [i for i in range(11)]
         puntos_reducidos = [0, 1, 2, 4, 6, 9, 12, 16, 20, 25, 30]
         return{
             #'rondas_fase2': rondas_fase2,
-            'distribucion': 'bienes_publicos/distribucion.png',
+            #'distribucion': 'static/bienes_publicos/distribucion.png',
             'puntos_asignados': puntos_asignados,
             'puntos_reducidos': puntos_reducidos
         }
@@ -435,11 +435,13 @@ class Final(Page):
         print ('pago: ', pago)
         return {'pago': pago}
 
-
+class FinalFase1(Page):
+    def is_displayed(self):
+        return self.subsession.round_number == 1
 
 page_sequence = [
-    #FinalFase1,
-    #InstruccionesFase2,
+    FinalFase1,
+    InstruccionesFase2,
     #Test2,
     EsperaVotacion,
     ElegirAdministrador,
