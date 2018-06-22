@@ -16,7 +16,7 @@ Bienes Públicos: Contribuir, Calcular VCM, Mostrar Resultados
 class Constants(BaseConstants):
     name_in_url = 'bienes_publicos_p2'
     players_per_group = 5
-    num_rounds = 1
+    num_rounds = 2
     fondo = 20
         
     modalF1 = 'bienes_publicos_p2/modalInstF1.html'

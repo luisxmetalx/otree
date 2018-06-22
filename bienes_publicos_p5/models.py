@@ -124,6 +124,7 @@ class Group(BaseGroup):
             ganador = self.get_players()[ind_ganador]
             self.administrador = ganador.id_in_group
             admin = self.administrador
+            
         else:
             #print ('nadie contribuyó nada')
             ganador = random.randint(1,5)
@@ -150,7 +151,9 @@ class Group(BaseGroup):
     def cacularGanancias(self):
         # obtiene el acumulado de las contribuciones de cada participante y actualiza el modelo
         self.contribucion_total = sum([p.contribucion for p in self.get_players()])
-
+        print("------------------------------------------------")
+        print("contribucion total: ",self.contribucion_total )
+        print("------------------------------------------------")
         # Calcula la ganancia de cada jugador y actualiza el modelo (VCM)
         for jugador in self.get_players():
             ganancia = round(Constants.fondo - jugador.contribucion + (2/Constants.players_per_group)*self.contribucion_total, 2)
