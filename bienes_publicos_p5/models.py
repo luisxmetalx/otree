@@ -94,6 +94,8 @@ class Group(BaseGroup):
     # sortea ganador con 75% de probabilidad de ser elegido el de mayor acumulado de contribuciones
     def sortear_admin_lev(self):
         prob_mayor = 0.75
+        gana=0
+        admin=0
         lista_contrib_acum = []
         for p in self.get_players():
             print ('Jugador: ', p.id_in_group, '  tiene: ', p.participant.vars["acumulado"])

@@ -104,7 +104,7 @@ class Test2(Page):
 
 class EsperaVotacion(WaitPage):
     def is_displayed(self):
-        return self.round_number==1 or self.round_number==4 or self.round_number==7
+        return self.round_number==1 or self.round_number==4 or self.round_number==7 or self.round_number==10
 
     def after_all_players_arrive(self):
         print ('...after all arrive...')
@@ -122,7 +122,7 @@ class ElegirAdministrador(Page):
     form_fields = ['voto']
 
     def is_displayed(self):
-        return self.round_number==1 or self.round_number==4 or self.round_number==7
+        return self.round_number==1 or self.round_number==4 or self.round_number==7 or self.round_number==10
 
     def vars_for_template(self):
         rondas = []
@@ -134,18 +134,18 @@ class ElegirAdministrador(Page):
                 rondas.append(self.round_number-i-1)
                 rondas=sorted(rondas)
 
-        print(rondas)
-        print(self.round_number)
-        print(sorted(rondas))
+        #print(rondas)
+        #print(self.round_number)
+        #print(sorted(rondas))
         contribuciones = []
         if(self.round_number==1):
             for i in rondas:
                 cont = []
                 print("el numero de participantes: ", len(self.player.get_others_in_group()))
                 for otro in self.player.get_others_in_group():
-                    sc="contribucion"+str(i)+": " + str(otro.participant.vars["contribuciones"][i-1])
-                    print(sc)
-                    cont.append(otro.participant.vars["contribuciones"][j-1])
+                    #sc="contribucion"+str(i)+": " + str(otro.participant.vars["contribuciones"][i-1])
+                    #print(sc)
+                    cont.append(otro.participant.vars["contribuciones"][i-1])
                 contribuciones.append(cont)
                 print(contribuciones)
         else:
@@ -155,13 +155,31 @@ class ElegirAdministrador(Page):
                 cont = []
                 for j in range(3):
                     sc="contribucion"+str(j)+": " + str(otro.in_round(self.round_number - (j+1)).contribucion)
-                    print(sc)
+                   #print(sc)
                     cont.append(otro.in_round(self.round_number - (3-j)).contribucion)
-                    print(cont)
+                    #print(cont)
                 contribuciones.append(cont)
-            
-            for i in len(contirbuciones):
-                lista=[]
+                print(contribuciones)
+            #sacar las contribuciones por ronda.
+            lista_rondas=[]
+            r1=[]
+            r2=[]
+            r3=[]
+            #ronda1
+            for i in range(len(contribuciones)):
+                r1.append(contribuciones[i][0])
+            #print(r1)
+            lista_rondas.append(r1)
+            #ronda2
+            for i in range(len(contribuciones)):
+                r2.append(contribuciones[i][1])
+            lista_rondas.append(r2)
+            #ronda3
+            for i in range(len(contribuciones)):
+                r3.append(contribuciones[i][2])
+            lista_rondas.append(r3)
+            contribuciones=lista_rondas
+            print("las contribuciones por las 3 rondas son: ",contribuciones)
                 
 
 
@@ -171,8 +189,11 @@ class ElegirAdministrador(Page):
             for i in range(len(contribuciones)):
                 contribuciones[i].insert(0, contribuciones_propias[i])
         else:
-            print(contribuciones)
-            print(contribuciones[ 0][2])
+            cont_propia=[]
+            for i in range(3):
+                contribuciones[i].insert(0,self.player.in_round(self.round_number - (3-i)).contribucion)
+            print("las contribuciones propias son: ",cont_propia)
+            print("las contribuciones por las 3 rondas son: ",contribuciones)
 
         #print ('contribuciones todos: ', contribuciones)
         
@@ -186,7 +207,7 @@ class ElegirAdministrador(Page):
 class FinalVotacion(WaitPage):
     def is_displayed(self):
         print('self.group.tratamiento --> ', self.group.tratamiento)
-        return self.group.tratamiento == 'democracia' and (self.round_number==1 or self.round_number==4 or self.round_number==7)
+        return self.group.tratamiento == 'democracia' and (self.round_number==1 or self.round_number==4 or self.round_number==7 or self.round_number==10)
 
     def after_all_players_arrive(self):
         print('....')
@@ -198,28 +219,78 @@ class ResultadosVotacion(Page):
     #timeout_seconds = 15
     def is_displayed(self):
         #self.player.ganVCM()
-        return (self.round_number==1 or self.round_number==4 or self.round_number==7)
+        return (self.round_number==1 or self.round_number==4 or self.round_number==7 or self.round_number==10)
 
     def vars_for_template(self):
         rondas = []
-        for i in range(len(self.player.participant.vars["contribuciones"])):
-            rondas.append(i+1)
+        if(self.round_number==1):
+            for i in range(len(self.player.participant.vars["contribuciones"])):
+                rondas.append(i+1)
+        else:
+            for i in range(3):
+                rondas.append(self.round_number-i-1)
+                rondas=sorted(rondas)
         
         contribuciones = []
-        for i in rondas:
-            cont = []
+        if(self.round_number==1):
+            for i in rondas:
+                cont = []
+                print("el numero de participantes: ", len(self.player.get_others_in_group()))
+                for otro in self.player.get_others_in_group():
+                    #sc="contribucion"+str(i)+": " + str(otro.participant.vars["contribuciones"][i-1])
+                    #print(sc)
+                    cont.append(otro.participant.vars["contribuciones"][i-1])
+                contribuciones.append(cont)
+                print(contribuciones)
+        else:
+            
+            print("el numero de participantes: ", len(self.player.get_others_in_group()))
             for otro in self.player.get_others_in_group():
-                cont.append(otro.participant.vars["contribuciones"][i-1])
-            contribuciones.append(cont)
+                cont = []
+                for j in range(3):
+                    sc="contribucion"+str(j)+": " + str(otro.in_round(self.round_number - (j+1)).contribucion)
+                   #print(sc)
+                    cont.append(otro.in_round(self.round_number - (3-j)).contribucion)
+                    #print(cont)
+                contribuciones.append(cont)
+                print(contribuciones)
+            #sacar las contribuciones por ronda.
+            lista_rondas=[]
+            r1=[]
+            r2=[]
+            r3=[]
+            #ronda1
+            for i in range(len(contribuciones)):
+                r1.append(contribuciones[i][0])
+            #print(r1)
+            lista_rondas.append(r1)
+            #ronda2
+            for i in range(len(contribuciones)):
+                r2.append(contribuciones[i][1])
+            lista_rondas.append(r2)
+            #ronda3
+            for i in range(len(contribuciones)):
+                r3.append(contribuciones[i][2])
+            lista_rondas.append(r3)
+            contribuciones=lista_rondas
+            print("las contribuciones por las 3 rondas son: ",contribuciones)
 
         #print ('contribuciones de otros: ', contribuciones)
         contribuciones_propias = self.player.participant.vars["contribuciones"]
 
-        for i in range(len(contribuciones)):
-            contribuciones[i].insert(0, contribuciones_propias[i])
+        if(self.round_number==1):
+            for i in range(len(contribuciones)):
+                contribuciones[i].insert(0, contribuciones_propias[i])
+        else:
+            cont_propia=[]
+            for i in range(3):
+                contribuciones[i].insert(0,self.player.in_round(self.round_number - (3-i)).contribucion)
+            print("las contribuciones propias son: ",cont_propia)
+            print("las contribuciones por las 3 rondas son: ",contribuciones)
 
         for jugador in self.group.get_players():
             jugador.participant.vars["admin"] = self.group.administrador
+            print ('jugador admin todos: ', jugador.participant.vars["admin"])
 
         #print ('contribuciones todos: ', contribuciones)
 
