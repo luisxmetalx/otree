@@ -26,6 +26,7 @@ class Contribuir(Page):
         
         # acumula en cada participante las contirbuciones para VCM
         self.player.participant.vars["acumulado"] += self.player.contribucion
+        print("el acumulado es: ",self.player.participant.vars["acumulado"])
 
         self.player.participant.vars["contribuciones"].append(self.player.contribucion)
 
@@ -43,7 +44,7 @@ class FinContribuciones(WaitPage):
 
 
 class Resultados(Page):
-    timeout_seconds = 60
+    #timeout_seconds = 60
     def is_displayed(self):
         if self.subsession.round_number == Constants.num_rounds:
             self.player.calcularGananciaAcumlada()

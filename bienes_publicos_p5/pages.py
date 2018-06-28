@@ -67,7 +67,7 @@ class Test2(Page):
         self.player.participant.vars["test2_p3"] = None
         self.player.participant.vars["test2_p4"] = None
         self.player.participant.vars["test2_p5"] = None
-        return self.subsession.round_number == Constants.num_rounds
+        return self.round_number == 1
     
     def vars_for_template(self):
         ronda_actual = self.subsession.round_number
@@ -109,13 +109,15 @@ class EsperaVotacion(WaitPage):
     def after_all_players_arrive(self):
         print ('...after all arrive...')
         self.group.obtenerTratamiento()
+        self.group.administrador = 0
         if self.group.tratamiento == 'leviatan':
             print ('Leviatan --> Se sortea')
-            if self.group.administrador == 0:
+            print("el adm es: ",self.group.administrador)
+            if(self.group.administrador == 0):
                 self.group.sortear_admin_lev()
             else:
                 print ('ya se ha sorteado administrador del grupo')
-
+            print("el adm es: ",self.group.administrador)
 
 class ElegirAdministrador(Page):
     form_model = models.Player
@@ -223,6 +225,7 @@ class ResultadosVotacion(Page):
 
     def vars_for_template(self):
         rondas = []
+        acumulado = []
         if(self.round_number==1):
             for i in range(len(self.player.participant.vars["contribuciones"])):
                 rondas.append(i+1)
@@ -292,8 +295,9 @@ class ResultadosVotacion(Page):
             jugador.participant.vars["admin"] = self.group.administrador
             print ('jugador admin todos: ', jugador.participant.vars["admin"])
 
-        #print ('contribuciones todos: ', contribuciones)
-
+        print ('el acumulado es: ', self.player.participant.vars["acumulado"])
+        print ("las contibuciones son: ", contribuciones)
+        
         return{
                 'tratamiento': self.player.tratamiento,
                 'rondas': rondas,
@@ -301,9 +305,10 @@ class ResultadosVotacion(Page):
                 'contribuciones_por_ronda': zip(rondas, contribuciones)
             }
     
-    def before_next_page(self):
-        for p in self.group.get_players():
-            p.participant.vars["acumulado"] = 0
+    # def before_next_page(self):
+    #     for p in self.group.get_players():
+    #         p.participant.vars["acumulado"] = 0
+    #         print("entro a la parte de iniciaizar el acumulado")
 
 class FinalFase1(Page):
     pass
@@ -343,7 +348,12 @@ class Contribuir(Page):
 
     def vars_for_template(self):
         ronda_actual = self.subsession.round_number
-        control = self.session.config['control']        
+        control = self.session.config['control'] 
+        #setear el acumulado a CERO en cada de las rondas
+        if(self.round_number == 1 or self.round_number == 4 or self.round_number == 7 or self.round_number == 10 ):
+                for p in self.group.get_players():
+                    p.participant.vars["acumulado"] = 0
+                    print("entro a la parte de iniciaizar el acumulado")
         return {
                 'rondas': Constants.num_rounds,
                 'ronda_actual': ronda_actual,
@@ -351,12 +361,13 @@ class Contribuir(Page):
                 'puntos_reducidos': Constants.puntos_reducidos,
                 'control': control
                 }
-
+            
     def before_next_page(self):
         if self.player.contribucion == -1:
             self.player.contribucion = utils.contribucion_aleatoria()
-       
+        
         # acumula en cada participante las contirbuciones para VCM y VCM-Tax/Punishment
+        print("la ronda de la subsesion es: ",self.subsession.round_number)
         if self.subsession.round_number > Constants.num_rounds:
             self.player.participant.vars["acumulado"] = 0
         self.player.participant.vars["acumulado"] += self.player.contribucion
@@ -486,7 +497,7 @@ class AplicarCastigo(Page):
 
 
 class ResultadosCastigo(Page):
-    timeout_seconds = 60
+    #timeout_seconds = 60
     def is_displayed(self):
         print ('view ResultadosCastigo --> id: ', self.player.id_in_group, ', admin : ', self.player.participant.vars.get("admin"))
         return True
@@ -549,7 +560,7 @@ class FinalFase1(Page):
 page_sequence = [
     FinalFase1,
     InstruccionesFase2,
-    #Test2,
+    Test2,
     EsperaVotacion,
     ElegirAdministrador,
     FinalVotacion,

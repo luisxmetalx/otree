@@ -58,17 +58,17 @@
       </table>
 
       <div class="row">
-        <div class="col-md-7">
-          <h4>Total de puntos asignados por el Administrador en esta ronda: {{ total_puntos_asignados }}</h4>
+        <div class="col-md-6">
+          <h5>Total de puntos asignados por el Administrador en esta ronda: {{ total_puntos_asignados }}</h5>
           {% if group.administrador != player.id_in_group %}
-          <h4>Total de puntos asignados por el Administrador a usted en esta ronda: {{ player.pts_asignados }} </h4>
-          <h4>Sus ganancias en esta ronda se redujeron en: {{ player.castigo }}</h4>
+          <h5>Total de puntos asignados por el Administrador a usted en esta ronda: {{ player.pts_asignados }} </h5>
+          <h5>Sus ganancias en esta ronda se redujeron en: {{ player.castigo }}</h5>
           {% endif %}
         </div>
-        <div class="col-md-5">
-          <h4>El aporte total a la cuenta del grupo es: {{ group.contribucion_total }}</h4>
-          <h4>Su ganancia de la cuenta del grupo: {{ ganancia_grupo }} </h4>
-          <h4><b>Su ganancia en esta ronda es: {{ player.gan_tp }}</b></h4>
+        <div class="col-md-6">
+          <h5>El aporte total a la cuenta del grupo es: {{ group.contribucion_total }}</h5>
+          <h5>Su ganancia de la cuenta del grupo: {{ ganancia_grupo }} </h5>
+          <h5><b>Su ganancia en esta ronda es: {{ player.gan_tp }}</b></h5>
         </div>
       </div>
       <br>   

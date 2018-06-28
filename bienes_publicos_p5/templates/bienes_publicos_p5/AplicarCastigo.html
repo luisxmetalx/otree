@@ -15,7 +15,7 @@
           </button>
         </div>
         <h4>Ronda {{ ronda_actual }} de {{ rondas }}</h4>
-        <h4>Usted es administrador, solo usted puede ver la información de los demás participantes</h4>
+        <h5>Usted es administrador, solo usted puede ver la información de los demás participantes</h5>
         {% if control == 1 %}
           <h4>Contribución mínima definida: <span class="frase"><b>{{ group.contribucion_minima }} puntos.</b></span></h4>
         {% endif %}
@@ -76,7 +76,7 @@
       </div>
       <div class="col-md-12 well">
         <h4 class="text-center"><b>Tabla de puntos</b></h4>
-        <h4><b> Ud dispone de {{ puntos_disponibles }} puntos para asignar. Recuerde, cada punto asignado reduce las ganancias según la conversión de la tabla:</b></h4>
+        <h5><b> Ud dispone de {{ puntos_disponibles }} puntos para asignar. Recuerde, cada punto asignado reduce las ganancias según la conversión de la tabla:</b></h5>
         <table class="table tabla">
           <tbody>
             <tr class="text-center">

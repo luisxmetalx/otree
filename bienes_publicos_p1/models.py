@@ -120,10 +120,10 @@ class Player(BasePlayer):
         
     tratamiento = models.CharField()
     
-    # test1_p1 = models.IntegerField(initial=0)
-    # test1_p2 = models.IntegerField(initial=0)
-    # test1_p3 = models.IntegerField(initial=0)
-    # test1_p4 = models.IntegerField(initial=0)
+    test1_p1 = models.IntegerField(initial=0)
+    test1_p2 = models.IntegerField(initial=0)
+    test1_p3 = models.IntegerField(initial=0)
+    test1_p4 = models.IntegerField(initial=0)
 
     def calcularNumMaquina(self):
         ip = str(self.participant.ip_address)

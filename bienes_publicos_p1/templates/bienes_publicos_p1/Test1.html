@@ -1,0 +1,230 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree_tags %}
+
+{% block title %}
+    Test 1
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        
+    <div class="col-md-1"></div>
+    <div class="col-md-10 well">
+        <div class="row fila">
+            <div class="col-md-10">
+                <p>
+                    <b>Si no recuerda como calcular las ganancias, vea el ejemplo en las Instrucciones (dar clic) <span class="glyphicon glyphicon-arrow-right flecha"></span> </b>
+                </p>
+            </div>
+            <div class="col-md-2">
+                <button type="button" class="btn btn-primary instrucciones" data-toggle="modal" data-target="#myModal">
+                    <span class="glyphicon glyphicon-list-alt"></span> Instrucciones
+                </button>
+            </div>
+            
+            
+        </div>
+        {% if player.participant.vars.test1_p1 != None or player.participant.vars.test1_p2 != None or player.participant.vars.test1_p3 != None or player.participant.vars.test1_p4 != None %}
+            <p>Preguntas ingresadas correctamente: </p>
+        {% endif %}
+        {% if player.participant.vars.test1_p1 != None %}
+            <span class="resp-correcta">1) {{ player.participant.vars.test1_p1 }}</span>
+        {% endif %}
+        {% if player.participant.vars.test1_p2 != None %}
+            <span class="resp-correcta">2) {{ player.participant.vars.test1_p2 }}</span>
+        {% endif %}
+        {% if player.participant.vars.test1_p3 != None %}
+            <span class="resp-correcta">3) {{ player.participant.vars.test1_p3 }}</span>
+        {% endif %}
+        {% if player.participant.vars.test1_p4 != None %}
+            <span class="resp-correcta">4) {{ player.participant.vars.test1_p4 }}</span>
+        {% endif %}
+        {% if player.participant.vars.test1_p1 != None or player.participant.vars.test1_p2 != None or player.participant.vars.test1_p3 != None or player.participant.vars.test1_p4 != None %}
+        <p>Por favor ingrésalas nuevamente</p>
+        {% endif %}
+        <div class="row preguntas">            
+            <form id="form-test1">
+                {% for ind, sup, preg in preguntas %}
+                <div class="form-group">
+                    <label for="{{ ind }}">{{ sup }}</label>
+                    <label for="{{ ind }}">{{ preg }}</label>
+                    <input type="number" class="form-control" name="test1_p{{ ind }}">
+                    {% if ind == 1 %}
+                        {{ form.test1_p1.errors }}
+                    {% endif %}
+                    {% if ind == 2 %}
+                        {{ form.test1_p2.errors }}
+                    {% endif %}
+                    {% if ind == 3 %}
+                        {{ form.test1_p3.errors }}
+                        <label for="4">{{ preg4 }}</label>
+                        <input type="number" class="form-control" name="test1_p4">
+                        {{ form.test1_p4.errors }}
+                    {% endif %}
+                </div>
+                {% endfor %}       
+                <button type="submit" id="btn-siguiente" class="btn btn-primary btn-siguiente" onclick="clic()">Siguiente</button>
+            </form>
+            <input type="hidden" name="test1" value={{ test1 }} id="test1"/>            
+        </div>
+    </div>
+    <div class="col-md-1"></div>
+    </div>
+
+    
+    <!-- Modal -->
+    <div id="myModal" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modalInstrucciones modal-lg">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">SUS GANANCIAS DENTRO DE LA TAREA</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <p>Sus ganancias dependen de la cantidad total de puntos en la cuenta grupal y la cantidad de puntos en su cuenta privada.</p>
+                    <p>Su ganacia total en cada ronda se puede calcular con la siguiente fórmula:</p>
+                    <br>
+                    <div class="row">
+                        <div class="col-md-2"></div>
+                        <div class="col-md-8">
+                            <p class="formula text-center">
+                                <b>20 - (puntos que asignó a la cuenta grupal)
+                                    <br>+ 0.4 * (suma de puntos asignados por todos los integrantes del grupo a la cuenta grupal)</b>
+                            </p>
+                        </div>
+                        <div class="col-md-2"></div>
+                    </div>
+                    <br>
+                    <p>
+                        <b> Por cada punto asignado a la cuenta privada usted obtiene 1 punto como ganancia.</b> Por ejemplo, si asigna 10 puntos
+                        a esta cuenta, su ganancia de la cuenta privada son 10 puntos.</p>
+                    <p>Sus
+                        <b>ganancias de la cuenta grupal</b> equivalen a la suma total de puntos asignados a la cuenta por todos los integrantes,
+                        multiplicados por 0.4.</p>
+                    <p>
+                        <b>Por cada punto que asigne a la cuenta grupal, todos en su grupo (incluido usted) obtienen 0.4 puntos como ganancia.</b>
+                        Por ejemplo, si cada integrante del grupo, incluido usted, asigna 10 puntos a la cuenta grupal, la suma de puntos en
+                        la cuenta grupal es 50 y por lo tanto sus ganancias de esta cuenta son 20 puntos (20=0.4*50).</p>
+                    <p>Tenga en cuenta que recibe 1 punto por cada punto que asigne a su cuenta privada. Por el contrario, usted, así como los demás
+                        miembros del grupo, recibe 0.4 puntos por cada punto asignado a la cuenta grupal. Note que los puntos agregados de la
+                        cuenta grupal se duplican y dividen en partes iguales para cada miembro del grupo.</p>
+                    <p>Note también que usted obtiene ganancias de los puntos asignados por otros miembros a la cuenta grupal.</p>
+                    <hr>
+                    <div class="row">
+                        <div class="col-md-2"></div>
+                        <div class="col-md-8">
+                            <div class="panel panel-default ejemplo">
+                                <div class="panel-heading ejemplo-titulo">
+                                    <h3 class="panel-title text-center">
+                                        <b>Ejemplo</b>
+                                    </h3>
+                                </div>
+                                <div class="panel-body">
+                                    <p>Supongamos que asigna 10 puntos a la cuenta grupal, el segundo y tercer integrante de su grupo asignan 20
+                                        puntos a la cuenta grupal, y los dos integrantes restantes asignan 0 puntos a la cuenta grupal.</p>
+                                    <p> Entonces la suma de los puntos a la cuenta grupal es:
+                                        <b>10 + 20 + 20 + 0 + 0 = 50 puntos</b>
+                                    </p>
+                                    <p>Cada integrante del grupo recibe ganancias de:
+                                        <b>0.4*50 = 20 puntos de la cuenta grupal.</b>
+                                    </p>
+                                    <p>Sus ganancias totales son:
+                                        <b>20 - 10 + (0.4*50) = 10 + 20 = 30 puntos.</b>
+                                    </p>
+                                    <p>Las ganancias del segundo y tercer integrante del grupo son:
+                                        <b>20 - 20 + (0.4*50) = 0 + 20 = 20 puntos.</b>
+                                    </p>
+                                    <p>Las ganancias del cuarto y quinto integrante del grupo son:
+                                        <b>20 - 0 + (0.4*50) = 20 + 20 = 40 puntos.</b>
+                                    </p>
+                                    <br>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2"></div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>  
+
+    
+{% endblock %}
+
+{% block styles %}
+    <style type="text/css">
+
+        .row{
+            margin: 0 auto;
+        }
+        #otree-body {
+            width: 85%;
+        }
+
+        .fila{
+            margin-bottom: 1%;
+            margin-right: 1%;
+        }
+
+        .formula{
+            padding: 1%;
+            text-align: center;
+            background: bisque;
+            border: solid;
+            width: 100%;
+        }
+    
+        .instrucciones{
+            float: right;
+        }
+
+        .preguntas{
+            padding-left: 2%;
+            padding-top: 2%;
+        }
+
+        .modalInstrucciones{
+            width: 70%;
+        }
+
+        .btn-siguiente{
+            float: right;
+        }
+
+        .resp-correcta{
+            padding-left: 10%;
+            margin-bottom: 2px;
+        }
+        .flecha{
+            font-size: 25px;
+            padding-left: 5%
+        }
+        .page-header{
+            margin-top: 0;
+        }
+        /*css del modal*/
+        .row {
+            margin: 0 auto;
+        }
+
+        .ejemplo {
+            background: #ccddff;
+        }
+
+        div.panel-heading.ejemplo-titulo {
+            background: #80aaff;
+        }
+
+    </style>
+{% endblock %}
+{% block scripts %}
+    <script>
+         $('#myModal').click(function(){
+            $('#sp').modal('show');
+        });
+    </script>
+{% endblock %}

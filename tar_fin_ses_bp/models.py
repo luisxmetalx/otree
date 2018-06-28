@@ -44,12 +44,12 @@ class Player(BasePlayer):
         self.pago_de_sesion = 2.00
         if self.participant.vars.get('pago_bp') == None:
             self.participant.vars["pago_bp"] = 0
-        if self.participant.vars.get('pago_bret') == None:
-            self.participant.vars["pago_bret"] = 0
+        if self.participant.vars.get('bret_payoff') == None:
+            self.participant.vars["bret_payoff"] = 0
         
         self.pago_bp = round(self.participant.vars.get('pago_bp'), 1)
         print('pago bp: ', self.pago_bp, type(self.pago_bp))
-        self.pago_bret = float(self.participant.vars.get('pago_bret'))
+        self.pago_bret = float(self.participant.vars.get('bret_payoff'))
         print('pago bret: ', self.pago_bret, type(self.pago_bret))
         self.pago_total = round(self.pago_de_sesion + self.pago_bp + self.pago_bret, 1)
         print('pago total: ', self.pago_total, type(self.pago_total))

@@ -137,8 +137,8 @@ class Group(BaseGroup):
             g.administrador = admin
         #print ('grupo: ', self.id_in_subsession, '| administrador: ', admin)
 
-        #BP4
-        contribucion_total = models.IntegerField()
+    #BP4
+    contribucion_total = models.IntegerField()
 
     # variables de el castigo a recibir para cada jugador
     castigo_jug1 = models.IntegerField(initial=0, min=0, max=20, blank=True)
@@ -168,11 +168,11 @@ class Player(BasePlayer):
     tratamiento = models.CharField()
     voto = models.IntegerField()
     
-    # test2_p1 = models.IntegerField(initial=0)
-    # test2_p2 = models.IntegerField(initial=0)
-    # test2_p3 = models.IntegerField(initial=0)
-    # test2_p4 = models.IntegerField(initial=0)
-    # test2_p5 = models.IntegerField(initial=0)
+    test2_p1 = models.IntegerField(initial=0)
+    test2_p2 = models.IntegerField(initial=0)
+    test2_p3 = models.IntegerField(initial=0)
+    test2_p4 = models.IntegerField(initial=0)
+    test2_p5 = models.IntegerField(initial=0)
 
     def role(self):
         if self.id_in_group == 1:
