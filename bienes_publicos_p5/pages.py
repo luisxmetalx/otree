@@ -556,6 +556,29 @@ class Final(Page):
 class FinalFase1(Page):
     def is_displayed(self):
         return self.subsession.round_number == 1
+    
+    def vars_for_template(self):
+        print("la letra fue: ",self.player.roleP)
+        # for p in self.group.get_players():
+        #     p.roleP = ''
+        while(self.player.roleP == '' or self.player.roleP == None):
+            acum=0            
+            letra = random.choice(['A','B','C','D','E'])
+            print("la letra escogida fue: ",letra)
+            for jugador in self.player.get_others_in_group():
+                print("letra asignada fue: ",jugador.roleP)
+                if(jugador.roleP == letra):
+                    acum+=1
+            print("veces repetidas: ",acum)
+            if(acum == 0):
+                print("letra no asiganada a ningunjugador")
+                self.player.roleP = letra
+
+                
+
+        return{
+            'role_participante':self.player.roleP,
+        }
 
 page_sequence = [
     FinalFase1,

@@ -168,6 +168,8 @@ class Player(BasePlayer):
     tratamiento = models.CharField()
     voto = models.IntegerField()
     
+    roleP = models.CharField()
+
     test2_p1 = models.IntegerField(initial=0)
     test2_p2 = models.IntegerField(initial=0)
     test2_p3 = models.IntegerField(initial=0)
@@ -185,6 +187,15 @@ class Player(BasePlayer):
             return 'D'
         else:
             return 'E'
+    
+    # def elegirRole(self):
+    #     while(self.role == None){
+    #         letra = random.choice(['A','B','C','D','E'])
+    #         for jugador in self.get_others_in_group():
+    #             if(jugador.role != letra):
+    #                 self.role = letra
+    #     }
+    #     return self.role
 
     # BP4
     contribucion = models.IntegerField(min=0, max=20)
