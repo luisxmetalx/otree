@@ -19,7 +19,7 @@
           <th class="text-center ronda">Ronda</th>
           <th class="text-center">Usted</th>
           {% for jugador in player.get_others_in_group %}
-          <th class="text-center">{{ jugador.role }}</th>
+          <th class="text-center">{{ jugador.roleP }}</th>
           {% endfor %}
         </thead>
         <tbody>
@@ -43,20 +43,14 @@
     </div>
     <div class="col-md-4 text-center ">
       <br>
-      <h4>Usted es el participante {{ player.role }}</h4>
+      <h4>Usted es el participante {{ player.roleP }}</h4>
       <hr>
       {% if player.participant.vars.tratamiento == 'leviatan' %}
         {% if player.id_in_group == group.administrador %}
           <h4><b>Usted es el administrador</b></h4>
         {% else %}
         <h4>
-          <b>El administrador será el participante
-            {% if group.administrador == 1 %}A</b>
-            {% elif group.administrador == 2 %} B</b>
-            {% elif group.administrador == 3 %} C</b>
-            {% elif group.administrador == 4 %} D</b>
-            {% elif group.administrador == 5 %} E</b>
-            {% endif %}
+          <b>El administrador será el participante {{administrador}}</b>
         </h4>
       {% endif %}
         

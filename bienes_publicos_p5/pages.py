@@ -110,6 +110,8 @@ class EsperaVotacion(WaitPage):
         print ('...after all arrive...')
         self.group.obtenerTratamiento()
         self.group.administrador = 0
+        
+
         if self.group.tratamiento == 'leviatan':
             print ('Leviatan --> Se sortea')
             print("el adm es: ",self.group.administrador)
@@ -198,12 +200,21 @@ class ElegirAdministrador(Page):
             print("las contribuciones por las 3 rondas son: ",contribuciones)
 
         #print ('contribuciones todos: ', contribuciones)
-        
+        # elegir otra letra de participante
+        if(self.round_number==4 or self.round_number==7 or self.round_number==10):
+            # for p in self.group.get_players():
+            #     p.roleP = ''
+            for jugador in self.group.get_players():
+                jugador.roleP = jugador.in_round(self.round_number-3).roleP
+                    
+                
         return {
             'rondas': rondas,
             'acumulado': self.player.participant.vars["acumulado"],
-            'contribuciones_por_ronda': zip(rondas, contribuciones)
+            'contribuciones_por_ronda': zip(rondas, contribuciones),
+            'playerRol': self.player.roleP
         }
+    
 
 
 class FinalVotacion(WaitPage):
@@ -279,6 +290,13 @@ class ResultadosVotacion(Page):
             print("las contribuciones por las 3 rondas son: ",contribuciones)
 
         #print ('contribuciones de otros: ', contribuciones)
+        # elegir otra letra de participante
+        if(self.round_number==4 or self.round_number==7 or self.round_number==10):
+            # for p in self.group.get_players():
+            #     p.roleP = ''
+            for jugador in self.group.get_players():
+                jugador.roleP = jugador.in_round(self.round_number-3).roleP
+
         contribuciones_propias = self.player.participant.vars["contribuciones"]
 
         if(self.round_number==1):
@@ -297,14 +315,36 @@ class ResultadosVotacion(Page):
 
         print ('el acumulado es: ', self.player.participant.vars["acumulado"])
         print ("las contibuciones son: ", contribuciones)
-        
+        for p in self.group.get_players():
+            if(p.id_in_group == self.group.administrador):
+                adm = p.roleP
         return{
                 'tratamiento': self.player.tratamiento,
                 'rondas': rondas,
                 'acumulado': self.player.participant.vars["acumulado"],
-                'contribuciones_por_ronda': zip(rondas, contribuciones)
+                'contribuciones_por_ronda': zip(rondas, contribuciones),
+                'administrador': adm
             }
-    
+
+    def before_next_page(self):
+        # elegir otra letra de participante
+        if(self.round_number==4 or self.round_number==7 or self.round_number==10):
+            if(self.player.roleP != ''):
+                for p in self.group.get_players():
+                    p.roleP = ''
+
+            while(self.player.roleP == '' or self.player.roleP == None):
+                acum=0            
+                letra = random.choice(['A','B','C','D','E'])
+                print("la letra escogida fue: ",letra)
+                for jugador in self.player.get_others_in_group():
+                    print("letra asignada fue: ",jugador.roleP)
+                    if(jugador.roleP == letra):
+                        acum+=1
+                print("veces repetidas: ",acum)
+                if(acum == 0):
+                    print("letra no asiganada a ningunjugador")
+                    self.player.roleP = letra
     # def before_next_page(self):
     #     for p in self.group.get_players():
     #         p.participant.vars["acumulado"] = 0
@@ -377,6 +417,20 @@ class Contribuir(Page):
         random.shuffle(otros_jugadores)
         self.player.participant.vars["jugadores_random"] = otros_jugadores
         print ('Otros jugadores: ', otros_jugadores)
+
+        if(self.round_number==4 or self.round_number==7 or self.round_number==10):
+            while(self.player.roleP == '' or self.player.roleP == None):
+                acum=0            
+                letra = random.choice(['A','B','C','D','E'])
+                print("la letra escogida fue: ",letra)
+                for jugador in self.player.get_others_in_group():
+                    print("letra asignada fue: ",jugador.roleP)
+                    if(jugador.roleP == letra):
+                        acum+=1
+                print("veces repetidas: ",acum)
+                if(acum == 0):
+                    print("letra no asiganada a ningunjugador")
+                    self.player.roleP = letra
         
 
 
@@ -389,7 +443,8 @@ class EsperaCastigo(WaitPage):
     def is_displayed(self):
         print ('view EsperaCastigo --> id: ', self.player.id_in_group, ', admin : ', self.player.participant.vars.get("admin"))
         return True
-
+        
+#aqui se debe de cambiar la condicon para que entre por la letra no por el id del jugador.
 class AplicarCastigo(Page):
     form_model = models.Group
     
@@ -583,7 +638,7 @@ class FinalFase1(Page):
 page_sequence = [
     FinalFase1,
     InstruccionesFase2,
-    Test2,
+    #Test2,
     EsperaVotacion,
     ElegirAdministrador,
     FinalVotacion,
