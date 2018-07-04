@@ -169,6 +169,7 @@ class Player(BasePlayer):
     voto = models.IntegerField()
     
     roleP = models.CharField()
+    Jug_admin =models.CharField()
 
     test2_p1 = models.IntegerField(initial=0)
     test2_p2 = models.IntegerField(initial=0)

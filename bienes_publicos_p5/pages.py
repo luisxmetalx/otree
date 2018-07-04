@@ -318,6 +318,10 @@ class ResultadosVotacion(Page):
         for p in self.group.get_players():
             if(p.id_in_group == self.group.administrador):
                 adm = p.roleP
+        
+        for j in self.group.get_players():
+            j.Jug_admin = adm
+
         return{
                 'tratamiento': self.player.tratamiento,
                 'rondas': rondas,
@@ -483,7 +487,27 @@ class AplicarCastigo(Page):
 
     def is_displayed(self):
         print ('view castigo --> id: ', self.player.id_in_group, ', admin : ', self.player.participant.vars.get("admin"))
-        return self.player.id_in_group == self.player.participant.vars.get("admin")
+        n_ronda = 0
+        for jugador in self.group.get_players():
+            print("jugador seleccionados: ", jugador.in_round(1).roleP)
+            print("jugador administrador: ", self.player.participant.vars.get("admin"))
+            if self.round_number >= 1 and self.round_number < 4:
+                n_ronda = 1
+                if jugador.in_round(n_ronda).roleP == self.player.in_round(n_ronda).Jug_admin:
+                    administrador = jugador.in_round(n_ronda).roleP
+                    print("la letra del administrador es: ", administrador)
+            elif self.round_number >= 4 and self.round_number < 7:
+                n_ronda = 4
+                if jugador.in_round(n_ronda).roleP == self.player.in_round(n_ronda).Jug_admin:
+                    administrador = jugador.in_round(n_ronda).roleP
+                    print("la letra del administrador es: ", administrador)
+            elif self.round_number >= 7 and self.round_number < 10:
+                n_ronda = 7
+                if jugador.in_round(n_ronda).roleP == self.player.in_round(n_ronda).Jug_admin:
+                    administrador = jugador.in_round(n_ronda).roleP
+                    print("la letra del administrador es: ", administrador)
+
+        return self.player.in_round(n_ronda).roleP == administrador
 
     def vars_for_template(self):
         otros_jugadores = self.player.participant.vars["jugadores_random"]
