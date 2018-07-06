@@ -155,7 +155,7 @@ SESSION_CONFIGS = [
         'name': 'bienes_publicos_p5',
         'display_name': "Sesión Bienes Públicos.",
         'num_demo_participants': 10,
-        'app_sequence': ['bienes_publicos_p1', 'bienes_publicos_p2', 'bienes_publicos_p5', 'bret', 'tar_fin_ses_bp', 'cuest_aversion_al_riesgo', 'cuest_demografico', 'despedida'],
+        'app_sequence': ['bienes_publicos_p1', 'bienes_publicos_p2', 'bienes_publicos_p5', 'tar_fin_ses_bp', 'cuest_aversion_al_riesgo', 'cuest_demografico', 'despedida'],
         'grupos_leviatan': 0,
         'grupos_democracia': 0,
         'control': 0,
@@ -167,16 +167,16 @@ SESSION_CONFIGS = [
         'app_sequence': ['ips'], 
     },
     {
-        'name': 'bret',
-        'display_name': "bret v2",
-        'num_demo_participants': 1,
-        'app_sequence': ['bret'], 
-    },
-    {
         'name': 'cuestionario_corrupcion',
         'display_name': "Cuestionario para la sesion de corrupcion",
         'num_demo_participants': 1,
         'app_sequence': ['cuestionario_corrupcion'], 
+    },
+    {
+        'name': 'prisionerdilemma',
+        'display_name': "Prisoner's Dilemma",
+        'num_demo_participants': 2,
+        'app_sequence': ['prisionerdilemma'], 
     },
     
     # other session configs ...
