@@ -3,14 +3,19 @@ from ._builtin import Page, WaitPage
 from .models import Constants
 
 
-class MyPage(Page):
-    pass
+class Introduction(Page):
+    timeout_seconds = 100
+
+class Decision(Page):
+    form_model = 'player'
+    form_field = ['decision']
 
 
 class ResultsWaitPage(WaitPage):
 
     def after_all_players_arrive(self):
-        pass
+        for p in self.group.get_players():
+            p.set_payoff()
 
 
 class Results(Page):
@@ -18,7 +23,8 @@ class Results(Page):
 
 
 page_sequence = [
-    MyPage,
+    Introduction,
+    Decision,
     ResultsWaitPage,
     Results
 ]
