@@ -2,10 +2,25 @@
 {% load otree static %}
 
 {% block title %}
-    Page title
+    Resultados
 {% endblock %}
 
 {% block content %}
+    <p>
+        {% if misma_eleccion %}
+            Ambos escogieron {{ mi_decision }}.
+        {% else %}
+            Usted escogió {{ mi_decision }} y el otro participante escogió a {{ oponente_decision }}.
+        {% endif %}
+    </p>
+
+    <p>
+        Como resultado, usted ganó {{ player.payoff }}.
+    </p>
+
+    {% next_button %}
+
+    {% include Constants.introduction_template %}
 
     {% next_button %}
 {% endblock %}

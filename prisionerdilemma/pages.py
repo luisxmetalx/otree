@@ -12,14 +12,20 @@ class Decision(Page):
 
 
 class ResultsWaitPage(WaitPage):
-
     def after_all_players_arrive(self):
         for p in self.group.get_players():
             p.set_payoff()
 
 
 class Results(Page):
-    pass
+    def vars_for_template(self):
+        yo = self.player
+        oponente = yo.other_player()
+        return {
+            'mi_decision': yo.decision,
+            'oponente_decision': oponente.decision,
+            'misma_eleccion': yo.decision == oponente.decision,
+        }
 
 
 page_sequence = [
