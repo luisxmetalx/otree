@@ -7,5 +7,8 @@ from .models import Constants
 class PlayerBot(Bot):
 
     def play_round(self):
-        yield (pages.MyPage)
+        yield (pages.Introduction)
+        yield (pages.Desicion, {"desicion":"Confesar"})
+        assert 'Si ambos escogen Confesar' in self.html
+        assert self.player.payoff == Constants.pago_ambos_confiesan
         yield (pages.Results)

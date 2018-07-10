@@ -17,13 +17,13 @@ class Constants(BaseConstants):
     name_in_url = 'prisionerdilemma'
     players_per_group = 2
     num_rounds = 1
-    introduction_template = 'prisionerdilemma/Introduction.html'
+    intructions_template = 'prisionerdilemma/instructions.html'
     #Pago cuando ambos jugadores confiesan o callan
     pago_ambos_confiesan = c(300)
     pago_ambos_callan = c(100)
     #Pago cuando un juigador confiesa y el otro coopera
-    pago_jugador_confiesa = c(300)
-    pago_jugador_calla = c(0)
+    pago_jugador_confiesa = c(0)
+    pago_jugador_calla = c(300)
 
 
 class Subsession(BaseSubsession):
@@ -36,7 +36,7 @@ class Group(BaseGroup):
 
 class Player(BasePlayer):
     decision = models.StringField(
-        choices=['Confesarr', 'Callar'],
+        choices=['Confesar', 'Callar'],
         doc="""This player's decision""",
         widget=widgets.RadioSelect
     )
@@ -45,16 +45,15 @@ class Player(BasePlayer):
         return self.get_others_in_group()[0]
 
     def set_payoff(self):
-
         matriz_pagos = {
-            'Confiesan':
+            'Confesar':
                 {
                     'Confesar': Constants.pago_ambos_confiesan,
-                    'Callar': Constants.pago_jugador_calla
+                    'Callar': Constants.pago_jugador_confiesa
                 },
-            'Callan':
+            'Callar':
                 {
-                    'Confesar': Constants.pago_jugador_confiesa,
+                    'Confesar': Constants.pago_jugador_calla,
                     'Callar': Constants.pago_ambos_callan
                 }
         }

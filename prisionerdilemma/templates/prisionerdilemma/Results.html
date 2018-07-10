@@ -15,14 +15,13 @@
     </p>
 
     <p>
-        Como resultado, usted ganó {{ player.payoff }}.
+        Como resultado, usted ganó {{ player.payoff|floatformat:"0" }} puntos.
     </p>
 
     {% next_button %}
 
-    {% include Constants.introduction_template %}
+    {% include Constants.intructions_template %}
 
-    {% next_button %}
 {% endblock %}
 
 

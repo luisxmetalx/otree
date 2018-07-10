@@ -8,14 +8,12 @@ class Introduction(Page):
 
 class Decision(Page):
     form_model = 'player'
-    form_field = ['decision']
-
+    form_fields = ['decision']
 
 class ResultsWaitPage(WaitPage):
     def after_all_players_arrive(self):
         for p in self.group.get_players():
             p.set_payoff()
-
 
 class Results(Page):
     def vars_for_template(self):
