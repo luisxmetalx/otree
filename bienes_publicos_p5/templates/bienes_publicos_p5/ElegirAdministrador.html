@@ -22,8 +22,8 @@
           <thead>
             <th class="text-center">Ronda</th>
             <th class="text-center">Usted</th>
-            {% for jugador in player.get_others_in_group %}
-                <th class="text-center">{{ jugador.roleP }}</th>
+            {% for jugador in roles %}
+                <th class="text-center">{{ jugador}}</th>
             {% endfor %}
           </thead>
           <tbody>
@@ -38,8 +38,8 @@
             <tr>
               <td class="text-center"><b>Contribución acumulada (puntos totales)</b></td>
               <td class="text-center"><b>{{ player.participant.vars.acumulado }}</b></td>
-              {% for otro in player.get_others_in_group %}
-                <td class="text-center"><b>{{ otro.participant.vars.acumulado }}</b></td>
+              {% for otro in total %}
+                <td class="text-center"><b>{{ otro }}</b></td>
               {% endfor %}
             </tr>
             {% if group.tratamiento == 'democracia' %}

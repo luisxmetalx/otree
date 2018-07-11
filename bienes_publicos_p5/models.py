@@ -96,13 +96,32 @@ class Group(BaseGroup):
         prob_mayor = 0.75
         gana=0
         admin=0
+        acum=0
         lista_contrib_acum = []
-        for p in self.get_players():
-            print ('Jugador: ', p.id_in_group, '  tiene: ', p.participant.vars["acumulado"])
-            lista_contrib_acum.append(p.participant.vars["acumulado"])
+        rolesJugador=['A','B','C','D','E']
+        #modificar para q agrupe con el orden de roles A,B,C,D,E
+        #print("elegimos las contribuciones por orden de roles")
+        #print("valor de acum: ",acum)
+        while acum < 5:
+            # print("entramos al while")
+            for gameR in rolesJugador :
+                for otro in self.get_players():
+                    if self.round_number == 1:
+                        if gameR == otro.roleP:
+                            lista_contrib_acum.append(otro.participant.vars["acumulado"])
+                            acum+=1
+                    elif (self.round_number == 4 or self.round_number == 7 or self.round_number == 10):
+                        if gameR == otro.in_round(self.round_number-3).roleP:
+                            lista_contrib_acum.append(otro.participant.vars["acumulado"])
+                            acum+=1
+
+        # for p in self.get_players():
+        #     print ('Jugador: ', p.id_in_group, '  tiene: ', p.participant.vars["acumulado"])
+        #     lista_contrib_acum.append(p.participant.vars["acumulado"])
         if sum(lista_contrib_acum) != 0:
             # hay al menos una contribución
-            print ('lista contrib acum (ordenada por id de participante):', lista_contrib_acum)
+            # print ('lista contrib acum (ordenada por id de participante):', lista_contrib_acum)
+            print ('lista contrib acum (ordenada por role de participante):', lista_contrib_acum)
             # se obtienen los indices de los valores maximos y los que no son maximo, 
             mayores = np.where(lista_contrib_acum == np.max(lista_contrib_acum))
             menores = np.where(lista_contrib_acum != np.max(lista_contrib_acum))
@@ -123,7 +142,15 @@ class Group(BaseGroup):
             else:
                 # gana uno que tiene el maximo de contribuciones acumladas (p = 0.75)
                 ind_ganador = np.random.choice(indices_mayores)
-            ganador = self.get_players()[ind_ganador]
+            for p in self.get_players():
+                if self.round_number==1:
+                    if rolesJugador[ind_ganador] == p.roleP:
+                        ganador=p
+                if(self.round_number == 4 or self.round_number == 7 or self.round_number == 10):
+                    if rolesJugador[ind_ganador] == p.in_round(self.round_number-3).roleP:
+                        ganador=p
+
+            # ganador = self.get_players()[ind_ganador]
             self.administrador = ganador.id_in_group
             admin = self.administrador
             

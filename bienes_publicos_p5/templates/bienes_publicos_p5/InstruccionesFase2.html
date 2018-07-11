@@ -25,11 +25,11 @@
                     <div class="col-md-9">
                         <p><b>¿CÓMO SE SELECCIONA EL ADMINISTRADOR?</b></p>
                     
-                        <p>A continuación usted podrá observar las decisiones de asignación de cada integrante del grupo en la fase 1.</p>
+                        <p>A continuación usted podrá observar las decisiones de asignación de cada integrante del grupo en la fase 1. La información se presenta de manera anónima (las etiquetas son solo referencia y cambian en cada ronda) </p>
                         <p><b>El computador elegirá un administrador</b> basado en una distribución que asigna una probabilidad del 75% de que el mayor contribusor del grupo sea elegido.</p>
-                        <p>Usted observará quién fue elegido antes de iniciar la fase 2.</p>
+                        <p>Usted observará el resultado de la elección antes de iniciar la fase 2.</p>
                         <p>Tenga en cuenta que <b>el administrador será elegido cada tres rondas.</b></p>
-                        <p>La elección en las instancias posteriores se realizará en base a la información de las contribuciones de las 3 rondas intermedias; por ejemplo, en la tercera ronda de la fase 2, antes de que el administrador sea elegido, usted podrá observar el total de contribuciones de todos los miembros del grupo en las 3 rondas precedentes.</p>
+                        <p>La elección en las instancias posteriores se realizará en base a la información de las contribuciones de las 3 rondas intermedias; por ejemplo, en la tercera ronda de la fase 2, antes de que el administrador sea elegido, usted podrá observar el total de contribuciones de todos los miembros del grupo (anonimamente) en las 3 rondas precedentes.</p>
                     </div>
                     <div class="col-md-3">
                         <img class="img-responsive" alt="" src="{% static "bienes_publicosv2/distribucion.png" %}" />
@@ -38,12 +38,12 @@
             {% else %}
 
                 <p><b>¿CÓMO SE SELECCIONA EL ADMINISTRADOR?</b></p>
-                <p>Antes de iniciar la fase 2, usted podrá observar las decisiones de asignación de cada integrante del grupo en la fase 1. </p>
+                <p>Antes de iniciar la fase 2, usted podrá observar las decisiones de asignación de cada integrante del grupo en la fase 1. La información se presenta de manera anónima (las etiquetas son solo referencia y cambian en cada ronda) </p>
                 <p>A continuación tendrá la oportunidad de <b>votar por cualquier integrante de su grupo</b> (excepto usted) para que sea elegido como administrador.</p>
                 <p><b> El que reciba la mayoría de los votos será elegido administrador.</b> En caso de empate, el administrador será seleccionado al azar entre los miembros empatados.</p>
-                <p>Usted observará quién fue elegido antes de iniciar la fase 2.</p>
+                <p>Usted observará el resultado de la elección antes de iniciar la fase 2.</p>
                 <p>Tenga en cuenta que <b>el administrador será elegido cada tres rondas.</b></p>
-                <p>La elección en las instancias posteriores se realizará en base a la información de las contribuciones de las 3 rondas intermedias; por ejemplo, en la tercera ronda de la fase 2, antes de que el administrador sea elegido, usted podrá observar el total de contribuciones de todos los miembros del grupo en las 3 rondas precedentes y así votar por el de su preferencia.</p>
+                <p>La elección en las instancias posteriores se realizará en base a la información de las contribuciones de las 3 rondas intermedias; por ejemplo, en la tercera ronda de la fase 2, antes de que el administrador sea elegido, usted podrá observar el total de contribuciones de todos los miembros del grupo (anonimamente) en las 3 rondas precedentes y así votar por el de su preferencia.</p>
             {% endif %}
             
             <br>
@@ -51,8 +51,7 @@
             <p>Hay dos etapas en cada ronda. En la primera etapa, usted toma su decisión de asignación de puntos a la cuenta grupal y luego observa las decisiones de los otros integrantes del grupo, ordenados de manera aleatoria, junto con sus ganancias.</p> 
             <p>En la segunda etapa, se deducen automáticamente 2 puntos de cada integrante del grupo para la <b>cuenta del administrador</b>. Por lo tanto, cada administrador dispone de 10 puntos en cada ronda.</p>
             <p><b> El administrador tiene la oportunidad de usar los puntos de esta cuenta para reducir las ganancias de los participantes que él elija dentro de su grupo, excepto el mismo.</b> El administrador no puede reducir sus propias ganancias.</p>
-            <p>Suponga que usted es seleccionado como administrador. Después de la primera etapa de cada ronda, observará la cantidad asignada a la cuenta del grupo por cada integrante. Al mismo tiempo, recibirá 2 puntos de cada integrante del grupo incluyéndolo a usted.</p>
-            <p>Luego elegirá los miembros del grupo (uno o varios) y <b>cuántos puntos de los 10 disponibles desea utilizar para reducir las ganancias de los miembros seleccionados</b>.</p>
+            <p>Suponga que usted es seleccionado como administrador. En cada ronda, después de la primera etapa, observará la cantidad asignada por cada integrante a la cuenta del grupo. Al mismo tiempo, recibirá 2 puntos de cada integrante del grupo, incluyéndolo a usted. Luego elegirá los miembros del grupo (uno o varios) y <b>cuántos puntos de los 10 disponibles desea utilizar para reducir las ganancias de los seleccionados</b>.</p>
             <p>Por cada punto que desee <b>asignar</b>, las ganancias de los participantes seleccionados se <b>reducen</b> según la siguiente tabla:</p>
             <table class="table tabla">
                 <tbody>
@@ -70,10 +69,10 @@
                 </tr>
                 </tbody>
             </table>
-            <p>El administrador es libre de dejar las ganancias de todos los integrantes del grupo sin cambios, asignando cero (0) puntos o dejando vacía la celda correspondiente.</p>
-            <p><b>Los puntos de la cuenta del administrador</b>, que no se asignan para reducir los ganancias de los demás, <b>se devuelven a todos los integrantes del grupo por igual.</b> Mientras que <b>los puntos asignados</b> por el administrador se deducen de la cuenta, y; por lo tanto, <b> son puntos no recuperables</b> por los miembros del grupo.</p>
+            <p>El administrador es libre de dejar intactas (sin cambios) las ganancias de todos los integrantes del grupo, asignando cero (0) puntos o dejando vacía la celda correspondiente.</p>
+            <p><b>Los puntos de la cuenta del administrador</b>, que no se asignan para reducir las ganancias de los demás, <b>se devuelven a todos los integrantes del grupo por igual.</b> Mientras que <b>los puntos asignados</b> por el administrador se deducen de la cuenta, y; por lo tanto, <b> son puntos no recuperables</b> por los miembros del grupo.</p>
 
-            <p>Las ganancias en cada ronda corresponden al resultado de sus decisiones y las decisiones del grupo; no obstante, <b>en caso estas sean negativas</b>, usted asumirá el costo de los <b>puntos asignados</b> a usted por el administrador (no su equivalente en puntos reducidos) o el costo de su ganancia negativa (pérdida); el que sea menor en términos absolutos.</p>
+            <p>Las ganancias en cada ronda corresponden al resultado de sus decisiones y las decisiones del grupo; no obstante, <b>en caso éstas sean negativas</b>, usted asumirá el costo de los <b>puntos asignados</b> a usted por el administrador (no su equivalente en puntos reducidos) o el costo de su ganancia negativa (pérdida); el que sea menor en términos absolutos.</p>
             <p>Por lo tanto, las ganancias en cada ronda se calculan de la siguiente manera:</p>
             <br>
             <div class="row">

@@ -60,7 +60,7 @@
       <div class="row">
         <div class="col-md-6">
           <h5>Total de puntos asignados por el Administrador en esta ronda: {{ total_puntos_asignados }}</h5>
-          {% if group.administrador != player.id_in_group %}
+          {% if administrador != roleJug %}
           <h5>Total de puntos asignados por el Administrador a usted en esta ronda: {{ player.pts_asignados }} </h5>
           <h5>Sus ganancias en esta ronda se redujeron en: {{ player.castigo }}</h5>
           {% endif %}

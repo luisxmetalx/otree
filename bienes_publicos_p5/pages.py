@@ -114,8 +114,9 @@ class EsperaVotacion(WaitPage):
 
         if self.group.tratamiento == 'leviatan':
             print ('Leviatan --> Se sortea')
-            print("el adm es: ",self.group.administrador)
+            print("el adm es antes: ",self.group.administrador)
             if(self.group.administrador == 0):
+                #print("entro a escoger nuevo adm")
                 self.group.sortear_admin_lev()
             else:
                 print ('ya se ha sorteado administrador del grupo')
@@ -141,17 +142,36 @@ class ElegirAdministrador(Page):
         #print(rondas)
         #print(self.round_number)
         #print(sorted(rondas))
+        
         contribuciones = []
+        #nuevas condiciones
+        acum=0
+        rolesJugador=['A','B','C','D','E']
+        if(self.round_number==1):
+            rolesJugador.remove(self.player.roleP)
+        elif(self.round_number == 4 or self.round_number == 7 or self.round_number == 10):
+            rolesJugador.remove(self.player.in_round(self.round_number-3).roleP)
+        #fin de nuevas condiciones.
         if(self.round_number==1):
             for i in rondas:
                 cont = []
-                print("el numero de participantes: ", len(self.player.get_others_in_group()))
-                for otro in self.player.get_others_in_group():
-                    #sc="contribucion"+str(i)+": " + str(otro.participant.vars["contribuciones"][i-1])
-                    #print(sc)
-                    cont.append(otro.participant.vars["contribuciones"][i-1])
+                #print("el numero de participantes: ", len(self.player.get_others_in_group()))
+                while acum < 4:
+                    for gameR in rolesJugador :
+                        for otro in self.player.get_others_in_group():
+                            #sc="contribucion"+str(i)+": " + str(otro.participant.vars["contribuciones"][i-1])
+                            #print(sc)
+                            if gameR == otro.roleP:
+                                cont.append(otro.participant.vars["contribuciones"][i-1])
+                                acum+=1
                 contribuciones.append(cont)
                 print(contribuciones)
+                acum=0
+            contribucion_total=[]
+                
+            for i in range(4):
+                suma=contribuciones[0][i]+contribuciones[1][i]
+                contribucion_total.append(suma)
         else:
             
             print("el numero de participantes: ", len(self.player.get_others_in_group()))
@@ -184,7 +204,10 @@ class ElegirAdministrador(Page):
             lista_rondas.append(r3)
             contribuciones=lista_rondas
             print("las contribuciones por las 3 rondas son: ",contribuciones)
-                
+            contribucion_total=[]
+            for i in range(4):
+                suma=contribuciones[0][i]+contribuciones[1][i]+contribuciones[2][i]
+                contribucion_total.append(suma)     
 
 
         #print ('contribuciones de otros: ', contribuciones)
@@ -212,7 +235,9 @@ class ElegirAdministrador(Page):
             'rondas': rondas,
             'acumulado': self.player.participant.vars["acumulado"],
             'contribuciones_por_ronda': zip(rondas, contribuciones),
-            'playerRol': self.player.roleP
+            'playerRol': self.player.roleP,
+            'roles': rolesJugador,
+            'total':contribucion_total
         }
     
 
@@ -246,16 +271,33 @@ class ResultadosVotacion(Page):
                 rondas=sorted(rondas)
         
         contribuciones = []
+        acum=0
+        rolesJugador=['A','B','C','D','E']
+        if(self.round_number==1):
+            rolesJugador.remove(self.player.roleP)
+        elif(self.round_number == 4 or self.round_number == 7 or self.round_number == 10):
+            rolesJugador.remove(self.player.in_round(self.round_number-3).roleP)
+        #fin de nuevas condiciones.
         if(self.round_number==1):
             for i in rondas:
                 cont = []
-                print("el numero de participantes: ", len(self.player.get_others_in_group()))
-                for otro in self.player.get_others_in_group():
-                    #sc="contribucion"+str(i)+": " + str(otro.participant.vars["contribuciones"][i-1])
-                    #print(sc)
-                    cont.append(otro.participant.vars["contribuciones"][i-1])
+                #print("el numero de participantes: ", len(self.player.get_others_in_group()))
+                while acum < 4:
+                    for gameR in rolesJugador :
+                        for otro in self.player.get_others_in_group():
+                            #sc="contribucion"+str(i)+": " + str(otro.participant.vars["contribuciones"][i-1])
+                            #print(sc)
+                            if gameR == otro.roleP:
+                                cont.append(otro.participant.vars["contribuciones"][i-1])
+                                acum+=1
                 contribuciones.append(cont)
                 print(contribuciones)
+                acum=0
+            contribucion_total=[]
+                
+            for i in range(4):
+                suma=contribuciones[0][i]+contribuciones[1][i]
+                contribucion_total.append(suma)
         else:
             
             print("el numero de participantes: ", len(self.player.get_others_in_group()))
@@ -288,6 +330,11 @@ class ResultadosVotacion(Page):
             lista_rondas.append(r3)
             contribuciones=lista_rondas
             print("las contribuciones por las 3 rondas son: ",contribuciones)
+
+            contribucion_total=[]
+            for i in range(4):
+                suma=contribuciones[0][i]+contribuciones[1][i]+contribuciones[2][i]
+                contribucion_total.append(suma)
 
         #print ('contribuciones de otros: ', contribuciones)
         # elegir otra letra de participante
@@ -327,7 +374,9 @@ class ResultadosVotacion(Page):
                 'rondas': rondas,
                 'acumulado': self.player.participant.vars["acumulado"],
                 'contribuciones_por_ronda': zip(rondas, contribuciones),
-                'administrador': adm
+                'administrador': adm,
+                'roles': rolesJugador,
+                'total':contribucion_total
             }
 
     def before_next_page(self):
@@ -506,6 +555,11 @@ class AplicarCastigo(Page):
                 if jugador.in_round(n_ronda).roleP == self.player.in_round(n_ronda).Jug_admin:
                     administrador = jugador.in_round(n_ronda).roleP
                     print("la letra del administrador es: ", administrador)
+            elif self.round_number >= 10:
+                n_ronda = 10
+                if jugador.in_round(n_ronda).roleP == self.player.in_round(n_ronda).Jug_admin:
+                    administrador = jugador.in_round(n_ronda).roleP
+                    print("la letra del administrador es: ", administrador)
 
         return self.player.in_round(n_ronda).roleP == administrador
 
@@ -600,6 +654,23 @@ class ResultadosCastigo(Page):
                 
         ganancia_grupo = self.player.ganancia - Constants.fondo + self.player.contribucion
 
+        if self.round_number >= 1 and self.round_number < 4:
+            n_ronda = 1
+            admin = self.player.in_round(n_ronda).Jug_admin
+            roles = self.player.in_round(n_ronda).roleP
+        elif self.round_number >= 4 and self.round_number < 7:
+            n_ronda = 4
+            admin = self.player.in_round(n_ronda).Jug_admin
+            roles = self.player.in_round(n_ronda).roleP
+        elif self.round_number >= 7 and self.round_number < 10:
+            n_ronda = 7
+            admin = self.player.in_round(n_ronda).Jug_admin
+            roles = self.player.in_round(n_ronda).roleP
+        elif self.round_number >= 10:
+            n_ronda = 10
+            admin = self.player.in_round(n_ronda).Jug_admin
+            roles = self.player.in_round(n_ronda).roleP
+
         return {
                 'rondas': Constants.num_rounds,
                 'ronda_actual': ronda_actual,
@@ -612,7 +683,9 @@ class ResultadosCastigo(Page):
                 'ganancias': ganancias,
                 'ganancia_sin_tp': round(self.player.ganancia + self.player.tp, 1),
                 'puntos_asignados': Constants.puntos_asignados,
-                'puntos_reducidos': Constants.puntos_reducidos
+                'puntos_reducidos': Constants.puntos_reducidos,
+                'administrador': admin,
+                'roleJug':roles,
                 }
 
     def before_next_page(self):
