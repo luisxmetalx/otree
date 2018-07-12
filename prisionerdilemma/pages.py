@@ -6,6 +6,10 @@ from .models import Constants
 class Introduction(Page):
     timeout_seconds = 100
 
+class Quiz(Page):
+    form_model = 'player'
+    form_fields = ['genero']
+
 class Decision(Page):
     form_model = 'player'
     form_fields = ['decision']
@@ -13,7 +17,7 @@ class Decision(Page):
 class ResultsWaitPage(WaitPage):
     def after_all_players_arrive(self):
         for p in self.group.get_players():
-            p.set_payoff()
+            p.escoger_decision()
 
 class Results(Page):
     def vars_for_template(self):

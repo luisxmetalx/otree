@@ -35,16 +35,28 @@ class Group(BaseGroup):
 
 
 class Player(BasePlayer):
+
+    #Se crea un campo para almacenar la decisión del jugaor
     decision = models.StringField(
         choices=['Confesar', 'Callar'],
-        doc="""This player's decision""",
+        doc="""Esto es la decisión del jugador""",
         widget=widgets.RadioSelect
     )
+
+    #Se crea un campo para almacenar el género del jugaor
+    genero = models.StringField(
+        choices=['Masculino', 'Femenino'],
+        doc="""Esto es el género del jugador""",
+        widget=widgets.RadioSelect
+    )
+
+    #La edad del jugador
+    edad = models.IntegerField()
 
     def other_player(self):
         return self.get_others_in_group()[0]
 
-    def set_payoff(self):
+    def escoger_decision(self):
         matriz_pagos = {
             'Confesar':
                 {
@@ -59,3 +71,6 @@ class Player(BasePlayer):
         }
 
         self.payoff = matriz_pagos[self.decision][self.other_player().decision]
+
+    def escoger_genero(self):
+        array_genero = {'Masculino' : Constants.masculino, 'Femenino' : Constants.femenino}
