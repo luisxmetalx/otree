@@ -51,7 +51,8 @@ class Player(BasePlayer):
     )
 
     #La edad del jugador
-    edad = models.IntegerField()
+    edad = models.IntegerField(min=18)
+    
 
     def other_player(self):
         return self.get_others_in_group()[0]
@@ -72,5 +73,4 @@ class Player(BasePlayer):
 
         self.payoff = matriz_pagos[self.decision][self.other_player().decision]
 
-    def escoger_genero(self):
-        array_genero = {'Masculino' : Constants.masculino, 'Femenino' : Constants.femenino}
+

@@ -8,7 +8,7 @@ class Introduction(Page):
 
 class Quiz(Page):
     form_model = 'player'
-    form_fields = ['genero']
+    form_fields = ['genero','edad']
 
 class Decision(Page):
     form_model = 'player'
@@ -29,10 +29,35 @@ class Results(Page):
             'misma_eleccion': yo.decision == oponente.decision,
         }
 
+class CharWaitPage(WaitPage):
+    def after_all_players_arrive(self):
+        pass
+            
+
+class Chart(Page):
+    def vars_for_template(self):
+        acum=0
+        l_edades=[]
+        l_generos=[]
+        for p in self.subsession.get_players():
+            l_edades.append(p.edad)
+            l_generos.append(p.genero)
+        
+        femenino=((l_generos.count('Femenino')/len(self.subsession.get_players())))*100
+        masculino=(l_generos.count('Masculino')/len(self.subsession.get_players()))*100
+        
+        n_jugador=len(self.group.get_players())
+        return {
+            'm':masculino,
+            'f':femenino
+        }
 
 page_sequence = [
     Introduction,
-    Decision,
-    ResultsWaitPage,
-    Results
+    Quiz,
+    # Decision,
+    # ResultsWaitPage,
+    # Results,
+    CharWaitPage,
+    Chart
 ]
