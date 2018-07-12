@@ -174,16 +174,21 @@ class ElegirAdministrador(Page):
                 contribucion_total.append(suma)
         else:
             
+            
             print("el numero de participantes: ", len(self.player.get_others_in_group()))
-            for otro in self.player.get_others_in_group():
-                cont = []
-                for j in range(3):
-                    sc="contribucion"+str(j)+": " + str(otro.in_round(self.round_number - (j+1)).contribucion)
-                   #print(sc)
-                    cont.append(otro.in_round(self.round_number - (3-j)).contribucion)
-                    #print(cont)
-                contribuciones.append(cont)
-                print(contribuciones)
+            while acum < 4:
+                for gameR in rolesJugador :
+                    for otro in self.player.get_others_in_group():
+                        cont = []
+                        if gameR == otro.in_round(self.round_number-3).roleP:
+                            for j in range(3):
+                                sc="contribucion"+str(j)+": " + str(otro.in_round(self.round_number - (j+1)).contribucion)
+                            #print(sc)
+                                cont.append(otro.in_round(self.round_number - (3-j)).contribucion)
+                                acum+=1
+                                #print(cont)
+                            contribuciones.append(cont)
+                            print(contribuciones)
             #sacar las contribuciones por ronda.
             lista_rondas=[]
             r1=[]
@@ -237,7 +242,8 @@ class ElegirAdministrador(Page):
             'contribuciones_por_ronda': zip(rondas, contribuciones),
             'playerRol': self.player.roleP,
             'roles': rolesJugador,
-            'total':contribucion_total
+            'total':contribucion_total,
+            'n_ronda':self.round_number
         }
     
 
@@ -301,15 +307,19 @@ class ResultadosVotacion(Page):
         else:
             
             print("el numero de participantes: ", len(self.player.get_others_in_group()))
-            for otro in self.player.get_others_in_group():
-                cont = []
-                for j in range(3):
-                    sc="contribucion"+str(j)+": " + str(otro.in_round(self.round_number - (j+1)).contribucion)
-                   #print(sc)
-                    cont.append(otro.in_round(self.round_number - (3-j)).contribucion)
-                    #print(cont)
-                contribuciones.append(cont)
-                print(contribuciones)
+            while acum < 4:
+                for gameR in rolesJugador :
+                    for otro in self.player.get_others_in_group():
+                        cont = []
+                        if gameR == otro.in_round(self.round_number-3).roleP:
+                            for j in range(3):
+                                sc="contribucion"+str(j)+": " + str(otro.in_round(self.round_number - (j+1)).contribucion)
+                            #print(sc)
+                                cont.append(otro.in_round(self.round_number - (3-j)).contribucion)
+                                acum+=1
+                                #print(cont)
+                            contribuciones.append(cont)
+                            print(contribuciones)
             #sacar las contribuciones por ronda.
             lista_rondas=[]
             r1=[]
