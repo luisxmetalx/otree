@@ -5,9 +5,32 @@
     Dilema del Prisionero
 {% endblock %}
 
-{% block content %}
 
-<canvas id="pie-chart" width="800" height="450"></canvas>
+{% block content %}
+<div class="row" style="margin-top:4%;margin-bottom:5%;">
+
+  <div class="col-sm-6">
+      <canvas id="HvsM" width="600" height="350"></canvas>
+  </div>
+
+  <div class="col-sm-6">
+      <canvas id="edades" width="600" height="350"></canvas>
+  </div>
+
+</div>
+
+<div class="row" style="margin-top:4%;margin-bottom:5%;">
+
+  <div class="col-sm-6">
+    <canvas id="Mujdilemma" width="600" height="350"></canvas>
+  </div>
+
+  <div class="col-sm-6">
+    <canvas id="Homdilemma" width="600" height="350"></canvas>
+  </div>
+
+</div>
+
 
 {% next_button %}
 
@@ -17,24 +40,127 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
     <script> 
        $(document).ready(function(){
-            var ctx = document.getElementById("pie-chart");
-            new Chart(ctx, {
-                type: 'pie',
-                data: {
-                  labels: ["Hombres", "Mujeres"],
-                  datasets: [{
-                    label: "Population (millions)",
-                    backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
-                    data: [{{ m}},{{f}}]
-                  }]
+          m = {{m}}
+          f = {{f}}
+          porc_muj_con = {{porc_muj_con}}
+          porc_muj_cal = {{porc_muj_cal}}
+          porc_hom_con = {{porc_hom_con}}
+          prom_edad_hom = {{prom_edad_hom}}
+
+          new Chart(document.getElementById("HvsM"), {
+              type: 'doughnut',
+              data: {
+                labels: ["Hombres", "Mujeres"],
+                datasets: [{
+                  label: "Cantidad Hombres vs Mujeres",
+                  backgroundColor: ["#20c997", "#fd7e14"],
+                  data: [ m , f ]
+                }]
+              },
+              options: {
+                title: {
+                  display: true,
+                  text: 'Género de los Participantes'
                 },
-                options: {
-                  title: {
-                    display: true,
-                    text: 'Predicted world population (millions) in 2050'
+                animation: {
+                  animateScale: true,
+                  animateRotate: true
+                },
+                tooltips: {
+                  callbacks: {
+                    label: function(tooltipItem, data) {
+                      var dataset = data.datasets[tooltipItem.datasetIndex]
+                      var currentValue = dataset.data[tooltipItem.index]       
+                      return currentValue + "%"
+                    }
                   }
                 }
-            });
+              }
+          })
+
+          new Chart(document.getElementById("Mujdilemma"), {
+            type: 'pie',
+            data: {
+              labels: ["Confesaron", "Callaron"],
+              datasets: [{
+                label: "Mujeres en Experimento",
+                backgroundColor: ["#CB14CB", "#E31D52"],
+                data: [ porc_muj_con , porc_muj_cal ]
+              }]
+            },
+            options: {
+              title: {
+                display: true,
+                text: 'Comportamiento de las Mujeres en el Experimento Dilema del Prisionero'
+              },
+              animation: {
+                animateScale: true,
+                animateRotate: true
+              },
+              tooltips: {
+                callbacks: {
+                  label: function(tooltipItem, data) {
+                    var dataset = data.datasets[tooltipItem.datasetIndex]
+                    var currentValue = dataset.data[tooltipItem.index]       
+                    return currentValue + "%"
+                  }
+                }
+              }
+            }
+          })
+
+          new Chart(document.getElementById("Homdilemma"), {
+            type: 'pie',
+            data: {
+              labels: ["Confesaron", "Callaron"],
+              datasets: [{
+                label: "Hombres en Experimento",
+                backgroundColor: ["#29EC91", "#037EA7"],
+                data: [ porc_hom_con , {{porc_hom_cal}} ]
+              }]
+            },
+            options: {
+              title: {
+                display: true,
+                text: 'Comportamiento de los Hombres en el Experimento Dilema del Prisionero'
+              },
+              animation: {
+                animateScale: true,
+                animateRotate: true
+              },
+              tooltips: {
+                callbacks: {
+                  label: function(tooltipItem, data) {
+                    var dataset = data.datasets[tooltipItem.datasetIndex]
+                    var currentValue = dataset.data[tooltipItem.index]       
+                    return currentValue + "%"
+                  }
+                }
+              }
+            }
+          })
+
+          new Chart(document.getElementById("edades"), {
+            type: 'bar',
+            data: {
+              labels: ["Hombres", "Mujeres"],
+              datasets: [{
+                label: "Cantidad Hombres vs Mujeres",
+                backgroundColor: ["#FCA802", "#9AED0B"],
+                data: [ prom_edad_hom , {{prom_edad_muj}} ]
+              }]
+            },
+            options: {
+              title: {
+                display: true,
+                text: 'Promedio de Edad de los Participantes'
+              },
+              animation: {
+                animateScale: true,
+                animateRotate: true
+              }
+            }
+          })
         });
     </script>
     
