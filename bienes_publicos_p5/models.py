@@ -197,12 +197,18 @@ class Player(BasePlayer):
     
     roleP = models.CharField()
     Jug_admin =models.CharField()
+    promedio_1=models.FloatField()
 
     test2_p1 = models.IntegerField(initial=0)
     test2_p2 = models.IntegerField(initial=0)
     test2_p3 = models.IntegerField(initial=0)
     test2_p4 = models.IntegerField(initial=0)
     test2_p5 = models.IntegerField(initial=0)
+
+    pregunta1 = models.LongStringField(label="¿Qué información fue más relevante para su decisión sobre el administrador del grupo?(¿Qué le hizo decidirse por el administrador seleccionado?).",widget=widgets.Textarea(attrs={'cols': '20', 'rows': '5'}))
+    pregunta2 = models.LongStringField(label="¿Se comportó el administrador del grupo de acuerdo con tus expectativas?.",widget=widgets.Textarea(attrs={'cols': '20', 'rows': '5'}))
+    pregunta3 = models.LongStringField(label="¿Qué opinas sobre el mecanismo de selección del administrador?",widget=widgets.Textarea(attrs={'cols': '20', 'rows': '5'}))
+    pregunta4 = models.LongStringField(label="¿Se comportó el administrador del grupo de acuerdo con tus expectativas?",widget=widgets.Textarea(attrs={'cols': '20', 'rows': '5'}))
 
     def role(self):
         if self.id_in_group == 1:

@@ -38,6 +38,21 @@
               <td class="text-center"><b>{{ otro }}</b></td>
             {% endfor %}
           </tr>
+          <tr>
+            <td class="text-center"><b>Contribución acumulada (Promedio)</b></td>
+            <td class="text-center"><b>{{promedio_jug|floatformat:2}}</b></td>
+            {% for valor in promedio_otros %}
+              <td class="text-center"><b>{{valor|floatformat:2}}</b></td>
+            {% endfor %}
+          </tr>
+          {% if subsession.round_number > 1 %}
+            <tr>
+              <td class="text-center"><b>Contribución acumulada de la ronda 1 (Promedio)</b></td>
+              {% for valor in promedio_r1 %}
+                <td class="text-center"><b>{{valor|floatformat:2}}</b></td>
+              {% endfor %}
+            </tr>
+          {% endif %}
         </tbody>
       </table>
     </div>
@@ -64,18 +79,12 @@
           <h4><b>Usted es el administrador</b></h4>
         {% else %}
           <h3><b>El administrador será el participante
-            {% if group.administrador == 1 %}
-                A</b></h4>
-            {% elif group.administrador == 2 %}
-                B</b></h4>
-            {% elif group.administrador == 3 %}
-                C</b></h4>
-            {% elif group.administrador == 4 %}
-                D</b></h4>
-            {% elif group.administrador == 5 %}
-                E</b>
+            {% for p in group.get_players %}
+              {% if p.id_in_group == group.administrador %}
+                {{p.roleP}}
+              {% endif %}
+            {% endfor %}
           </h3>
-            {% endif %}
         {% endif %}
 
       {% endif %}

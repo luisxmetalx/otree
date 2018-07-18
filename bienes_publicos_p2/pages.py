@@ -44,7 +44,7 @@ class FinContribuciones(WaitPage):
 
 
 class Resultados(Page):
-    #timeout_seconds = 60
+    timeout_seconds = 60
     def is_displayed(self):
         if self.subsession.round_number == Constants.num_rounds:
             self.player.calcularGananciaAcumlada()
@@ -86,9 +86,19 @@ class Resultados(Page):
                 'ganancias': ganancias
                 }
 
-
+# class Contestas(Page):
+#     form_model = 'player'
+#     #form_fields=['pregunta1','pregunta2','pregunta3','pregunta4']
+#     def get_form_fields(self):
+#         if self.player.participant.vars["tratamiento"] == "leviatan":
+#             return ['pregunta3','pregunta4']
+#         else:
+#             return ['pregunta1','pregunta2']
+#     def is_displayed(self):
+#         return self.subsession.round_number==1
 
 page_sequence = [
+    #Contestas,
     Contribuir,
     FinContribuciones,
     Resultados,

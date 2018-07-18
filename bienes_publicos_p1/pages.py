@@ -114,5 +114,5 @@ class Test1(Page):
 page_sequence = [    
     Instrucciones,
     InstruccionesFase1,
-    #Test1
+    Test1
 ]

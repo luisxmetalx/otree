@@ -16,7 +16,7 @@ Bienes Públicos: Contribuir, Calcular VCM, Mostrar Resultados
 class Constants(BaseConstants):
     name_in_url = 'bienes_publicos_p2'
     players_per_group = 5
-    num_rounds = 2
+    num_rounds = 10
     fondo = 20
         
     modalF1 = 'bienes_publicos_p2/modalInstF1.html'
@@ -51,6 +51,11 @@ class Player(BasePlayer):
     tratamiento = models.CharField()
     ganancia = models.FloatField(initial=0)
     ganVCM = models.FloatField(initial=0)
+
+    # pregunta1 = models.LongStringField(label="¿Qué información fue más relevante para su decisión sobre el administrador del grupo?(¿Qué le hizo decidirse por el administrador seleccionado?).",widget=widgets.Textarea(attrs={'cols': '20', 'rows': '5'}))
+    # pregunta2 = models.LongStringField(label="¿Se comportó el administrador del grupo de acuerdo con tus expectativas?.",widget=widgets.Textarea(attrs={'cols': '20', 'rows': '5'}))
+    # pregunta3 = models.LongStringField(label="¿Qué opinas sobre el mecanismo de selección del administrador?",widget=widgets.Textarea(attrs={'cols': '20', 'rows': '5'}))
+    # pregunta4 = models.LongStringField(label="¿Se comportó el administrador del grupo de acuerdo con tus expectativas?",widget=widgets.Textarea(attrs={'cols': '20', 'rows': '5'}))
 
     # calcula la suma de las ganacias de cada ronda y lo guarda en la variable del dicc "ganVCM"
     def calcularGananciaAcumlada(self):

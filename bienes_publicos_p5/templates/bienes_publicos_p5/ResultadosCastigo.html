@@ -58,14 +58,14 @@
       </table>
 
       <div class="row">
-        <div class="col-md-6">
+        <div class="col">
           <h5>Total de puntos asignados por el Administrador en esta ronda: {{ total_puntos_asignados }}</h5>
           {% if administrador != roleJug %}
           <h5>Total de puntos asignados por el Administrador a usted en esta ronda: {{ player.pts_asignados }} </h5>
           <h5>Sus ganancias en esta ronda se redujeron en: {{ player.castigo }}</h5>
           {% endif %}
         </div>
-        <div class="col-md-6">
+        <div class="col-4.5">
           <h5>El aporte total a la cuenta del grupo es: {{ group.contribucion_total }}</h5>
           <h5>Su ganancia de la cuenta del grupo: {{ ganancia_grupo }} </h5>
           <h5><b>Su ganancia en esta ronda es: {{ player.gan_tp }}</b></h5>
