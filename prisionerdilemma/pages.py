@@ -49,14 +49,18 @@ class Chart(Page):
         pareja_conf = 0
         pareja_no_conf = 0
         pareja_dif = 0
-        yo = self.player
-        oponente = yo.other_player()
-        if yo.decision == oponente.decision and yo.decision=='Confesar':
-            pareja_conf += 1
-        elif yo.decision == oponente.decision and yo.decision=='Callar':
-            pareja_no_conf += 1
-        else:
-            pareja_dif += 1
+        
+        for j in self.subsession.get_groups():
+            for p in j.get_players():
+                yo = p
+                oponente = yo.other_player()
+                if yo.decision == oponente.decision and yo.decision=='Confesar':
+                    pareja_conf += 1
+                elif yo.decision == oponente.decision and yo.decision=='Callar':
+                    pareja_no_conf += 1
+                else:
+                    pareja_dif += 1
+
         for p in self.subsession.get_players():
             l_edades.append(p.edad)
             l_generos.append(p.genero)
@@ -81,9 +85,9 @@ class Chart(Page):
         porc_muj_callaron = (mujeres_callaron/total_mujeres)*100
         porc_hom_confesaron = (hombres_confesaron/total_hombres)*100
         porc_hom_callaron = (hombres_callaron/total_hombres)*100
-        pair_conf = ((pareja_conf)/((total_hombres+total_mujeres)/2))*100
-        pair_no_conf = ((pareja_no_conf)/((total_hombres+total_mujeres)/2))*100
-        pair_dif = ((pareja_dif)/((total_hombres+total_mujeres)/2))*100
+        pair_conf = ((pareja_conf/2)/((total_hombres+total_mujeres)/2))*100
+        pair_no_conf = ((pareja_no_conf/2)/((total_hombres+total_mujeres)/2))*100
+        pair_dif = ((pareja_dif/2)/((total_hombres+total_mujeres)/2))*100
 
         suma1 = 0
         suma2 = 0
