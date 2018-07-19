@@ -757,17 +757,18 @@ class AplicarCastigo(Page):
                 n_ronda = 1
                 if jugador.in_round(n_ronda).roleP == self.player.in_round(n_ronda).Jug_admin:
                     administrador = jugador.in_round(n_ronda).roleP
-                    print("la letra del administrador es: ", administrador)
+                    print("la letra del administrador1 es: ", administrador)
             elif self.round_number >= 4 and self.round_number < 7:
                 n_ronda = 4
                 if jugador.in_round(n_ronda).roleP == self.player.in_round(n_ronda).Jug_admin:
                     administrador = jugador.in_round(n_ronda).roleP
-                    print("la letra del administrador es: ", administrador)
+                    print("la letra del administrador4 es: ", administrador)
             elif self.round_number >= 7 and self.round_number < 10:
                 n_ronda = 7
                 if jugador.in_round(n_ronda).roleP == self.player.in_round(n_ronda).Jug_admin:
                     administrador = jugador.in_round(n_ronda).roleP
-                    print("la letra del administrador es: ", administrador)
+                    print("la letra del administrador7 es: ", administrador)
+                    print("el rol de este player es: ",self.player.in_round(n_ronda).roleP)
             elif self.round_number >= 10:
                 n_ronda = 10
                 if jugador.in_round(n_ronda).roleP == self.player.in_round(n_ronda).Jug_admin:
@@ -945,17 +946,6 @@ class FinalFase1(Page):
             'role_participante':self.player.roleP,
         }
 
-class Contestas(Page):
-    form_model = 'player'
-    #form_fields=['pregunta1','pregunta2','pregunta3','pregunta4']
-    def get_form_fields(self):
-        if self.player.participant.vars["tratamiento"] == "leviatan":
-            return ['pregunta3','pregunta4']
-        else:
-            return ['pregunta1','pregunta2']
-    def is_displayed(self):
-        return self.subsession.round_number == Constants.num_rounds
-
 
 page_sequence = [
     FinalFase1,
@@ -975,6 +965,6 @@ page_sequence = [
     ResultadosCastigo,
     Final,
     #nuevas preguntas
-    Contestas
+    #Contestas
 
 ]
