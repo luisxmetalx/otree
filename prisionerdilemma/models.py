@@ -36,14 +36,14 @@ class Group(BaseGroup):
 
 class Player(BasePlayer):
 
-    #Se crea un campo para almacenar la decisión del jugaor
+    #Se crea un campo para almacenar la decisión del jugador
     decision = models.StringField(
         choices=['Confesar', 'Callar'],
         doc="""Esto es la decisión del jugador""",
         widget=widgets.RadioSelect
     )
 
-    #Se crea un campo para almacenar el género del jugaor
+    #Se crea un campo para almacenar el género del jugador
     genero = models.StringField(
         choices=['Masculino', 'Femenino'],
         doc="""Esto es el género del jugador""",
@@ -52,6 +52,9 @@ class Player(BasePlayer):
 
     #La edad del jugador
     edad = models.IntegerField(min=18)
+    
+    #matricula del jugador
+    matricula = models.IntegerField(min=100000000,max=999999999)
     
 
     def other_player(self):

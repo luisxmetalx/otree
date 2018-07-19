@@ -8,7 +8,7 @@ class Introduction(Page):
 
 class Quiz(Page):
     form_model = 'player'
-    form_fields = ['genero','edad']
+    form_fields = ['genero','edad','matricula']
 
 class Decision(Page):
     form_model = 'player'
@@ -23,6 +23,7 @@ class Results(Page):
     def vars_for_template(self):
         yo = self.player
         oponente = yo.other_player()
+
         return {
             'mi_decision' : yo.decision,
             'oponente_decision' : oponente.decision,
@@ -44,6 +45,18 @@ class Chart(Page):
         mujeres_callaron = 0
         hombres_confesaron = 0
         hombres_callaron = 0
+
+        pareja_conf = 0
+        pareja_no_conf = 0
+        pareja_dif = 0
+        yo = self.player
+        oponente = yo.other_player()
+        if yo.decision == oponente.decision and yo.decision=='Confesar':
+            pareja_conf += 1
+        elif yo.decision == oponente.decision and yo.decision=='Callar':
+            pareja_no_conf += 1
+        else:
+            pareja_dif += 1
         for p in self.subsession.get_players():
             l_edades.append(p.edad)
             l_generos.append(p.genero)
@@ -68,6 +81,9 @@ class Chart(Page):
         porc_muj_callaron = (mujeres_callaron/total_mujeres)*100
         porc_hom_confesaron = (hombres_confesaron/total_hombres)*100
         porc_hom_callaron = (hombres_callaron/total_hombres)*100
+        pair_conf = ((pareja_conf)/((total_hombres+total_mujeres)/2))*100
+        pair_no_conf = ((pareja_no_conf)/((total_hombres+total_mujeres)/2))*100
+        pair_dif = ((pareja_dif)/((total_hombres+total_mujeres)/2))*100
 
         suma1 = 0
         suma2 = 0
@@ -88,7 +104,10 @@ class Chart(Page):
             'porc_hom_con' : porc_hom_confesaron,
             'porc_hom_cal' : porc_hom_callaron,
             'prom_edad_muj' : prom_edad_mujer,
-            'prom_edad_hom' : prom_edad_hombre
+            'prom_edad_hom' : prom_edad_hombre,
+            'pair_conf' : pair_conf,
+            'pair_no_conf' : pair_no_conf,
+            'pair_dif' : pair_dif
         }
 
 page_sequence = [
