@@ -130,6 +130,71 @@ class ElegirAdministrador(Page):
         return self.round_number==1 or self.round_number==4 or self.round_number==7 or self.round_number==10
 
     def vars_for_template(self):
+        #solucionar problemas de roles repetidos.
+        adb=[]
+        letras=['A','B','C','D','E']
+        for jug in self.group.get_players():
+            adb.append(jug.roleP)
+        a=adb.count('A')
+        b=adb.count('B')
+        c=adb.count('C')
+        d=adb.count('D')
+        e=adb.count('E')
+        if (a>1 or b>1 or c>1 or d>1 or e>1):
+            print("hay roles repetidos")
+            if(a>1):
+                print("el rol repetido es el A")
+                print("el indice es: ",adb.index('A'))
+                px=adb.index('A')
+                adb.remove('A')
+                print(adb)
+                for l in adb:
+                    letras.remove(l)
+                for pg in self.group.get_players():
+                    if(pg.id_in_group==(px+1)):
+                        pg.roleP=letras[0]
+
+            elif(b>1):
+                print("el rol repetido es el B")
+                px=adb.index('B')
+                adb.remove('B')
+                print(adb)
+                for l in adb:
+                    letras.remove(l)
+                for pg in self.group.get_players():
+                    if(pg.id_in_group==(px+1)):
+                        pg.roleP=letras[0]
+            elif(c>1):
+                print("el rol repetido es el C")
+                px=adb.index('C')
+                adb.remove('C')
+                print(adb)
+                for l in adb:
+                    letras.remove(l)
+                for pg in self.group.get_players():
+                    if(pg.id_in_group==(px+1)):
+                        pg.roleP=letras[0]
+            elif(d>1):
+                print("el rol repetido es el D")
+                px=adb.index('D')
+                adb.remove('D')
+                print(adb)
+                for l in adb:
+                    letras.remove(l)
+                for pg in self.group.get_players():
+                    if(pg.id_in_group==(px+1)):
+                        pg.roleP=letras[0]
+            elif(e>1):
+                print("el rol repetido es el E")
+                px=adb.index('E')
+                adb.remove('E')
+                print(adb)
+                for l in adb:
+                    letras.remove(l)
+                for pg in self.group.get_players():
+                    if(pg.id_in_group==(px+1)):
+                        pg.roleP=letras[0]
+
         rondas = []
         if(self.round_number==1):
             for i in range(len(self.player.participant.vars["contribuciones"])):
@@ -257,8 +322,8 @@ class ElegirAdministrador(Page):
         acum=0
         promedio_r1=[]
         while acum < 4:
-            for gameR in rolesJugador :
-                for otro in self.player.get_others_in_group():
+            for gameR in rolesJugador:
+                for otro in self.group.get_players():
                     if gameR == otro.in_round(1).roleP:
                         acum+=1
                         #print(cont)
@@ -267,73 +332,11 @@ class ElegirAdministrador(Page):
         promedio_r1.insert(0,self.player.in_round(1).promedio_1)
         print(promedio_r1)   
 
-        #solucionar problemas de roles repetidos.
-        adb=[]
-        letras=['A','B','C','D','E']
-        for jug in self.group.get_players():
-            adb.append(jug.roleP)
-        a=adb.count('A')
-        b=adb.count('B')
-        c=adb.count('C')
-        d=adb.count('D')
-        e=adb.count('E')
-        if (a>1 or b>1 or c>1 or d>1 or e>1):
-            print("hay roles repetidos")
-            if(a>1):
-                print("el rol repetido es el A")
-                print("el indice es: ",adb.index('A'))
-                px=adb.index('A')
-                adb.remove('A')
-                print(adb)
-                for l in adb:
-                    letras.remove(l)
-                for pg in self.group.get_players():
-                    if(pg.id_in_group==(px+1)):
-                        pg.roleP=letras[0]
-
-            elif(b>1):
-                print("el rol repetido es el B")
-                px=adb.index('B')
-                adb.remove('B')
-                print(adb)
-                for l in adb:
-                    letras.remove(l)
-                for pg in self.group.get_players():
-                    if(pg.id_in_group==(px+1)):
-                        pg.roleP=letras[0]
-            elif(c>1):
-                print("el rol repetido es el C")
-                px=adb.index('C')
-                adb.remove('C')
-                print(adb)
-                for l in adb:
-                    letras.remove(l)
-                for pg in self.group.get_players():
-                    if(pg.id_in_group==(px+1)):
-                        pg.roleP=letras[0]
-            elif(d>1):
-                print("el rol repetido es el D")
-                px=adb.index('D')
-                adb.remove('D')
-                print(adb)
-                for l in adb:
-                    letras.remove(l)
-                for pg in self.group.get_players():
-                    if(pg.id_in_group==(px+1)):
-                        pg.roleP=letras[0]
-            elif(e>1):
-                print("el rol repetido es el E")
-                px=adb.index('E')
-                adb.remove('E')
-                print(adb)
-                for l in adb:
-                    letras.remove(l)
-                for pg in self.group.get_players():
-                    if(pg.id_in_group==(px+1)):
-                        pg.roleP=letras[0]
+        
 
         #promedio del participante                 
         self.player.promedio_1=(self.player.participant.vars["acumulado"])/len(rondas)
+
         return {
             'rondas': rondas,
             'acumulado': self.player.participant.vars["acumulado"],
@@ -361,7 +364,7 @@ class FinalVotacion(WaitPage):
         print('administrador | dem: ', admin)
 
 class ResultadosVotacion(Page):
-    timeout_seconds = 15
+    #timeout_seconds = 15
     def is_displayed(self):
         #self.player.ganVCM()
         return (self.round_number==1 or self.round_number==4 or self.round_number==7 or self.round_number==10)
@@ -500,8 +503,8 @@ class ResultadosVotacion(Page):
         acum=0
         promedio_r1=[]
         while acum < 4:
-            for gameR in rolesJugador :
-                for otro in self.player.get_others_in_group():
+            for gameR in rolesJugador:
+                for otro in self.group.get_players():
                     if gameR == otro.in_round(1).roleP:
                         acum+=1
                         #print(cont)
@@ -584,6 +587,7 @@ class ResultadosVotacion(Page):
                 'promedio_r1': promedio_r1,
                 'contribuciones_por_ronda': zip(rondas, contribuciones),
                 'administrador': adm,
+                'letras':letras,
                 'roles': rolesJugador,
                 'total':contribucion_total
             }

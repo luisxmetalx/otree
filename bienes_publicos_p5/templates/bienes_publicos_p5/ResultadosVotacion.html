@@ -71,8 +71,12 @@
         
       {% endif %}
       {% if player.participant.vars.tratamiento == 'democracia' %}
-        {% for p in group.get_players %}
-          <h5>Participante {{ p.role }} obtuvo {{ p.participant.vars.votos_recibidos }} votos</h5>
+        {% for l in letras %}
+          {% for p in group.get_players %}
+            {% if p.roleP == l %}
+              <h5>Participante {{ p.roleP }} obtuvo {{ p.participant.vars.votos_recibidos }} votos</h5>
+            {% endif %}
+          {% endfor %}
         {% endfor %}
         <br>
         {% if player.id_in_group == group.administrador %}
