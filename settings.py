@@ -178,6 +178,12 @@ SESSION_CONFIGS = [
         'num_demo_participants': 2,
         'app_sequence': ['prisionerdilemma'], 
     },
+    {
+        'name': 'comp_duolipo_bertrand',
+        'display_name': "Competencia de Duolipo a la Bertrand",
+        'num_demo_participants': 2,
+        'app_sequence': ['comp_duolipo_bertrand'], 
+    },
     
     # other session configs ...
     # other session configs go here ...

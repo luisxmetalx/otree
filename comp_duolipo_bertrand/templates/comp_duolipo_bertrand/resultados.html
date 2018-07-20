@@ -1,0 +1,40 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+    Resultados
+{% endblock %}
+
+{% block content %}
+    <div class="card bg-light">
+        <div class="card-body">
+            <p class="text-justify font-weight-bold">
+                Su ganancia ha sido de ${{mi_ganancia}}
+            </p>
+                <table class="table table-hover text-center">
+                    <thead>
+                        <tr class="table-active">
+                            <th scope="col">Ronda</th>
+                            <th scope="col">Ganancia</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        
+                        {%for i,j in lista.items%}
+                            <tr class="table-light">
+                                <td> {{i}} </td>
+                                <td> ${{j}} </td>
+                            </tr>
+                        {%endfor%}
+
+                        <tr class="table-light">
+                            <th scope="row">Ganancia Total</th>
+                            <td> ${{ganancia_total}} </td>
+                        </tr>
+                        
+                    </tbody>                    
+                </table>
+            {% next_button %}
+        </div>
+    </div>
+{% endblock %}
