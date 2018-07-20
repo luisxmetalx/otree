@@ -43,7 +43,7 @@
               {% endfor %}
             </tr>
             <tr>
-              <td class="text-center"><b>Contribución acumulada (Promedio)</b></td>
+              <td class="text-center"><b>Contribución Promedio</b></td>
               <td class="text-center"><b>{{promedio_jug|floatformat:2}}</b></td>
               {% for valor in promedio_otros %}
                 <td class="text-center"><b>{{valor|floatformat:2}}</b></td>
@@ -51,7 +51,7 @@
             </tr>
             {% if subsession.round_number > 1 %}
               <tr>
-                <td class="text-center"><b>Contribución acumulada de la ronda 1 (Promedio)</b></td>
+                <td class="text-center"><b>Contribución Promedio Fase 1</b></td>
                 {% for valor in promedio_r1 %}
                   <td class="text-center"><b>{{valor|floatformat:2}}</b></td>
                 {% endfor %}

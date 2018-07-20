@@ -1,0 +1,21 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree_tags %}
+
+{% block title %}
+Preguntas
+{% endblock %}
+    
+{% block content %}
+    <div class="container-fluid">
+        <div class="row">
+            <p class="text-justify">Por favor, escribir su respusta lo más directo posible, en un máximo de 250 palabras.</p>
+        </div>
+        {% for field in form %}
+            <div class="row">{% formfield field %}</div>
+        {% endfor %}
+        
+        <div class="row">
+            {% next_button %}
+        </div>
+    </div>
+{% endblock%}

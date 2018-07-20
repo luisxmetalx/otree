@@ -35,6 +35,22 @@ class Player(BasePlayer):
     pago_bret = models.FloatField()
     pago_total = models.FloatField()
 
+    #preguntas para democracia
+    pregunta1 = models.LongStringField(label="¿Qué información fue más relevante para su decisión sobre el administrador del grupo?(¿Qué le hizo decidirse por el administrador seleccionado?).",widget=widgets.Textarea(attrs={'cols': '20', 'rows': '5'}))
+    pregunta2 = models.LongStringField(label="¿Se comportó el administrador del grupo de acuerdo con tus expectativas?.",widget=widgets.Textarea(attrs={'cols': '20', 'rows': '5'}))
+    pregunta3 = models.LongStringField(label="Estamos interesados en conocer su motivación en la votación de la fase 2. Específicamente, ¿qué información tomó en cuenta para votar por el administrador del grupo?.",widget=widgets.Textarea(attrs={'cols': '20', 'rows': '5'}))
+
+    #preguntas para leviatan
+    pregunta4 = models.LongStringField(label="¿Qué opinas sobre el mecanismo de selección del administrador?",widget=widgets.Textarea(attrs={'cols': '20', 'rows': '5'}))
+    pregunta5 = models.LongStringField(label="¿Se comportó el administrador del grupo de acuerdo con tus expectativas?",widget=widgets.Textarea(attrs={'cols': '20', 'rows': '5'}))
+    pregunta6 = models.LongStringField(label="¿Qué opina del mecanismo de selección del administrador? Si tuviera que volver a diseñar el mecanismo de selección, ¿qué regla o reglas elegiría?.",widget=widgets.Textarea(attrs={'cols': '20', 'rows': '5'}))
+
+    #preguntas comunes
+    pregunta7 = models.LongStringField(label="¿Cómo esperaba que los administradores tomaran sus decisiones en cada ronda?.",widget=widgets.Textarea(attrs={'cols': '20', 'rows': '5'}))
+    pregunta8 = models.LongStringField(label="¿Los administradores se comportaron de acuerdo con sus expectativas?. Explique",widget=widgets.Textarea(attrs={'cols': '20', 'rows': '5'}))
+    pregunta9 = models.LongStringField(label="¿Qué efecto, en su caso, cree que tuvieron los administradores sobre los resultados de su grupo?.",widget=widgets.Textarea(attrs={'cols': '20', 'rows': '5'}))
+    pregunta10 = models.LongStringField(label="Si tuviéramos que agregar una tercera fase al experimento, ¿preferiría que se usen las reglas de la fase 1 ó fase 2?.",widget=widgets.Textarea(attrs={'cols': '20', 'rows': '5'}))
+
 
     def info_de_pagos(self):
 
