@@ -42,7 +42,7 @@
                 <p>A continuación tendrá la oportunidad de <b>VOTAR por cualquier integrante de su grupo</b> (excepto usted) para que sea elegido como administrador durante las próximas tres rondas.<b> El que reciba la mayoría de los votos será elegido administrador.</b> En caso de empate, el administrador será seleccionado al azar entre los miembros empatados.</p>
                 <p>Usted observará el resultado de la elección del administrador antes de iniciar la fase 2.</p>
                 <p>Tenga en cuenta que <b>el administrador será elegido cada tres rondas, mediante votación, igual que en la ronda 1.</b></p>
-                <p>Antes de votar en las rondas posteriores cada miembro del grupo observará el promedio de las contribuciones en la fase 1 y la información de las 3 rondas intermedias. Especificamente, en las rondas 4, 7, 10, usted observará el promedio de las contribuciones a la cuenta grupal de la fase 1 y el total de las contribuciones de todos los miembros del grupo en las 3 últimas rondas. Así podrá votar por el administrador de su preferencia.</p>
+                <p>Antes de votar en las rondas posteriores cada miembro del grupo observará el promedio de las contribuciones en la fase 1 y la información de las 3 rondas intermedias. Específicamente, en las rondas 4, 7, 10, usted observará el promedio de las contribuciones a la cuenta grupal de la fase 1 y el total de las contribuciones de todos los miembros del grupo en las 3 últimas rondas. Así podrá votar por el administrador de su preferencia.</p>
             {% endif %}
             
             <br>
@@ -128,7 +128,8 @@
             <b>Por favor levante la mano si tiene alguna pregunta</b>, si no, de clic en <b>Siguiente</b> para continuar.</p>
             
             <div class="row">
-                {% next_button %}
+                <div class="col-10"></div>
+                <div class="col-1">{% next_button %}</div>
             </div>
             </div>    
     </div>
@@ -141,56 +142,55 @@
 
 {% block styles %}
 <style type="text/css">
+    .otree-body {
+        max-width: 95%;
+        
+    }
 
-  .row{
-    margin: 0 auto;
-  }
+    .row{
+        margin: 0 auto;
+    }
 
-  .ejemplo{
-    background: #ccddff;
-  }
-  
-  div.panel-heading.ejemplo-titulo{
-    background: #80aaff;
-  }
-    
-  .otree-body{
-    width: 85%;
-  }
-  
-  .page-header{
-    padding-top: 5px;
-    margin-top: 5px;
-  }
+    .ejemplo{
+        background: #ccddff;
+    }
 
-  .formula{
-    padding: 1%;
-    text-align: center;
-    background: bisque;
-    border: solid;
-    width: 100%;
-  }
+    div.panel-heading.ejemplo-titulo{
+        background: #80aaff;
+    }
 
-  .tabla > tbody > tr, .tabla > tbody > tr > td{
-    border: 2px solid;
-    vertical-align: middle;
-  }
+    .page-header{
+        margin-top: 0%;
+    }
 
-  div.horizontal {
-    display: flex;
-    justify-content: center;
-  }
-  div.vertical {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    width: 400px;
-  }
+    .formula{
+        padding: 1%;
+        text-align: center;
+        background: bisque;
+        border: solid;
+        width: 100%;
+    }
 
-  img{
-    margin-left: -40px;
-    
-  }
+    .tabla > tbody > tr, .tabla > tbody > tr > td{
+        border: 2px solid;
+        vertical-align: middle;
+    }
+
+    div.horizontal {
+        display: flex;
+        justify-content: center;
+    }
+    div.vertical {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        width: 400px;
+    }
+
+    img{
+        margin-left: -40px;
+        
+    }
 </style>
 
 {% endblock %}

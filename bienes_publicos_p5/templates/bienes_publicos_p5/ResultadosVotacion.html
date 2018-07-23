@@ -11,94 +11,96 @@
 
 {% block content %}
 
-    <div class="row well">
-    <div class="col-md-8">
-      <br>
-      <table class="table tabla ">
-        <thead>
-          <th class="text-center ronda">Ronda</th>
-          <th class="text-center">Usted</th>
-          {% for jugador in roles %}
-          <th class="text-center">{{ jugador }}</th>
-          {% endfor %}
-        </thead>
-        <tbody>
-          {% for ronda, cont in contribuciones_por_ronda %}
-            <tr class="text-center">
-              <td>{{ ronda }}</td>
-              {% for c in cont %}
-                <td>{{ c }}</td>
+    <div class="container-fluit">
+      <div class="row well">
+        <div class="col-md-8">
+          <br>
+          <table class="table table-sm table-bordered ">
+            <thead>
+              <th class="text-center ronda">Ronda</th>
+              <th class="text-center">Usted</th>
+              {% for jugador in roles %}
+              <th class="text-center">{{ jugador }}</th>
               {% endfor %}
-            </tr>
-          {% endfor %}
-          <tr>
-            <td class="text-center"><b>Contribución acumulada (puntos totales)</b></td>
-            <td class="text-center"><b>{{ player.participant.vars.acumulado }}</b></td>
-            {% for otro in total %}
-              <td class="text-center"><b>{{ otro }}</b></td>
-            {% endfor %}
-          </tr>
-          <tr>
-            <td class="text-center"><b>Contribución Promedio</b></td>
-            <td class="text-center"><b>{{promedio_jug|floatformat:2}}</b></td>
-            {% for valor in promedio_otros %}
-              <td class="text-center"><b>{{valor|floatformat:2}}</b></td>
-            {% endfor %}
-          </tr>
-          {% if subsession.round_number > 1 %}
-            <tr>
-              <td class="text-center"><b>Contribución Promedio Fase 1</b></td>
-              {% for valor in promedio_r1 %}
-                <td class="text-center"><b>{{valor|floatformat:2}}</b></td>
+            </thead>
+            <tbody>
+              {% for ronda, cont in contribuciones_por_ronda %}
+                <tr class="text-center">
+                  <td>{{ ronda }}</td>
+                  {% for c in cont %}
+                    <td>{{ c }}</td>
+                  {% endfor %}
+                </tr>
               {% endfor %}
-            </tr>
-          {% endif %}
-        </tbody>
-      </table>
-    </div>
-    <div class="col-md-4 text-center ">
-      <br>
-      <h4>Usted es el participante {{ player.roleP }}</h4>
-      <hr>
-      {% if player.participant.vars.tratamiento == 'leviatan' %}
-        {% if player.id_in_group == group.administrador %}
-          <h4><b>Usted es el administrador</b></h4>
-        {% else %}
-        <h4>
-          <b>El administrador será el participante {{administrador}}</b>
-        </h4>
-      {% endif %}
-        
-      {% endif %}
-      {% if player.participant.vars.tratamiento == 'democracia' %}
-        {% for l in letras %}
-          {% for p in group.get_players %}
-            {% if p.roleP == l %}
-              <h5>Participante {{ p.roleP }} obtuvo {{ p.participant.vars.votos_recibidos }} votos</h5>
-            {% endif %}
-          {% endfor %}
-        {% endfor %}
-        <br>
-        {% if player.id_in_group == group.administrador %}
-          <h4><b>Usted es el administrador</b></h4>
-        {% else %}
-          <h3><b>El administrador será el participante
-            {% for p in group.get_players %}
-              {% if p.id_in_group == group.administrador %}
-                {{p.roleP}}
+              <tr>
+                <td class="text-center"><b>Contribución acumulada (puntos totales)</b></td>
+                <td class="text-center"><b>{{ player.participant.vars.acumulado }}</b></td>
+                {% for otro in total %}
+                  <td class="text-center"><b>{{ otro }}</b></td>
+                {% endfor %}
+              </tr>
+              <tr>
+                <td class="text-center"><b>Contribución Promedio</b></td>
+                <td class="text-center"><b>{{promedio_jug|floatformat:2}}</b></td>
+                {% for valor in promedio_otros %}
+                  <td class="text-center"><b>{{valor|floatformat:2}}</b></td>
+                {% endfor %}
+              </tr>
+              {% if subsession.round_number > 1 %}
+                <tr>
+                  <td class="text-center"><b>Contribución Promedio Fase 1</b></td>
+                  {% for valor in promedio_r1 %}
+                    <td class="text-center"><b>{{valor|floatformat:2}}</b></td>
+                  {% endfor %}
+                </tr>
               {% endif %}
+            </tbody>
+          </table>
+          <div class="row">
+            <div class="col-10"></div>
+            <div class="col-1"> {% next_button %}</div>
+          </div>
+        </div>
+        <div class="col-md-4 text-center ">
+          <br>
+          <h4>Usted es el participante {{ player.roleP }}</h4>
+          <hr>
+          {% if player.participant.vars.tratamiento == 'leviatan' %}
+            {% if player.id_in_group == group.administrador %}
+              <h4><b>Usted es el administrador</b></h4>
+            {% else %}
+            <h4>
+              <b>El administrador será el participante {{administrador}}</b>
+            </h4>
+          {% endif %}
+            
+          {% endif %}
+          {% if player.participant.vars.tratamiento == 'democracia' %}
+            {% for l in letras %}
+              {% for p in group.get_players %}
+                {% if p.roleP == l %}
+                  <h5>Participante {{ p.id_in_group }} obtuvo {{ p.participant.vars.votos_recibidos }} votos</h5>
+                {% endif %}
+              {% endfor %}
             {% endfor %}
-          </h3>
-        {% endif %}
-
-      {% endif %}
-
-    </div>
-
-    <div class="row">
-       {% next_button %}
-    </div>
-      
+            <br>
+            {% if player.id_in_group == group.administrador %}
+              <h4><b>Usted es el administrador</b></h4>
+            {% else %}
+              <h3><b>El administrador será el participante
+                {% for p in group.get_players %}
+                  {% if p.id_in_group == group.administrador %}
+                    {{p.roleP}}
+                  {% endif %}
+                {% endfor %}
+              </h3>
+            {% endif %}
+    
+          {% endif %}
+    
+        </div>          
+        </div>
+        
     </div>
 
 
@@ -107,9 +109,7 @@
 {% block styles %}
   <style type="text/css">
 
-  .row{
-    margin: 0 auto;
-  }
+  
 
   .page-header{
     margin-top: 0;
@@ -121,14 +121,13 @@
     background: lavender;
     padding: 1%;
   }
-  .tabla > thead > tr, .tabla > thead > tr > th{
+  .table-bordered td, .table-bordered th {
     border: 2px solid grey;
   }
-  
-  .tabla > tbody > tr, .tabla > tbody > tr > td{
-    border: 2px solid grey;
+  .table thead th {
+    vertical-align: bottom;
+    border-bottom: 2px solid grey;
   }
-
   .ronda{
     width: 50%;
   }

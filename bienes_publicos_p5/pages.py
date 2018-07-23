@@ -844,7 +844,7 @@ class AplicarCastigo(Page):
 
 
 class ResultadosCastigo(Page):
-    timeout_seconds = 60
+    #timeout_seconds = 60
     def is_displayed(self):
         print ('view ResultadosCastigo --> id: ', self.player.id_in_group, ', admin : ', self.player.participant.vars.get("admin"))
         return True

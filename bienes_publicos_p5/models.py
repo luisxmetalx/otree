@@ -52,9 +52,10 @@ class Group(BaseGroup):
         #setear valores a cero para q no escoja votos pasados
         for p in self.get_players():
             p.participant.vars["votos_recibidos"] = 0
-        #suma de botos 
+        #suma de votos 
         for p in self.get_players():
             self.get_player_by_id(p.voto).participant.vars["votos_recibidos"] += 1
+            print("id del participante: ",p.voto)
         for p in self.get_players():
             print ('id: ', p.id_in_group, 'votos recibidos: ', p.participant.vars["votos_recibidos"])
     

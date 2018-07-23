@@ -18,7 +18,7 @@
         <h4>Contribuciones de todos los participantes a la cuenta del grupo</h4>
         <br>
   
-        <table class="table tabla">
+        <table class="table table-sm table-bordered">
           <thead>
             <th class="text-center">Ronda</th>
             <th class="text-center">Usted</th>
@@ -78,7 +78,8 @@
         <br>
   
         <div class="row">
-           {% next_button %}
+          <div class="col-10"></div>
+          <div class="col-1"> {% next_button %}</div>
         </div>
       </div>
     </div>
@@ -101,12 +102,15 @@
     margin: 0 auto;
   }
 
-  .tabla > thead > tr, .tabla > thead > tr > th{
-    border: 2px solid grey;
-  }
   
-  .tabla > tbody > tr, .tabla > tbody > tr > td{
+  .table-bordered td, .table-bordered th {
     border: 2px solid grey;
   }
+  .table thead th {
+    vertical-align: bottom;
+    border-bottom: 2px solid grey;
+  }
+
+  
 </style>
 {% endblock %}
