@@ -16,10 +16,11 @@ precio tendra todo el mercado o la mitad.
 class Constants(BaseConstants):
     name_in_url = 'comp_duolipo_bertrand'
     players_per_group = 2
-    num_rounds = 10
+    num_rounds = 2
     ume = 0.01
     intructions_template = 'comp_duolipo_bertrand/instructions.html'
     demanda = 100
+    cmg = 4
 
 class Subsession(BaseSubsession):
     pass
@@ -30,11 +31,21 @@ class Group(BaseGroup):
 
 
 class Player(BasePlayer):
+    #genero de los participante
+    genero = models.StringField(
+        choices=['Masculino', 'Femenino'],
+        doc="""Esto es el género del jugador""",
+        widget=widgets.RadioSelect
+    )
+
+    #edad del participante
+    edad = models.IntegerField(min=18)
+    
     #precio que pone el jugador entre 0 y 20 en cada ronda
     precio = models.IntegerField(min=0, max=20)
 
     #valor temporal para la ganancia actual de la ronda
-    value = 0
+    value = models.IntegerField(initial=0)
 
     #matricula del jugador
     matricula = models.IntegerField(min=100000000,max=999999999)

@@ -1,0 +1,152 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+
+{% block title %}
+    Dilema del Prisionero
+{% endblock %}
+
+
+{% block content %}
+
+<div class="row" style="margin-top:4%;margin-bottom:5%;">
+
+  <div class="col-sm-12">
+      <canvas id="grupos_precio" width="800" height="450"></canvas>
+  </div>
+
+</div>
+
+<div class="row" style="margin-top:4%;margin-bottom:5%;">
+
+    <div class="col-sm-12">
+        <canvas id="ganancias" width="800" height="450"></canvas>
+    </div>
+  
+</div>
+
+<div class="row" style="margin-top:4%;margin-bottom:5%;">
+
+    <div class="col-sm-6">
+        <canvas id="HvsM" width="600" height="350"></canvas>
+    </div>
+  
+    <div class="col-sm-6">
+        <canvas id="edades" width="600" height="350"></canvas>
+    </div>
+  
+</div>
+
+
+{% next_button %}
+
+{% endblock %}
+
+{% block app_scripts %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+    <script> 
+       $(document).ready(function(){
+            m = {{m|json}}
+            f = {{f|json}}
+            prom_edad_hombre = {{prom_edad_hombre|json}}
+
+            new Chart(document.getElementById("grupos_precio"), {
+                type: 'bar',
+                data: {
+                    labels: [ {% for i in total_grupos %} {{i|json}}, {%endfor%} "CMG"],
+                    datasets: [{
+                        label: "Precio Promedio",
+                        data: [ {% for i in prom_precio %} {{i|json}}, {%endfor%} {{cmg|json}}],
+                        backgroundColor: ["#0595E2", "#05E24F","#E25505"],
+                    }]
+                },
+                options: {
+                    title: {
+                        display: true,
+                        text: 'Promedio de Precio de los Grupos Participantes'
+                    },
+                    animation: {
+                        animateScale: true,
+                        animateRotate: true
+                    }
+                }
+            })
+
+            new Chart(document.getElementById("ganancias"), {
+                type: 'bar',
+                data: {
+                  labels: [{% for i in total_grupos %} {{i|json}}, {%endfor%} "Ganancia Maxima"],
+                  datasets: [{
+                    label: "Ganancias",
+                    backgroundColor: ["#FCA802", "#9AED0B","#E25505","#FFF000"],
+                    data: [ {% for i in ganancia_total %} {{i|json}}, {%endfor%} {{ganancia_max}} ]
+                  }]
+                },
+                options: {
+                  title: {
+                    display: true,
+                    text: 'Ganancia Maxima por Grupo'
+                  },
+                  animation: {
+                    animateScale: true,
+                    animateRotate: true
+                  }
+                }
+              })
+            
+            new Chart(document.getElementById("HvsM"), {
+                type: 'doughnut',
+                data: {
+                  labels: ["Hombres", "Mujeres"],
+                  datasets: [{
+                    label: "Cantidad Hombres vs Mujeres",
+                    backgroundColor: ["#20c997", "#fd7e14"],
+                    data: [ m , f ]
+                  }]
+                },
+                options: {
+                  title: {
+                    display: true,
+                    text: 'Género de los Participantes'
+                  },
+                  animation: {
+                    animateScale: true,
+                    animateRotate: true
+                  },
+                  tooltips: {
+                    callbacks: {
+                      label: function(tooltipItem, data) {
+                        var dataset = data.datasets[tooltipItem.datasetIndex]
+                        var currentValue = dataset.data[tooltipItem.index]       
+                        return currentValue + "%"
+                      }
+                    }
+                  }
+                }
+            })
+
+            new Chart(document.getElementById("edades"), {
+                type: 'bar',
+                data: {
+                  labels: ["Hombres", "Mujeres"],
+                  datasets: [{
+                    label: "Cantidad Hombres vs Mujeres",
+                    backgroundColor: ["#E2DB05", "#8105E2"],
+                    data: [ prom_edad_hombre , {{prom_edad_mujer}} ]
+                  }]
+                },
+                options: {
+                  title: {
+                    display: true,
+                    text: 'Promedio de Edad de los Participantes'
+                  },
+                  animation: {
+                    animateScale: true,
+                    animateRotate: true
+                  }
+                }
+              })
+        });
+    </script>
+    
+{% endblock %}

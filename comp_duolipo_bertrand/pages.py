@@ -7,8 +7,12 @@ class Introduction(Page):
     def is_displayed(self):
         return self.round_number == 1
     timeout_seconds = 100
+
+class Quiz(Page):
+    def is_displayed(self):
+        return self.round_number == 1
     form_model = 'player'
-    form_fields = ['matricula']
+    form_fields = ['genero','edad','matricula']
 
 class darPrecio(Page):
     form_model = 'player'
@@ -24,6 +28,9 @@ class ResultsWaitPage(WaitPage):
             p.ganancia()
 
 class Resultados(Page):
+    def is_displayed(self):
+        return self.round_number != Constants.num_rounds
+
     def vars_for_template(self):
         yo = self.player
         oponente = yo.other_player()
@@ -54,11 +61,91 @@ class Results(Page):
             'lista' : lista
         }
 
+class CharWaitPage(WaitPage):
+    def is_displayed(self):
+        return self.round_number == Constants.num_rounds
+    wait_for_all_groups = True
+
+class Charts(Page):
+    def is_displayed(self):
+        return self.round_number == Constants.num_rounds
+
+    def vars_for_template(self):
+
+        #se saca el precio promedio y ganancia maxima del grupo
+        ganancia_total = []
+        prom_precio = []
+        for j in self.subsession.get_groups():
+            tmp = 0
+            for i in j.get_players():
+                yo = i
+                oponente = yo.other_player()
+                tmp1 = sum([p.payoff for p in yo.in_all_rounds()])
+                tmp2 = sum([p.payoff for p in oponente.in_all_rounds()])
+                tmp = (tmp1 + tmp2)/Constants.num_rounds
+                tmp3 = tmp1 + tmp2
+            ganancia_total.append(tmp3)
+            prom_precio.append(tmp)
+        
+        #ganancia maxima del grupo    
+        ganancia_maxima = Constants.demanda * 20 * Constants.ume * Constants.num_rounds
+        
+        #se saca lista de edad y de genero 
+        l_edades_mujeres = []
+        l_edades_hombres = []
+        l_generos = []
+        for p in self.subsession.get_players():
+            l_generos.append(p.in_round(1).genero)
+            if p.in_round(1).genero == "Masculino":
+                l_edades_hombres.append(p.in_round(1).edad)
+            if p.in_round(1).genero == "Femenino":
+                l_edades_mujeres.append(p.in_round(1).edad)
+        
+        #se saca numero de hombres y mujeres
+        total_mujeres = l_generos.count('Femenino')
+        total_hombres = l_generos.count('Masculino')
+        #se saca el porcentaje de mujeres y hombres
+        porc_femenino = round((total_mujeres/len(self.subsession.get_players()))*100,2)
+        porc_masculino = round((total_hombres/len(self.subsession.get_players()))*100,2)
+
+        #se saca edades promedio de hombres y mujeres
+        suma1 = 0
+        suma2 = 0
+
+        for i in l_edades_mujeres:
+            suma1 += i
+
+        for i in l_edades_hombres:
+            suma2 += i
+        
+        prom_edad_mujer = round(suma1/len(l_edades_mujeres),2)
+        prom_edad_hombre = round(suma2/len(l_edades_hombres),2)
+
+        total_grupos = []
+        c = 0
+        for i in self.subsession.get_groups():
+            c += 1
+            total_grupos.append("Grupo "+str(c))
+
+        return{
+            'prom_precio' : prom_precio,
+            'cmg' : Constants.cmg,
+            'ganancia_total' : ganancia_total,
+            'ganancia_max' : ganancia_maxima,
+            'prom_edad_mujer' : prom_edad_mujer,
+            'prom_edad_hombre' : prom_edad_hombre,
+            'f' : porc_femenino,
+            'm' : porc_masculino,
+            'total_grupos' : total_grupos
+        }
 
 page_sequence = [
     Introduction,
+    Quiz,
     darPrecio,
     ResultsWaitPage,
     Resultados,
-    Results
+    Results,
+    CharWaitPage,
+    Charts
 ]

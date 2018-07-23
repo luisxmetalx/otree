@@ -37,10 +37,9 @@ class CharWaitPage(WaitPage):
 class Chart(Page):
     def vars_for_template(self):
         acum = 0
-        l_edades = []
+        l_generos = []
         l_edades_mujeres = []
         l_edades_hombres = []
-        l_generos = []
         mujeres_confesaron = 0
         mujeres_callaron = 0
         hombres_confesaron = 0
@@ -60,9 +59,9 @@ class Chart(Page):
                     pareja_no_conf += 1
                 else:
                     pareja_dif += 1
-
+                    
+        #se rellena la lista de edades 
         for p in self.subsession.get_players():
-            l_edades.append(p.edad)
             l_generos.append(p.genero)
             if p.decision=='Confesar' and p.genero=='Femenino':
                 mujeres_confesaron += 1
@@ -76,19 +75,24 @@ class Chart(Page):
             else:
                 hombres_callaron += 1
                 l_edades_hombres.append(p.edad)
-        
+
+        #se calcula total mujeres y hombres
         total_mujeres = l_generos.count('Femenino')
         total_hombres = l_generos.count('Masculino')
+        #procentaje de hombres y mujeres
         porc_femenino = (total_mujeres/len(self.subsession.get_players()))*100
         porc_masculino = (total_hombres/len(self.subsession.get_players()))*100
+        #porcentaje de hombres y mujeres que callaron o confesaron
         porc_muj_confesaron = (mujeres_confesaron/total_mujeres)*100
         porc_muj_callaron = (mujeres_callaron/total_mujeres)*100
         porc_hom_confesaron = (hombres_confesaron/total_hombres)*100
         porc_hom_callaron = (hombres_callaron/total_hombres)*100
+        #procentaje de grupos que ambos callaron o confesaron o difirieron
         pair_conf = ((pareja_conf/2)/((total_hombres+total_mujeres)/2))*100
         pair_no_conf = ((pareja_no_conf/2)/((total_hombres+total_mujeres)/2))*100
         pair_dif = ((pareja_dif/2)/((total_hombres+total_mujeres)/2))*100
 
+        #se calcula la edad promedio de hombres y mujeres
         suma1 = 0
         suma2 = 0
 
@@ -100,6 +104,7 @@ class Chart(Page):
         
         prom_edad_mujer = suma1/len(l_edades_mujeres)
         prom_edad_hombre = suma2/len(l_edades_hombres)
+        
         return {
             'm' : porc_masculino,
             'f' : porc_femenino,
