@@ -75,15 +75,20 @@ class Charts(Page):
         #se saca el precio promedio y ganancia maxima del grupo
         ganancia_total = []
         prom_precio = []
-        for j in self.subsession.get_groups():
+        for k in range(1,Constants.num_rounds):
             tmp = 0
-            for i in j.get_players():
-                yo = i
-                oponente = yo.other_player()
-                tmp1 = sum([p.payoff for p in yo.in_all_rounds()])
-                tmp2 = sum([p.payoff for p in oponente.in_all_rounds()])
-                tmp = (tmp1 + tmp2)/Constants.num_rounds
-                tmp3 = tmp1 + tmp2
+            tmp1 = 0
+            tmp2 = 0
+            tmp3 = 0
+            for j in self.subsession.get_groups():
+                for i in j.get_players():
+                    yo = i
+                    oponente = yo.other_player()
+                    tmp1 = yo.in_round(k).payoff
+                    tmp2 = oponente.in_round(k).payoff
+                    tmp = ((tmp1 + tmp2)/Constants.num_rounds)
+                    print(tmp)
+                    tmp3 = (tmp1 + tmp2)
             ganancia_total.append(tmp3)
             prom_precio.append(tmp)
         
@@ -123,9 +128,9 @@ class Charts(Page):
 
         total_grupos = []
         c = 0
-        for i in self.subsession.get_groups():
+        for i in range(Constants.num_rounds):
             c += 1
-            total_grupos.append("Grupo "+str(c))
+            total_grupos.append("Ronda "+str(c))
 
         return{
             'prom_precio' : prom_precio,
