@@ -71,26 +71,32 @@ class Charts(Page):
         return self.round_number == Constants.num_rounds
 
     def vars_for_template(self):
-
-        #se saca el precio promedio y ganancia maxima del grupo
         ganancia_total = []
         prom_precio = []
-        for k in range(1,Constants.num_rounds):
+        #se saca el precio promedio y ganancia maxima del grupo
+        for k in range(1,Constants.num_rounds+1):
             tmp = 0
             tmp1 = 0
             tmp2 = 0
             tmp3 = 0
-            for j in self.subsession.get_groups():
-                for i in j.get_players():
-                    yo = i
-                    oponente = yo.other_player()
-                    tmp1 = yo.in_round(k).payoff
-                    tmp2 = oponente.in_round(k).payoff
-                    tmp = ((tmp1 + tmp2)/Constants.num_rounds)
-                    print(tmp)
-                    tmp3 = (tmp1 + tmp2)
-            ganancia_total.append(tmp3)
-            prom_precio.append(tmp)
+            grupos = self.subsession.get_groups()
+            precio = []
+            ganancia = []
+            for j in grupos:
+                players = j.get_players()
+                yo = players[0]
+                oponente = yo.other_player()
+                tmp1 = yo.in_round(k).payoff
+                tmp2 = oponente.in_round(k).payoff
+                tmp3 = (tmp1 + tmp2)
+                tmp = ((tmp1 + tmp2)/Constants.num_rounds)
+                precio.append(tmp)
+                ganancia.append(tmp3)
+            #print('jugador 1: '+str(tmp1)+'jugador 2: '+str(tmp2))
+            
+                
+            prom_precio.append(sum([i for i in ganancia])/len(grupos))
+            ganancia_total.append(sum([i for i in precio])/len(grupos))
         
         #ganancia maxima del grupo    
         ganancia_maxima = Constants.demanda * 20 * Constants.ume * Constants.num_rounds
@@ -109,6 +115,7 @@ class Charts(Page):
         #se saca numero de hombres y mujeres
         total_mujeres = l_generos.count('Femenino')
         total_hombres = l_generos.count('Masculino')
+        print(total_mujeres)
         #se saca el porcentaje de mujeres y hombres
         porc_femenino = round((total_mujeres/len(self.subsession.get_players()))*100,2)
         porc_masculino = round((total_hombres/len(self.subsession.get_players()))*100,2)

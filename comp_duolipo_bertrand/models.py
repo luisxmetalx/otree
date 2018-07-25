@@ -16,7 +16,7 @@ precio tendra todo el mercado o la mitad.
 class Constants(BaseConstants):
     name_in_url = 'comp_duolipo_bertrand'
     players_per_group = 2
-    num_rounds = 2
+    num_rounds = 3
     ume = 0.01
     intructions_template = 'comp_duolipo_bertrand/instructions.html'
     demanda = 100
