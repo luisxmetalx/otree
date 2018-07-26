@@ -14,6 +14,11 @@ class Decision(Page):
     form_model = 'player'
     form_fields = ['decision']
 
+    def vars_for_template(self):
+        return {
+            'ronda' : self.round_number
+            }
+
 class ResultsWaitPage(WaitPage):
     def after_all_players_arrive(self):
         for p in self.group.get_players():

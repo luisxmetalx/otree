@@ -115,7 +115,7 @@ class Charts(Page):
         #se saca numero de hombres y mujeres
         total_mujeres = l_generos.count('Femenino')
         total_hombres = l_generos.count('Masculino')
-        
+
         #se saca el porcentaje de mujeres y hombres
         porc_femenino = round((total_mujeres/len(self.subsession.get_players()))*100,2)
         porc_masculino = round((total_hombres/len(self.subsession.get_players()))*100,2)
@@ -134,10 +134,12 @@ class Charts(Page):
         prom_edad_hombre = round(suma2/len(l_edades_hombres),2)
 
         total_grupos = []
+        cmg_const = []
         c = 0
         for i in range(Constants.num_rounds):
             c += 1
             total_grupos.append("Ronda "+str(c))
+            cmg_const.append(Constants.cmg)
 
         return{
             'prom_precio' : prom_precio,
@@ -148,7 +150,8 @@ class Charts(Page):
             'prom_edad_hombre' : prom_edad_hombre,
             'f' : porc_femenino,
             'm' : porc_masculino,
-            'total_grupos' : total_grupos
+            'total_grupos' : total_grupos,
+            'cmg_const' : cmg_const
         }
 
 page_sequence = [
