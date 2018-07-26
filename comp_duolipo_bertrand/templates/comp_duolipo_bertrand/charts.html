@@ -46,10 +46,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
     <script> 
        $(document).ready(function(){
-            m = {{m|json}}
-            f = {{f|json}}
-            prom_edad_hombre = {{prom_edad_hombre|json}}
-
+        
             new Chart(document.getElementById("grupos_precio"), {
                 type: 'bar',
                 data: {
@@ -101,7 +98,7 @@
                   datasets: [{
                     label: "Cantidad Hombres vs Mujeres",
                     backgroundColor: ["#20c997", "#fd7e14"],
-                    data: [ m , f ]
+                    data: [ {{m|json}} , {{f|json}} ]
                   }]
                 },
                 options: {
@@ -132,7 +129,7 @@
                   datasets: [{
                     label: "Cantidad Hombres vs Mujeres",
                     backgroundColor: ["#E2DB05", "#8105E2"],
-                    data: [ prom_edad_hombre , {{prom_edad_mujer}} ]
+                    data: [ {{prom_edad_hombre|json}} , {{prom_edad_mujer|json}} ]
                   }]
                 },
                 options: {

@@ -89,14 +89,14 @@ class Charts(Page):
                 tmp1 = yo.in_round(k).payoff
                 tmp2 = oponente.in_round(k).payoff
                 tmp3 = (tmp1 + tmp2)
-                tmp = ((tmp1 + tmp2)/Constants.num_rounds)
+                tmp = ((tmp1 + tmp2))
                 precio.append(tmp)
                 ganancia.append(tmp3)
             #print('jugador 1: '+str(tmp1)+'jugador 2: '+str(tmp2))
             
                 
             prom_precio.append(sum([i for i in ganancia])/len(grupos))
-            ganancia_total.append(sum([i for i in precio])/len(grupos))
+            ganancia_total.append(sum([i for i in precio]))
         
         #ganancia maxima del grupo    
         ganancia_maxima = Constants.demanda * 20 * Constants.ume * Constants.num_rounds
@@ -115,7 +115,7 @@ class Charts(Page):
         #se saca numero de hombres y mujeres
         total_mujeres = l_generos.count('Femenino')
         total_hombres = l_generos.count('Masculino')
-        print(total_mujeres)
+        
         #se saca el porcentaje de mujeres y hombres
         porc_femenino = round((total_mujeres/len(self.subsession.get_players()))*100,2)
         porc_masculino = round((total_hombres/len(self.subsession.get_players()))*100,2)
