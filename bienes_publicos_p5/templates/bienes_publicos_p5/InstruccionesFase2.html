@@ -2,7 +2,7 @@
 {% load staticfiles otree_tags %}
 
 {% block title %}
-    Instrucciones Fase 2
+    Instrucciones Sección 1 Fase 2
 {% endblock %}
 
 {% block content %}
@@ -10,7 +10,7 @@
 <div class="container-fluit">
     <div class="row">
         <div class="col-md-12">
-            <p>Lea detenidamente estas instrucciones</p>
+            <p>Lea detenidamente estas instrucciones.</p>
 
             <p>Esta fase incluye {{Constants.num_rounds}} rondas en total. Similar a la fase 1, usted continúa interactuando con los mismos 4 participantes de su grupo y en cada ronda toma una decisión sobre la asignación de {{ Constants.fondo }} puntos a una <b>cuenta grupal</b>. Los puntos restantes se asignan automáticamente a la <b>cuenta privada.</b></p>
             
@@ -25,8 +25,8 @@
                     <div class="col-md-9">
                         <p><b>¿CÓMO SE SELECCIONA EL ADMINISTRADOR?</b></p>
                     
-                        <p>Antes de iniciar la fase 2, usted podrá observar las decisiones de asignación, en cada ronda, así como el promedio de las contribuciones, de cada miembro del grupo en la fase 1. La información se presenta de manera anónima (las etiquetas son solo referencia y cambian en cada ronda) </p>
-                        <p><b>El computador elegirá un administrador</b> basado en una distribución que asigna una probabilidad del 75% de que el mayor contribusor del grupo sea elegido. Si el mayor contribusor de la fase 1 no es seleccionado (esto sucede con una probabilidad de 25%), cualquier otro miembro del grupo puede ser seleccionado como administrador con igual probabilidad</p>
+                        <p>Antes de iniciar la fase 2, usted podrá observar las decisiones de asignación, en cada ronda, así como el promedio de las contribuciones, de cada miembro del grupo en la fase 1. La información se presenta de manera anónima (las etiquetas son solo referencia y cambian en cada ronda). </p>
+                        <p><b>El computador elegirá un administrador</b> basado en una distribución que asigna una probabilidad del 75% de que el mayor contribusor del grupo sea elegido. Si el mayor contribusor de la fase 1 no es seleccionado (esto sucede con una probabilidad de 25%), cualquier otro miembro del grupo puede ser seleccionado como administrador con igual probabilidad.</p>
                         <p>Usted observará el resultado de la elección antes de iniciar la fase 2.</p>
                         <p>Tenga en cuenta que <b>el administrador será elegido cada tres rondas.</b></p>
                         <p>La elección en las instancias posteriores se realizará en base al promedio de las contribuciones de la fase 1, y también de información de las contribuciones de las 3 rondas intermedias. Específicamente, en las rondas 4, 7, 10, usted observará el promedio de las contribuciones a la cuenta grupal de la fase 1 y el total de las contribuciones de todos los miembros del grupo en las tres últimas rondas; el administrador será elegido en base a esta información.</p>
@@ -38,7 +38,7 @@
             {% else %}
 
                 <p><b>¿CÓMO SE SELECCIONA EL ADMINISTRADOR?</b></p>
-                <p>Antes de iniciar la fase 2, usted podrá observar las decisiones de asignación, en cada ronda, así como el promedio de las contribuciones, de cada miembro del grupo en la fase 1. La información se presenta de manera anónima (las etiquetas son solo referencia y cambian en cada ronda) </p>
+                <p>Antes de iniciar la fase 2, usted podrá observar las decisiones de asignación, en cada ronda, así como el promedio de las contribuciones, de cada miembro del grupo en la fase 1. La información se presenta de manera anónima (las etiquetas son solo referencia y cambian en cada ronda). </p>
                 <p>A continuación tendrá la oportunidad de <b>VOTAR por cualquier integrante de su grupo</b> (excepto usted) para que sea elegido como administrador durante las próximas tres rondas.<b> El que reciba la mayoría de los votos será elegido administrador.</b> En caso de empate, el administrador será seleccionado al azar entre los miembros empatados.</p>
                 <p>Usted observará el resultado de la elección del administrador antes de iniciar la fase 2.</p>
                 <p>Tenga en cuenta que <b>el administrador será elegido cada tres rondas, mediante votación, igual que en la ronda 1.</b></p>

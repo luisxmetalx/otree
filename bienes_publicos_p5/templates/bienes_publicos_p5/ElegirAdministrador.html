@@ -60,13 +60,21 @@
             {% if group.tratamiento == 'democracia' %}
             <tr>
               <td colspan="2" class="text-center"><b>Elegir Administrador</b></td>
-              {% for p in player.get_others_in_group %}
+              <!-- {% for p in player.get_others_in_group %}
               <td class="text-center">
                 <label class="radio-inline">
                   <input name="voto" type="radio" value={{ p.id_in_group }} required>
                 </label>
               </td>
+              {% endfor %} -->
+              {% for p in id_jugadores %}
+                <td class="text-center">
+                  <label class="radio-inline">
+                    <input name="voto" type="radio" value={{ p }} required>
+                  </label>
+                </td>
               {% endfor %}
+                
             </tr>
             {% else %}
               <input name="voto" type="hidden" value={{ player.id_in_group }} required>

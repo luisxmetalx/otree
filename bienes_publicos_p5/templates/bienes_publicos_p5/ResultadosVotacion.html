@@ -79,7 +79,7 @@
             {% for l in letras %}
               {% for p in group.get_players %}
                 {% if p.roleP == l %}
-                  <h5>Participante {{ p.id_in_group }} obtuvo {{ p.participant.vars.votos_recibidos }} votos</h5>
+                  <h5>Participante {{ p.roleP }} obtuvo {{ p.participant.vars.votos_recibidos }} votos</h5>
                 {% endif %}
               {% endfor %}
             {% endfor %}

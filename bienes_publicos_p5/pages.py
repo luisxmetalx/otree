@@ -332,7 +332,12 @@ class ElegirAdministrador(Page):
         promedio_r1.insert(0,self.player.in_round(1).promedio_1)
         print(promedio_r1)   
 
-        
+        #nueva votacion para los roles aleatorios
+        id_jugadores=[]
+        for r in rolesJugador:
+            for p in self.player.get_others_in_group():
+                if p.roleP == r:
+                    id_jugadores.append(p.id_in_group)
 
         #promedio del participante                 
         self.player.promedio_1=(self.player.participant.vars["acumulado"])/len(rondas)
@@ -347,6 +352,7 @@ class ElegirAdministrador(Page):
             'playerRol': self.player.roleP,
             'roles': rolesJugador,
             'total':contribucion_total,
+            'id_jugadores': id_jugadores,
             'n_ronda':self.round_number
         }
     
@@ -578,6 +584,14 @@ class ResultadosVotacion(Page):
                     if(pg.id_in_group==(px+1)):
                         pg.roleP=letras[0]
 
+
+        # #nueva votacion para los roles aleatorios
+        # id_jugadores=[]
+        # for r in rolesJugador:
+        #     for p in self.player.get_others_in_group()  :
+        #         if p.roleP == r:
+        #             id_jugadores.append(p.id_in_group)
+
         return{
                 'tratamiento': self.player.tratamiento,
                 'rondas': rondas,
@@ -586,6 +600,7 @@ class ResultadosVotacion(Page):
                 'promedio_jug': self.player.promedio_1,
                 'promedio_r1': promedio_r1,
                 'contribuciones_por_ronda': zip(rondas, contribuciones),
+                #'id_jugadores': id_jugadores,
                 'administrador': adm,
                 'letras':letras,
                 'roles': rolesJugador,
