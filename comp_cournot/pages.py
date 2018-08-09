@@ -78,9 +78,11 @@ class Charts(Page):
     def vars_for_template(self):
         grupo1 = 'Grupo 1'
         grupo1_ganancia = []
+        grupo1_unidades = []
         grupo1_pvu = []
         grupos_ganancias = {}
         grupos_pvu = {}
+        grupos_units = {}
         control_grupo = 0
         lista_colores = ['','#A2CD45','#21869A','#6D36D7','#08F20C','#D8991B','#13ABF1','#E32329','#12ED4F','#E1F111','#150EF4','#6A6895','#8F02F4','#3F7F04','#804005','#036F21','#170633','#625F66','#625F66']
         cont = 1
@@ -102,12 +104,15 @@ class Charts(Page):
                     tmp = tmp1 + tmp2
                     grupo1_ganancia.append(tmp)
                     grupo1_pvu.append(yo.in_round(k).group.unit_price)
+                    grupo1_unidades.append(yo.in_round(k).group.total_units)
             else:
                 cont += 1
                 tmp = {}
                 tmp5 = {}
+                tmp6 = {}
                 l_tmp = []
                 l_pvu = []
+                l_units = []
                 for k in range(1,Constants.num_rounds+1):
                     players = j.get_players()
                     yo = players[0]
@@ -116,9 +121,12 @@ class Charts(Page):
                     tmp2 = oponente.in_round(k).payoff
                     l_tmp.append( tmp1 + tmp2 )
                     l_pvu.append(yo.in_round(k).group.unit_price)
+                    l_units.append(yo.in_round(k).group.total_units)
                     tmp[lista_colores[cont]] = l_tmp
                     tmp5[lista_colores[cont]] = l_pvu
+                    tmp6[lista_colores[cont]] = l_units
                     grupos_pvu['Grupo '+str(cont)] = tmp5
+                    grupos_units['Grupo '+str(cont)] = tmp6
                 grupos_ganancias['Grupo '+str(cont)] = tmp
                 
         
@@ -166,6 +174,8 @@ class Charts(Page):
             'grupos_ganancias' : grupos_ganancias,
             'grupo1_pvu' : grupo1_pvu,
             'grupos_pvu' : grupos_pvu,
+            'grupo1_units' : grupo1_unidades,
+            'grupos_units' : grupos_units,
             'prom_edad_mujer' : prom_edad_mujer,
             'prom_edad_hombre' : prom_edad_hombre,
             'f' : porc_femenino,
