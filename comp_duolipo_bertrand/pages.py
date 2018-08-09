@@ -99,7 +99,7 @@ class Charts(Page):
             ganancia_total.append(sum([i for i in precio]))
         
         #ganancia maxima del grupo    
-        ganancia_maxima = Constants.demanda * 20 * Constants.ume * Constants.num_rounds
+        ganancia_maxima = Constants.demanda * 20 * Constants.ume * len(self.subsession.get_groups())
         
         #se saca lista de edad y de genero 
         l_edades_mujeres = []
