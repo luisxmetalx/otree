@@ -184,7 +184,12 @@ SESSION_CONFIGS = [
         'num_demo_participants': 2,
         'app_sequence': ['comp_duolipo_bertrand'], 
     },
-    
+    {
+        'name': 'comp_cournot',
+        'display_name': "Competencia Cournot",
+        'num_demo_participants': 2,
+        'app_sequence': ['comp_cournot'], 
+    },
     # other session configs ...
     # other session configs go here ...
 ]

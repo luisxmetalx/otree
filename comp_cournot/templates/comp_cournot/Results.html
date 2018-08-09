@@ -1,0 +1,43 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+    Resultados
+{% endblock %}
+
+{% block content %}
+
+    <p>Los resultados son mostrados en la siguiente tabla.</p>
+
+    <table class="table">
+
+        <tr>
+            <td>Su firma produció:</td>
+            <td>{{ player.unidades }} unidades</td>
+        </tr>
+
+        <tr>
+            <td>La otra firma produció:</td>
+            <td>{{ other_player_units }} unidades</td>
+        </tr>
+
+        <tr>
+            <td>Total de producción:</td>
+            <td>{{ group.total_units }} unidades</td>
+        </tr>
+
+        <tr>
+            <td style="border-top-width:4px">Precion de Venta Unitario:</td>
+            <td style="border-top-width:4px">{{ Constants.total_capacity }} – {{ group.total_units }} = ${{ group.unit_price }}</td>
+        </tr>
+
+        <tr>
+            <td>Su ganancia:</td>
+            <td>${{ player.payoff }}</td>
+        </tr>
+
+    </table>
+
+    {% next_button %}
+
+{% endblock %}

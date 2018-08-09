@@ -1,0 +1,37 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+    Producción
+{% endblock %}
+
+{% block content %}
+    <h4>Ronda {{ronda}} de {{Constants.num_rounds}}</h4>
+    <button type="button" class="btn btn-secondary" data-toggle="modal" data-target=".bd-example-modal-lg">
+        Ver Instrucciones
+    </button>
+    {% formfield player.unidades label="¿Cuántas unidades va a producir (de 0 a 30)?" %}
+
+    {% next_button %}
+
+    
+    <div class="modal fade bd-example-modal-lg" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Instruciones</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+                {% include Constants.instructions_template %}
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+            </div>
+          </div>
+        </div>
+    </div>
+
+{% endblock %}
