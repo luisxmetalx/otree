@@ -36,12 +36,11 @@ class Subsession(BaseSubsession):
     def creating_session(self):
         # se guarda el diccionario de ip's como variable de sesión
         self.session.vars['dicc_ip'] = generar_Dicc_Ip()
-        
+
         total_grupos = len([g for g in self.get_groups()])
         print('Grupos en la sesión: ', total_grupos)
         grupos_leviatan = self.session.config['grupos_leviatan']
         grupos_democracia = self.session.config['grupos_democracia']
-
         if grupos_democracia + grupos_leviatan == 0 or grupos_democracia + grupos_leviatan > total_grupos:
             # Mayor o menor cantidad de tratamientos por grupos que los grupos totales o
             # Suma de grupos asignados por tratamientos igual a cero

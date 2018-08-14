@@ -609,6 +609,7 @@ class ResultadosVotacion(Page):
 
     def before_next_page(self):
         # elegir otra letra de participante
+        lista=['A','B','C','D','E']
         if(self.round_number==4 or self.round_number==7 or self.round_number==10):
             if(self.player.roleP != ''):
                 for p in self.group.get_players():
@@ -616,7 +617,7 @@ class ResultadosVotacion(Page):
 
             while(self.player.roleP == '' or self.player.roleP == None):
                 acum=0            
-                letra = random.choice(['A','B','C','D','E'])
+                letra = random.choice(lista)
                 print("la letra escogida fue: ",letra)
                 for jugador in self.player.get_others_in_group():
                     print("letra asignada fue: ",jugador.roleP)
@@ -626,6 +627,8 @@ class ResultadosVotacion(Page):
                 if(acum == 0):
                     print("letra no asiganada a ningunjugador")
                     self.player.roleP = letra
+                lista.remove(letra)
+                
     # def before_next_page(self):
     #     for p in self.group.get_players():
     #         p.participant.vars["acumulado"] = 0
@@ -765,6 +768,72 @@ class AplicarCastigo(Page):
     def is_displayed(self):
         print ('view castigo --> id: ', self.player.id_in_group, ', admin : ', self.player.participant.vars.get("admin"))
         n_ronda = 0
+        #solucionar problemas de roles repetidos.
+        adb_conju=set() #lista de roles
+        letrass={'A','B','C','D','E'}
+        for jug in self.group.get_players():
+            adb_conju.add(str(jug.roleP))
+        #print(letras-adb)
+        faltantes=set()
+        faltantes=letrass-adb_conju
+        print(faltantes)
+
+        for lts in faltantes:
+            adb=[]
+            letras=['A','B','C','D','E']
+            for jug in self.group.get_players():
+                adb.append(jug.roleP)
+            a=adb.count('A')
+            b=adb.count('B')
+            c=adb.count('C')
+            d=adb.count('D')
+            e=adb.count('E')
+            if (a>1 or b>1 or c>1 or d>1 or e>1):
+                print("hay roles repetidos")
+                if(a>1):
+                    print("el rol repetido es el A")
+                    print("el indice es: ",adb.index('A'))
+                    px=adb.index('A')
+                    adb.remove('A')
+                    print(adb)
+                    for pg in self.group.get_players():
+                        if(pg.id_in_group==(px+1)):
+                            pg.roleP=lts
+
+                elif(b>1):
+                    print("el rol repetido es el B")
+                    px=adb.index('B')
+                    adb.remove('B')
+                    print(adb)
+                    for pg in self.group.get_players():
+                        if(pg.id_in_group==(px+1)):
+                            pg.roleP=lts
+                elif(c>1):
+                    print("el rol repetido es el C")
+                    px=adb.index('C')
+                    adb.remove('C')
+                    print(adb)
+                    for pg in self.group.get_players():
+                        if(pg.id_in_group==(px+1)):
+                            pg.roleP=lts
+                elif(d>1):
+                    print("el rol repetido es el D")
+                    px=adb.index('D')
+                    adb.remove('D')
+                    print(adb)
+                    for pg in self.group.get_players():
+                        if(pg.id_in_group==(px+1)):
+                            pg.roleP=lts
+                elif(e>1):
+                    print("el rol repetido es el E")
+                    px=adb.index('E')
+                    adb.remove('E')
+                    print(adb)
+                    for pg in self.group.get_players():
+                        if(pg.id_in_group==(px+1)):
+                            pg.roleP=lts
+        
+
         for jugador in self.group.get_players():
             print("jugador seleccionados: ", jugador.in_round(1).roleP)
             print("jugador administrador: ", self.player.participant.vars.get("admin"))
@@ -859,7 +928,7 @@ class AplicarCastigo(Page):
 
 
 class ResultadosCastigo(Page):
-    #timeout_seconds = 60
+    timeout_seconds = 60
     def is_displayed(self):
         print ('view ResultadosCastigo --> id: ', self.player.id_in_group, ', admin : ', self.player.participant.vars.get("admin"))
         return True
