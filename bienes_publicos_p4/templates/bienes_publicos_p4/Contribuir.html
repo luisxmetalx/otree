@@ -1,0 +1,98 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree_tags %}
+
+{% block title %}
+    Contribuir
+{% endblock %}
+
+{% block content %}
+
+
+    <div class="col-md-12 well">
+        <div class="row">
+            <button type="button" class="btn btn-primary instrucciones" data-toggle="modal" data-target="#myModal">
+                <span class="glyphicon glyphicon-list-alt"></span> Instrucciones
+            </button>
+        </div>
+        <h4>Ronda {{ ronda_actual }} de {{ rondas }}</h4>
+        {% if control == 1 %}
+            <br>
+            <h4>Mensaje del Administrador:</h4>
+            <p><b>Contribución mínima para esta ronda es de <span class="frase">{{ group.contribucion_minima }} puntos.</span></b></p>
+            <br>
+        {% endif %}
+        {% if control == 2 %}
+            <br>
+            <h4>Mensaje del Administrador:</h4>
+            <p><b>Se asignarán puntos para reducir las ganacias a quienes contribuyan menos de: <span class="frase">{{ group.contribucion_minima }} puntos.</span></b></p>
+            <br>
+        {% endif %}
+        
+        {% formfield player.contribucion with label="¿Cuánto desea contribuir a la cuenta grupal?" %}
+        {% if control == 1 %}
+            <p>Por favor ingrese un número entero entre {{ group.contribucion_minima }} y {{ Constants.fondo }}</p>
+        {% else %}
+            <p>Por favor ingrese un número entero entre 0 y {{ Constants.fondo }}</p>
+        {% endif %}
+        
+        <div class="row">
+            {% next_button %}
+        </div>
+    </div>
+
+    {% include Constants.modalF2 %}   
+
+{% endblock %}
+
+{% block styles %}
+<style type="text/css">
+    .row{
+        margin: 0 auto;
+    }
+    #otree-body {
+        width: 85%;
+    }
+
+    .fila {
+        margin-bottom: 1%;
+        margin-right: 1%;
+    }
+
+    .formula {
+        padding: 1%;
+        text-align: center;
+        background: bisque;
+        border: solid;
+        width: 100%;
+    }
+
+    .instrucciones {
+        float: right;
+    }
+
+    .preguntas {
+        padding-left: 2%;
+        padding-top: 2%;
+    }
+
+    .modalInstrucciones {
+        width: 70%;
+    }
+
+    .btn-siguiente {
+        float: right;
+    }
+
+    .tabla > tbody > tr, .tabla > tbody > tr > td{
+        border: 2px solid;
+        vertical-align: middle;
+    }
+
+    .frase{
+        font-size: large;
+        color: blue;
+    }
+</style>
+{% endblock %}
+
+

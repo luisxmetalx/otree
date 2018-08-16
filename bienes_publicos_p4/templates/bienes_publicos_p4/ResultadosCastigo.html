@@ -1,0 +1,135 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree_tags %}
+
+{% block title %}
+    Resultados
+{% endblock %}
+
+{% block content %}
+
+    <div class="col-md-12 well">
+      <div class="row">
+        <button type="button" class="btn btn-primary instrucciones" data-toggle="modal" data-target="#myModal">
+          <span class="glyphicon glyphicon-list-alt"></span> Instrucciones
+        </button>
+      </div>
+      <h4>Ronda {{ ronda_actual }} de {{ rondas }}</h4>
+      <table class="table tabla">
+        <thead>
+          <th></th>
+          <th class="text-center text-primary">Usted</th>
+          {% for otro in player.get_others_in_group %}
+            <th class="text-center">Otro</th>
+          {% endfor %}
+        </thead>
+        <tbody>
+          <tr>
+            <td><b>Puntos totales</b></td>
+            <td class="text-center">{{ Constants.fondo }}</td>
+            {% for contr in contribuciones %}
+              <td class="text-center">{{ Constants.fondo }}</td>
+            {% endfor %}
+          </tr>
+          <tr>
+            <td><b>Aporte a cuenta grupal</b></td>
+            <td class="text-center">{{ player.contribucion }}</td>
+            {% for contr in contribuciones %}
+              <td class="text-center">{{ contr }}</td>
+            {% endfor %}
+          </tr>
+          <tr>
+            <td>
+              <b>Aporte a la cuenta grupal (en porcentaje)</b>
+            </td>
+            <td class="text-center">{{ porcentaje_propio|floatformat:2 }}%</td>
+            {% for porc in porcentajes %}
+            <td class="text-center">{{ porc|floatformat:2 }}%</td>
+            {% endfor %}
+          </tr>
+          <tr>
+          <tr>
+            <td><b>Ganancias en esta ronda</b></td>
+            <td class="text-center">{{ player.gan_tp|floatformat:2 }}</td>
+            {% for gan in ganancias %}
+              <td class="text-center">{{ gan|floatformat:2 }}</td>
+            {% endfor %}
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="row">
+        <div class="col-md-7">
+          <h4>Total de puntos asignados por el Administrador en esta ronda: {{ total_puntos_asignados }}</h4>
+          {% if group.administrador != player.id_in_group %}
+          <h4>Total de puntos asignados por el Administrador a usted en esta ronda: {{ player.pts_asignados }} </h4>
+          <h4>Sus ganancias en esta ronda se redujeron en: {{ player.castigo }}</h4>
+          {% endif %}
+        </div>
+        <div class="col-md-5">
+          <h4>El aporte total a la cuenta del grupo es: {{ group.contribucion_total }}</h4>
+          <h4>Su ganancia de la cuenta del grupo: {{ ganancia_grupo }} </h4>
+          <h4><b>Su ganancia en esta ronda es: {{ player.gan_tp }}</b></h4>
+        </div>
+      </div>
+      <br>   
+      <div class="row">
+         {% next_button %}
+      </div>
+
+    </div>
+
+    {% include Constants.modalF2 %}
+
+{% endblock %}
+
+{% block styles %}
+  <style type="text/css">
+
+  .row{
+    margin: 0 auto;
+  }
+
+  .info{
+    margin: 0 auto;
+    text-align: center;
+    background: lavender;
+    padding: 1%;
+    height: 85px;
+  }
+
+  .tabla > thead > tr, .tabla > thead > tr > th{
+    border: 2px solid grey;
+  }
+  
+  .tabla > tbody > tr, .tabla > tbody > tr > td{
+    border: 2px solid grey;
+  }
+
+  .formula {
+        padding: 1%;
+        text-align: center;
+        background: bisque;
+        border: solid;
+        width: 100%;
+    }
+
+    .instrucciones {
+        float: right;
+    }
+
+    .preguntas {
+        padding-left: 2%;
+        padding-top: 2%;
+    }
+
+    .modalInstrucciones {
+        width: 70%;
+    }
+
+    .btn-siguiente {
+        float: right;
+    }
+
+  </style>
+
+{% endblock %}

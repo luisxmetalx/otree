@@ -1,0 +1,168 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree_tags %}
+
+{% block title %}
+    Cuenta del administrador: puntos a asignar para reducir las ganancias
+{% endblock %}
+
+{% block content %}
+
+    <div class="row">
+      <div class="col-md-12 well">
+        <div class="row">
+          <button type="button" class="btn btn-primary instrucciones" data-toggle="modal" data-target="#myModal">
+            <span class="glyphicon glyphicon-list-alt"></span> Instrucciones
+          </button>
+        </div>
+        <h4>Ronda {{ ronda_actual }} de {{ rondas }}</h4>
+        <h4>Usted es administrador, solo usted puede ver la información de los demás participantes</h4>
+        {% if control == 1 %}
+          <h4>Contribución mínima definida: <span class="frase"><b>{{ group.contribucion_minima }} puntos.</b></span></h4>
+        {% endif %}
+        {% if control == 2 %}
+          <h4>Contribución mínima sugerida: <span class="frase"><b>{{ group.contribucion_minima }} puntos.</b></h4>
+        {% endif %}
+        <table class="table tabla">
+          <thead>
+            <th></th>
+            <th class="text-center text-primary">Usted</th>
+            {% for contr in contribuciones %}
+              <th class="text-center">Otro</th>
+            {% endfor %}
+          </thead>
+          <tbody>
+            <tr>
+              <td><b>Puntos totales</b></td>
+              {% for p in group.get_players %}
+                <td class="text-center">{{ Constants.fondo }}</td>
+              {% endfor %}
+            </tr>
+            <tr>
+              <td><b>Aporte a cuenta grupal</b></td>
+                <td class="text-center">{{ player.contribucion }}</td>
+              {% for contr in contribuciones %}
+                <td class="text-center">{{ contr }}</td>
+              {% endfor %}
+            </tr>
+            <tr>
+              <td>
+                <b>Aporte a la cuenta grupal (en porcentaje)</b>
+              </td>
+              <td class="text-center">{{ porcentaje_propio|floatformat:2 }}%</td>
+              {% for porc in porcentajes %}
+              <td class="text-center">{{ porc|floatformat:2 }}%</td>
+              {% endfor %}
+            </tr>
+            <tr>
+              <td><b>Puntos ganados</b></td>
+              <td class="text-center">{{ player.ganancia }}</td>
+              {% for gan in ganancias %}
+              <td class="text-center">{{ gan }}</td>
+              {% endfor %}
+            </tr>
+            <tr>
+              <td colspan="2" class="text-center fila-castigo"><b>Ingrese puntos a asignar</b></td>
+              
+              {% for jug in lista_jugadores %}
+              <td class="text-center">
+                <input type="number" class="form-control text-center input-castigo"  name="castigo_jug{{ jug }}">
+              </td>
+              {% endfor %}
+              
+            </tr>
+          </tbody>
+        </table>
+        <h4>El aporte total a la cuenta del grupo es: {{ group.contribucion_total }}</h4>
+      </div>
+      <div class="col-md-12 well">
+        <h4 class="text-center"><b>Tabla de puntos</b></h4>
+        <h4><b> Ud dispone de {{ puntos_disponibles }} puntos para asignar. Recuerde, cada punto asignado reduce las ganancias según la conversión de la tabla:</b></h4>
+        <table class="table tabla">
+          <tbody>
+            <tr class="text-center">
+              <td><b>Puntos Asignados</b></td>
+              {% for p in puntos_asignados %}
+                <td><b>{{ p }}</b></td>
+              {% endfor %}
+            </tr>
+            <tr class="text-center">
+              <td><b>Puntos Reducidos</b></td>
+              {% for p in puntos_reducidos %}
+                <td><b>{{ p }}</b></td>
+              {% endfor %}
+            </tr>
+          </tbody>
+        </table>
+        <div class="row">
+           {% next_button %}
+        </div>
+        
+      </div>
+    </div>
+
+    {% include Constants.modalF2 %}
+
+{% endblock %}
+
+{% block styles %}
+  <style type="text/css">
+  .row{
+    margin: 0 auto;
+  }
+
+  .tabla > thead > tr, .tabla > thead > tr > th{
+    border: 2px solid grey;
+    vertical-align: middle;
+  }
+  
+  .tabla > tbody > tr, .tabla > tbody > tr > td{
+    border: 2px solid grey;
+    vertical-align: middle;
+  }
+
+  td.fila-castigo{
+    width: 40%;
+  }
+
+  input[type="number"].form-control {
+    width: 100%;
+  }
+
+  .formula {
+        padding: 1%;
+        text-align: center;
+        background: bisque;
+        border: solid;
+        width: 100%;
+    }
+
+    .instrucciones {
+        float: right;
+    }
+
+    .preguntas {
+        padding-left: 2%;
+        padding-top: 2%;
+    }
+
+    .modalInstrucciones {
+        width: 70%;
+    }
+
+    .btn-siguiente {
+        float: right;
+    }
+
+    .page-header{
+      margin-top: 0;
+      padding-top: 0;
+    }
+
+    .frase{
+        font-size: large;
+        color: blue;
+    }
+  
+  </style>
+
+{% endblock %}

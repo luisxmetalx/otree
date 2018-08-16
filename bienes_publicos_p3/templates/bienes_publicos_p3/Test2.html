@@ -1,0 +1,147 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree_tags %}
+
+{% block title %}
+    Test 2
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-1"></div>
+        <div class="col-md-10 well">
+            <div class="row fila">
+                <div class="col-md-10">
+                    <p>
+                        <b>Si no recuerda como calcular las ganancias, vea el ejemplo en las Instrucciones (dar clic)
+                            <span class="glyphicon glyphicon-arrow-right flecha"></span>
+                        </b>
+                    </p>
+                </div>
+                <div class="col-md-2">
+                    <button type="button" class="btn btn-primary instrucciones" data-toggle="modal" data-target="#myModal">
+                        <span class="glyphicon glyphicon-list-alt"></span> Instrucciones
+                    </button>
+                </div>
+            </div>
+            {% if player.participant.vars.test2_p1 != None or player.participant.vars.test2_p2 != None or player.participant.vars.test2_p3 != None or player.participant.vars.test2_p4 != None or player.participant.vars.test2_p5 != None %}
+                <p>Preguntas ingresadas correctamente: </p>
+            {% endif %}
+            {% if player.participant.vars.test2_p1 != None %}
+                <span class="resp-correcta">1) {{ player.participant.vars.test2_p1 }}</span>
+            {% endif %}
+            {% if player.participant.vars.test2_p2 != None %}
+                <span class="resp-correcta">2) {{ player.participant.vars.test2_p2 }}</span>
+            {% endif %}
+            {% if player.participant.vars.test2_p3 != None %}
+                <span class="resp-correcta">3) {{ player.participant.vars.test2_p3 }}</span>
+            {% endif %}
+            {% if player.participant.vars.test2_p4 != None %}
+                <span class="resp-correcta">4) {{ player.participant.vars.test2_p4 }}</span>
+            {% endif %}
+            {% if player.participant.vars.test2_p5 != None %}
+                <span class="resp-correcta">5) {{ player.participant.vars.test2_p5 }}</span>
+            {% endif %}
+            {% if player.participant.vars.test2_p1 != None or player.participant.vars.test2_p2 != None or player.participant.vars.test2_p3 != None or player.participant.vars.test2_p4 != None or player.participant.vars.test2_p5 != None %}
+                <p>Por favor ingrésalas nuevamente</p>
+            {% endif %}
+
+            <div class="row preguntas">
+                <form id="form-test2">
+                    {% for ind, sup, preg in preguntas %}
+                    <div class="form-group">
+                        <label for="{{ ind }}">{{ sup }}</label>     
+                        <label for="{{ ind }}">{{ preg }}</label>
+                        <input type="number" class="form-control" name="test2_p{{ ind }}">
+                        {% if ind == 1 %}
+                            {{ form.test2_p1.errors }}
+                        {% endif %}
+                        {% if ind == 2 %}
+                            {{ form.test2_p2.errors }}
+                        {% endif %}
+                        {% if ind == 3 %}
+                            {{ form.test2_p3.errors }}
+                        {% endif %}
+                        {% if ind == 4 %}
+                            {{ form.test2_p4.errors }}
+                            <label for="{{ 5 }}">{{ preg5 }}</label>
+                            <input type="number" class="form-control" name="test2_p5">
+                            {{ form.test2_p5.errors }}
+                        {% endif %}
+                    </div>
+                    {% endfor %}
+                    <button type="submit" id="btn-siguiente" class="btn btn-primary btn-siguiente" onclick="clic()">Siguiente</button>
+                </form>
+                <input type="hidden" name="test2" value={{ test2 }} id="test2" />
+            </div>
+        </div>
+        <div class="col-md-1"></div>
+    </div>
+
+    {% include Constants.modalF2 %}
+
+{% endblock %}
+
+{% block styles %}
+    <style type="text/css">
+        #otree-body {
+            width: 85%;
+        }
+
+        .page-header{
+            margin-top: 0;
+        }
+    
+        .fila {
+            margin-bottom: 1%;
+            margin-right: 1%;
+        }
+
+        .formula{
+            padding: 1%;
+            text-align: center;
+            background: bisque;
+            border: solid;
+            width: 100%;
+        }
+    
+        .instrucciones {
+            float: right;
+        }
+    
+        .preguntas {
+            padding-left: 2%;
+            padding-right: 2%;
+            padding-top: 2%;
+        }
+
+        .modalInstrucciones{
+            width: 70%;
+        }
+          
+        .tabla > tbody > tr, .tabla > tbody > tr > td{
+            border: 2px solid;
+            vertical-align: middle;
+        }
+
+        .btn-siguiente{
+            float: right;
+        }
+
+        .resp-correcta{
+            padding-left: 10%;
+            margin-bottom: 2px;
+        }
+
+        .flecha{
+            font-size: 25px;
+            padding-left: 5%
+        }
+        .page-header{
+            padding-top: 0;
+            margin-top: 0;
+        }
+
+
+    </style>
+{% endblock %}
+
