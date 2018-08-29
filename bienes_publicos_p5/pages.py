@@ -339,10 +339,20 @@ class ElegirAdministrador(Page):
                 if p.roleP == r:
                     id_jugadores.append(p.id_in_group)
 
-        #promedio del participante                 
-        self.player.promedio_1=(self.player.participant.vars["acumulado"])/len(rondas)
+                        
+        
+        # print(contribuciones)
+        
+        #suma de la contricion del mismo jugador
+        if self.round_number == 1:
+            sumaPropia = self.player.participant.vars["acumulado"]
+        else:
+            sumaPropia = contribuciones[0][0] + contribuciones[1][0] + contribuciones[2][0]
+        #promedio del participante 
+        self.player.promedio_1=sumaPropia/len(rondas)
 
         return {
+            'acumulado_propio': sumaPropia,
             'rondas': rondas,
             'acumulado': self.player.participant.vars["acumulado"],
             'promedio_otros': acumulado,
@@ -584,7 +594,14 @@ class ResultadosVotacion(Page):
                     if(pg.id_in_group==(px+1)):
                         pg.roleP=letras[0]
 
-
+        #suma de la contricion del mismo jugador
+        if self.round_number == 1:
+            sumaPropia = self.player.participant.vars["acumulado"]
+        else:
+            sumaPropia = contribuciones[0][0] + contribuciones[1][0] + contribuciones[2][0]
+        #promedio del participante 
+        #self.player.promedio_1=sumaPropia/len(rondas)
+        
         # #nueva votacion para los roles aleatorios
         # id_jugadores=[]
         # for r in rolesJugador:
@@ -593,9 +610,9 @@ class ResultadosVotacion(Page):
         #             id_jugadores.append(p.id_in_group)
 
         return{
+                'acumulado_propio': sumaPropia,
                 'tratamiento': self.player.tratamiento,
                 'rondas': rondas,
-                'acumulado': self.player.participant.vars["acumulado"],
                 'promedio_otros': acumulado,
                 'promedio_jug': self.player.promedio_1,
                 'promedio_r1': promedio_r1,
@@ -859,7 +876,8 @@ class AplicarCastigo(Page):
                     administrador = jugador.in_round(n_ronda).roleP
                     print("la letra del administrador es: ", administrador)
 
-        return self.player.in_round(n_ronda).roleP == administrador
+        #return self.player.in_round(n_ronda).roleP == administrador
+        return self.player.id_in_group == self.player.participant.vars.get("admin")
 
     def vars_for_template(self):
         otros_jugadores = self.player.participant.vars["jugadores_random"]

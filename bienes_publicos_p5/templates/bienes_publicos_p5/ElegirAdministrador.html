@@ -4,7 +4,14 @@
 {% block title %}
 
     {% if group.tratamiento == 'leviatan' %}
-      Resumen de contribuciones de la primera fase
+      
+      
+      {% if session.config.name == 'bienes_publicos_p5' %}
+        Resumen de contribuciones de la segunda fase
+      {% else %}
+        Resumen de contribuciones de la primera fase
+      {% endif %}
+        
     {% else %}
       Votación
     {% endif %}
@@ -37,7 +44,7 @@
             {% endfor %}
             <tr>
               <td class="text-center"><b>Contribución acumulada (puntos totales)</b></td>
-              <td class="text-center"><b>{{ player.participant.vars.acumulado }}</b></td>
+              <td class="text-center"><b>{{acumulado_propio}}</b></td>
               {% for otro in total %}
                 <td class="text-center"><b>{{ otro }}</b></td>
               {% endfor %}

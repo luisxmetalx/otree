@@ -92,12 +92,13 @@ class Subsession(BaseSubsession):
                 print('Grupo asignado a tratamiento leviatan: ', g.id_in_subsession)
                 for actual in g.in_all_rounds():
                     actual.tratamiento = 'leviatan'
-
+            acum=0
             for g in self.get_groups()[grupos_democracia + grupos_leviatan:]:
                 # se asigna para los grupos impares 'democracia' y para los pares 'leviatan'
                 for actual in g.in_all_rounds():
-                    if actual.id % 2 == 1:
+                    if actual.id % 2 == 1 and acum==0:
                         actual.tratamiento = 'democracia'
+                        acum+=1
                     else:
                         actual.tratamiento = 'leviatan'
                     print('Grupo: ', actual.id_in_subsession, '| tratamiento: ', actual.tratamiento)
