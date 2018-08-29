@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 {% extends "global/Page.html" %}
 {% load staticfiles otree_tags %}
 
@@ -133,3 +134,128 @@
   }
   </style>
 {% endblock %}
+=======
+{% extends "global/Page.html" %}
+{% load staticfiles otree_tags %}
+
+{% block title %}
+    {% if group.tratamiento == 'leviatan' %}
+      Resultados de la elección del administrador
+    {% else %}
+      Votación
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+
+    <div class="row well">
+    <div class="col-md-8">
+      <br>
+      <table class="table tabla ">
+        <thead>
+          <th class="text-center ronda">Ronda</th>
+          <th class="text-center">Usted</th>
+          {% for jugador in player.get_others_in_group %}
+          <th class="text-center">{{ jugador.roleP }}</th>
+          {% endfor %}
+        </thead>
+        <tbody>
+          {% for ronda, cont in contribuciones_por_ronda %}
+            <tr class="text-center">
+              <td>{{ ronda }}</td>
+              {% for c in cont %}
+                <td>{{ c }}</td>
+              {% endfor %}
+            </tr>
+          {% endfor %}
+          <tr>
+            <td class="text-center"><b>Contribución acumulada (puntos totales)</b></td>
+            <td class="text-center"><b>{{ player.participant.vars.acumulado }}</b></td>
+            {% for otro in player.get_others_in_group %}
+              <td class="text-center"><b>{{ otro.participant.vars.acumulado }}</b></td>
+            {% endfor %}
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="col-md-4 text-center ">
+      <br>
+      <h4>Usted es el participante {{ player.roleP }}</h4>
+      <hr>
+      {% if player.participant.vars.tratamiento == 'leviatan' %}
+        {% if player.id_in_group == group.administrador %}
+          <h4><b>Usted es el administrador</b></h4>
+        {% else %}
+        <h4>
+          <b>El administrador será el participante {{administrador}}</b>
+        </h4>
+      {% endif %}
+        
+      {% endif %}
+      {% if player.participant.vars.tratamiento == 'democracia' %}
+        {% for p in group.get_players %}
+          <h5>Participante {{ p.role }} obtuvo {{ p.participant.vars.votos_recibidos }} votos</h5>
+        {% endfor %}
+        <br>
+        {% if player.id_in_group == group.administrador %}
+          <h4><b>Usted es el administrador</b></h4>
+        {% else %}
+          <h3><b>El administrador será el participante
+            {% if group.administrador == 1 %}
+                A</b></h4>
+            {% elif group.administrador == 2 %}
+                B</b></h4>
+            {% elif group.administrador == 3 %}
+                C</b></h4>
+            {% elif group.administrador == 4 %}
+                D</b></h4>
+            {% elif group.administrador == 5 %}
+                E</b>
+          </h3>
+            {% endif %}
+        {% endif %}
+
+      {% endif %}
+
+    </div>
+
+    <div class="row">
+       {% next_button %}
+    </div>
+      
+    </div>
+
+
+{% endblock %}
+
+{% block styles %}
+  <style type="text/css">
+
+  .row{
+    margin: 0 auto;
+  }
+
+  .page-header{
+    margin-top: 0;
+  }
+
+  .info{
+    margin: 0 auto;
+    text-align: center;
+    background: lavender;
+    padding: 1%;
+  }
+  .tabla > thead > tr, .tabla > thead > tr > th{
+    border: 2px solid grey;
+  }
+  
+  .tabla > tbody > tr, .tabla > tbody > tr > td{
+    border: 2px solid grey;
+  }
+
+  .ronda{
+    width: 50%;
+  }
+  </style>
+{% endblock %}
+>>>>>>> origin/ayudante

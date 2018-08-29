@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 {% extends "global/Page.html" %}
 {% load staticfiles otree_tags %}
 
@@ -32,3 +33,39 @@
 
 </style>
 {% endblock %}
+=======
+{% extends "global/Page.html" %}
+{% load staticfiles otree_tags %}
+
+{% block title %}
+    Final de la sección 1
+{% endblock %}
+
+{% block content %}
+
+    <div class="row">
+      <div class="col-md-2"></div>
+      <div class="col-md-8 well">
+        <h4>La sección 1 ha finalizado.</h4>
+        <h4>De clic en siguiente para pasar a la segunda sección.</h4>
+
+        <div class="row">
+           <div class="col-11"></div>
+           <div class="col-1">{% next_button %}</div>
+        </div>
+      </div>
+      <div class="col-md-2"></div>
+    </div>
+
+    
+{% endblock %}
+
+{% block styles %}
+<style type="text/css">
+  .row{
+    margin: 0 auto;
+  }
+
+</style>
+{% endblock %}
+>>>>>>> origin/ayudante

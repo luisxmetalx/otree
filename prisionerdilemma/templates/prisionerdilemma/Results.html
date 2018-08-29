@@ -1,0 +1,25 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+    Resultados
+{% endblock %}
+
+{% block content %}
+    <p>
+        {% if misma_eleccion %}
+            Ambos escogieron {{ mi_decision }}.
+        {% else %}
+            Usted escogió {{ mi_decision }} y el otro participante escogió a {{ oponente_decision }}.
+        {% endif %}
+    </p>
+
+    <p>
+        Como resultado, usted ganó {{ player.payoff|floatformat:"0" }} puntos.
+    </p>
+
+    {% next_button %}
+
+{% endblock %}
+
+

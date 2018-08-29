@@ -1,0 +1,47 @@
+{% load otree static %}
+<div class="card bg-light instructions">
+    <div class="card-body">
+<<<<<<< Updated upstream
+=======
+
+        <h3>
+            Instrucción
+        </h3>
+    
+>>>>>>> Stashed changes
+        <link rel="stylesheet" type="text/css" href="{% static 'global/matrix.css' %}"/>
+
+        <p class="justify">
+            En este estudio usted va a participar aleatoriamente en cooperación con otra persona. Cada uno de ustedes elige de manera
+            simultánea y privada si desea cooperar o desertar. Sus pagos serán determinados por las opciones de ambos como se
+            detalla a continuación:
+        </p>
+        <p class="justify">
+            <i>En cada celda, la cantidad a la izquierda es la recompensa para usted y la derecha para el otro participante.</i>
+        </p>
+
+        <table class='table table-bordered text-center' style='width: auto; margin: auto'>
+            <tr>
+                <th colspan=2 rowspan=2></th>
+                <th colspan=2>El otro participante</th>
+            </tr>
+            <tr>
+                <th>Confesan</th>
+                <th>Callan</th>
+            </tr>
+            <tr>
+                <th rowspan=2>
+                    <span class="rotate90">Usted</span>
+                </th>
+                <th>Confiesan</th>
+                <td>{{ Constants.pago_ambos_confiesan|floatformat:"0" }} puntos, {{ Constants.pago_ambos_confiesan|floatformat:"0" }} puntos</td>
+                <td>0 puntos, {{ Constants.pago_jugador_calla|floatformat:"0" }} puntos</td>
+            </tr>
+            <tr>
+                <th>Callan</th>
+                <td>{{ Constants.pago_jugador_calla|floatformat:"0" }} puntos, 0 puntos</td>
+                <td>{{ Constants.pago_ambos_callan|floatformat:"0" }} puntos, {{ Constants.pago_ambos_callan|floatformat:"0" }} puntos</td>
+            </tr>
+        </table>
+    </div>
+</div>

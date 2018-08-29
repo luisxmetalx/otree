@@ -1,0 +1,233 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+
+{% block title %}
+    Competencia Cournot
+{% endblock %}
+
+
+{% block content %}
+
+<div class="row" style="margin-top:4%;margin-bottom:5%;">
+
+  <div class="col-sm-12">
+      <canvas id="grupos_ganancias" width="800" height="450"></canvas>
+  </div>
+
+</div>
+
+<div class="row" style="margin-top:4%;margin-bottom:5%;">
+
+    <div class="col-sm-12">
+        <canvas id="grupos_pvu" width="800" height="450"></canvas>
+    </div>
+  
+</div>
+
+<div class="row" style="margin-top:4%;margin-bottom:5%;">
+
+  <div class="col-sm-12">
+      <canvas id="grupos_units" width="800" height="450"></canvas>
+  </div>
+
+</div>
+
+<div class="row" style="margin-top:4%;margin-bottom:5%;">
+
+    <div class="col-sm-6">
+        <canvas id="HvsM" width="600" height="350"></canvas>
+    </div>
+  
+    <div class="col-sm-6">
+        <canvas id="edades" width="600" height="350"></canvas>
+    </div>
+  
+</div>
+
+
+{% next_button %}
+
+{% endblock %}
+
+{% block app_scripts %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+    <script> 
+       $(document).ready(function(){
+        
+            new Chart(document.getElementById("grupos_ganancias"), {
+                type: 'line',
+                data: {
+                    labels: [ ""{% for i in rondas %} ,{{i|json}} {%endfor%}],
+                    datasets: [{
+                        label: "Grupo 1",
+                        data: [0 {% for i in grupo1_ganancia %} ,{{i|json}} {%endfor%}],
+                        fill: false,
+                        borderWidth: 1,
+                        borderColor: "rgb(5,149,226,1)",
+                        borderDash: [0],
+                        lineTension: 0,
+                        steppedLine: false
+                      }
+                      {% for key,colors in grupos_ganancias.items %}
+                        ,{
+                            type: 'line',
+                            {% for color,value in colors.items %}
+                              label: "{{key}}",
+                              data: [ 0 {% for i in value %} ,'{{i|json}}' {%endfor%} ],
+                              fill: false,
+                              borderWidth: 1,
+                              borderColor: '{{color}}',
+                              borderDash: [0],
+                              lineTension: 0,
+                              steppedLine: false
+                            {% endfor %}
+                        }
+                      {% endfor %}
+                    ]
+                },
+                options: {
+                  title: {
+                    display: true,
+                    text: 'Ganancia Grupal'
+                  }
+                }
+            })
+
+            new Chart(document.getElementById("grupos_pvu"), {
+              type: 'line',
+              data: {
+                  labels: [ ""{% for i in rondas %} ,{{i|json}} {%endfor%}],
+                  datasets: [{
+                      label: "Grupo 1",
+                      data: [0 {% for i in grupo1_pvu %} ,{{i|json}} {%endfor%}],
+                      fill: false,
+                      borderWidth: 1,
+                      borderColor: "rgb(5,149,226,1)",
+                      borderDash: [0],
+                      lineTension: 0,
+                      steppedLine: false
+                    }
+                    {% for key,colors in grupos_pvu.items %}
+                      ,{
+                          type: 'line',
+                          {% for color,value in colors.items %}
+                            label: "{{key}}",
+                            data: [ 0 {% for i in value %} ,'{{i|json}}' {%endfor%} ],
+                            fill: false,
+                            borderWidth: 1,
+                            borderColor: '{{color}}',
+                            borderDash: [0],
+                            lineTension: 0,
+                            steppedLine: false
+                          {% endfor %}
+                      }
+                    {% endfor %}
+                  ]
+              },
+              options: {
+                title: {
+                  display: true,
+                  text: 'Precio de Venta Unitario por Grupo'
+                }
+              }
+          })
+
+
+          new Chart(document.getElementById("grupos_units"), {
+            type: 'line',
+            data: {
+                labels: [ ""{% for i in rondas %} ,{{i|json}} {%endfor%}],
+                datasets: [{
+                    label: "Grupo 1",
+                    data: [0 {% for i in grupo1_units %} ,{{i|json}} {%endfor%}],
+                    fill: false,
+                    borderWidth: 1,
+                    borderColor: "rgb(5,149,226,1)",
+                    borderDash: [0],
+                    lineTension: 0,
+                    steppedLine: false
+                  }
+                  {% for key,colors in grupos_units.items %}
+                    ,{
+                        type: 'line',
+                        {% for color,value in colors.items %}
+                          label: "{{key}}",
+                          data: [ 0 {% for i in value %} ,'{{i|json}}' {%endfor%} ],
+                          fill: false,
+                          borderWidth: 1,
+                          borderColor: '{{color}}',
+                          borderDash: [0],
+                          lineTension: 0,
+                          steppedLine: false
+                        {% endfor %}
+                    }
+                  {% endfor %}
+                ]
+            },
+            options: {
+              title: {
+                display: true,
+                text: 'Total Productos Producidos por Grupo'
+              }
+            }
+        })
+
+            
+            
+            new Chart(document.getElementById("HvsM"), {
+                type: 'doughnut',
+                data: {
+                  labels: ["Hombres", "Mujeres"],
+                  datasets: [{
+                    label: "Cantidad Hombres vs Mujeres",
+                    backgroundColor: ["#20c997", "#fd7e14"],
+                    data: [ {{m|json}} , {{f|json}} ]
+                  }]
+                },
+                options: {
+                  title: {
+                    display: true,
+                    text: 'Género de los Participantes'
+                  },
+                  animation: {
+                    animateScale: true,
+                    animateRotate: true
+                  },
+                  tooltips: {
+                    callbacks: {
+                      label: function(tooltipItem, data) {
+                        var dataset = data.datasets[tooltipItem.datasetIndex]
+                        var currentValue = dataset.data[tooltipItem.index]       
+                        return currentValue + "%"
+                      }
+                    }
+                  }
+                }
+            })
+
+            new Chart(document.getElementById("edades"), {
+                type: 'bar',
+                data: {
+                  labels: ["Hombres", "Mujeres"],
+                  datasets: [{
+                    label: "Cantidad Hombres vs Mujeres",
+                    backgroundColor: ["#E2DB05", "#8105E2"],
+                    data: [ {{prom_edad_hombre|json}} , {{prom_edad_mujer|json}} ]
+                  }]
+                },
+                options: {
+                  title: {
+                    display: true,
+                    text: 'Promedio de Edad de los Participantes'
+                  },
+                  animation: {
+                    animateScale: true,
+                    animateRotate: true
+                  }
+                }
+              })
+        });
+    </script>
+    
+{% endblock %}

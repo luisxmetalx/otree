@@ -1,0 +1,26 @@
+Para los graficos:
+-Sumar ganancia por grupo y graficarlos por ronda, es decir en va a ver diez lineas.
+-Mismo esquema para el valor unitario de venta pero prom entre los miembros del grupo.
+-Mismo esquema para unidades producidas, sumar por grupo.
+
+new Chart(document.getElementById("ganancias"), {
+                type: 'bar',
+                data: {
+                  labels: [{% for i in total_grupos %} {{i|json}}, {%endfor%} "Ganancia Maxima"],
+                  datasets: [{
+                    label: "Ganancias",
+                    backgroundColor: ["#FCA802", "#9AED0B","#E25505","#FFF000"],
+                    data: [ {% for i in ganancia_total %} {{i|json}}, {%endfor%} {{ganancia_max}} ]
+                  }]
+                },
+                options: {
+                  title: {
+                    display: true,
+                    text: 'Ganancia Maxima por Grupo'
+                  },
+                  animation: {
+                    animateScale: true,
+                    animateRotate: true
+                  }
+                }
+              })
