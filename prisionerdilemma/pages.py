@@ -4,9 +4,13 @@ from .models import Constants
 
 
 class Introduction(Page):
+    def is_displayed(self):
+            return self.round_number == 1
     timeout_seconds = 100
 
 class Quiz(Page):
+    def is_displayed(self):
+            return self.round_number == 1
     form_model = 'player'
     form_fields = ['genero','edad','matricula']
 
@@ -36,10 +40,15 @@ class Results(Page):
         }
 
 class CharWaitPage(WaitPage):
+    def is_displayed(self):
+            return self.round_number == Constants.num_rounds
     wait_for_all_groups = True
             
 
 class Chart(Page):
+    def is_displayed(self):
+            return self.round_number==Constants.num_rounds
+
     def vars_for_template(self):
         acum = 0
         l_generos = []
@@ -54,32 +63,34 @@ class Chart(Page):
         pareja_no_conf = 0
         pareja_dif = 0
         
-        for j in self.subsession.get_groups():
-            for p in j.get_players():
-                yo = p
-                oponente = yo.other_player()
-                if yo.decision == oponente.decision and yo.decision=='Confesar':
-                    pareja_conf += 1
-                elif yo.decision == oponente.decision and yo.decision=='Callar':
-                    pareja_no_conf += 1
-                else:
-                    pareja_dif += 1
+        for k in range(1,Constants.num_rounds+1):
+            for j in self.subsession.get_groups():
+                for p in j.get_players():
+                    yo = p
+                    oponente = yo.other_player()
+                    if yo.in_round(k).decision == oponente.in_round(k).decision and yo.in_round(k).decision =='Confiesa':
+                        pareja_conf += 1
+                    elif yo.in_round(k).decision == oponente.in_round(k).decision and yo.in_round(k).decision =='No Confiesa':
+                        pareja_no_conf += 1
+                    else:
+                        pareja_dif += 1
                     
         #se rellena la lista de edades 
-        for p in self.subsession.get_players():
-            l_generos.append(p.genero)
-            if p.decision=='Confesar' and p.genero=='Femenino':
-                mujeres_confesaron += 1
-                l_edades_mujeres.append(p.edad)
-            elif p.decision=='Callar' and p.genero=='Femenino':
-                mujeres_callaron += 1
-                l_edades_mujeres.append(p.edad)
-            elif p.decision=='Confesar' and p.genero=='Masculino':
-                hombres_confesaron += 1
-                l_edades_hombres.append(p.edad)
-            else:
-                hombres_callaron += 1
-                l_edades_hombres.append(p.edad)
+        for k in range(1,Constants.num_rounds+1):
+            for p in self.subsession.get_players():
+                l_generos.append(p.in_round(1).genero)
+                if p.in_round(k).decision=='Confiesa' and p.in_round(1).genero=='Femenino':
+                    mujeres_confesaron += 1
+                    l_edades_mujeres.append(p.in_round(1).edad)
+                elif p.in_round(k).decision=='No Confiesa' and p.in_round(1).genero=='Femenino':
+                    mujeres_callaron += 1
+                    l_edades_mujeres.append(p.in_round(1).edad)
+                elif p.in_round(k).decision=='Confiesa' and p.in_round(1).genero=='Masculino':
+                    hombres_confesaron += 1
+                    l_edades_hombres.append(p.in_round(1).edad)
+                else:
+                    hombres_callaron += 1
+                    l_edades_hombres.append(p.in_round(1).edad)
 
         #se calcula total mujeres y hombres
         total_mujeres = l_generos.count('Femenino')

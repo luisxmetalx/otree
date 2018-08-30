@@ -16,7 +16,7 @@ prision.
 class Constants(BaseConstants):
     name_in_url = 'prisionerdilemma'
     players_per_group = 2
-    num_rounds = 1
+    num_rounds = 10
     intructions_template = 'prisionerdilemma/instructions.html'
     #Pago cuando ambos jugadores confiesan o callan
     pago_ambos_confiesan = c(300)
@@ -38,7 +38,7 @@ class Player(BasePlayer):
 
     #Se crea un campo para almacenar la decisión del jugador
     decision = models.StringField(
-        choices=['Confesar', 'Callar'],
+        choices=['Confiesa', 'No Confiesa'],
         doc="""Esto es la decisión del jugador""",
         widget=widgets.RadioSelect
     )
@@ -62,15 +62,15 @@ class Player(BasePlayer):
 
     def escoger_decision(self):
         matriz_pagos = {
-            'Confesar':
+            'Confiesa':
                 {
-                    'Confesar': Constants.pago_ambos_confiesan,
-                    'Callar': Constants.pago_jugador_confiesa
+                    'Confiesa': Constants.pago_ambos_confiesan,
+                    'No Confiesa': Constants.pago_jugador_confiesa
                 },
-            'Callar':
+            'No Confiesa':
                 {
-                    'Confesar': Constants.pago_jugador_calla,
-                    'Callar': Constants.pago_ambos_callan
+                    'Confiesa': Constants.pago_jugador_calla,
+                    'No Confiesa': Constants.pago_ambos_callan
                 }
         }
 
