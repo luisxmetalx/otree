@@ -1,0 +1,23 @@
+{% load otree static %}
+
+<div class="card bg-light instructions">
+    <div class="card-body">
+    <h3>
+        Instrucciones
+    </h3>
+
+    <p>
+        En este estudio, usted estará en un grupo formado aleatoriamente de  {{ Constants.players_per_group }} participantes. Cada participnte en el grupo recibe {{ Constants.endowment }} puntos. El grupo tiene la oportunidad de emprender un proyecto en conjunto. Cada participante en el grupo decide cuánto aportar en el proyecto. La contribución puede ser cualquier número entero  de 0 a {{ Constants.endowment }} puntos.
+    </p>
+    <p>
+        The earnings from the project are calculated as follows: The
+        contributions of all {{ Constants.players_per_group }} participants are
+        added up, the total contribution
+        is multiplied by a factor of {{ Constants.multiplier }}, and the
+        resulting amount is the total earnings from the project, which is
+        evenly split among all {{ Constants.players_per_group }}
+        participants. Your payoff equals your earnings from the project, plus
+        the amount you did not contribute.
+    </p>
+    </div>
+</div>
