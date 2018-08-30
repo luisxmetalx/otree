@@ -52,8 +52,8 @@ class TotalResults(Page):
             lista.append(i.unidades)
             lista.append(i.other_player().unidades)
             lista.append(i.group.total_units)
-            lista.append('$' + str(i.group.unit_price))
-            lista.append('$' + str(i.payoff))
+            lista.append(str(i.group.unit_price))
+            lista.append(str(i.payoff))
             dic_ganancia[i.round_number]=lista
             
         return {

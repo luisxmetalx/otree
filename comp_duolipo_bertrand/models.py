@@ -19,7 +19,7 @@ class Constants(BaseConstants):
     num_rounds = 5
     ume = 0.01
     intructions_template = 'comp_duolipo_bertrand/instructions.html'
-    demanda = 100
+    demanda = 10
     cmg = 4
 
 class Subsession(BaseSubsession):
@@ -58,9 +58,9 @@ class Player(BasePlayer):
         oponente = self.other_player()
         value=0
         if yo.precio == oponente.precio:
-            value = yo.precio*(Constants.demanda/2)*Constants.ume
+            value = (yo.precio-4)*(Constants.demanda/2)
         elif yo.precio < oponente.precio:
-            value = yo.precio*(Constants.demanda)*Constants.ume
+            value = (yo.precio-4)*(Constants.demanda)
         else:
             value = 0
         self.payoff = value

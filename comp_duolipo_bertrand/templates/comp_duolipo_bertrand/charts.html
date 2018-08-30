@@ -48,7 +48,7 @@
        $(document).ready(function(){
         
             new Chart(document.getElementById("grupos_precio"), {
-                type: 'bar',
+                type: 'line',
                 data: {
                     labels: [ {% for i in total_grupos %} {{i|json}}, {%endfor%} "CMG"],
                     datasets: [{
@@ -86,7 +86,7 @@
                 options: {
                   title: {
                     display: true,
-                    text: 'Ganancia Maxima por Grupo'
+                    text: 'Ganancia Total por Ronda.'
                   },
                   animation: {
                     animateScale: true,

@@ -6,7 +6,7 @@ from .models import Constants
 class Introduction(Page):
     def is_displayed(self):
             return self.round_number == 1
-    timeout_seconds = 100
+    # timeout_seconds = 100
 
 class Quiz(Page):
     def is_displayed(self):

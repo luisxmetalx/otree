@@ -155,7 +155,7 @@ SESSION_CONFIGS = [
         'name': 'bienes_publicos_p5',
         'display_name': "Sesión Bienes Públicos.",
         'num_demo_participants': 10,
-        'app_sequence': ['bienes_publicos_p1', 'bienes_publicos_p2', 'bienes_publicos_p5', 'tar_fin_ses_bp', 'cuest_aversion_al_riesgo', 'cuest_demografico', 'despedida'],
+        'app_sequence': ['bienes_publicos_p1', 'bienes_publicos_p2', 'bienes_publicos_p5','bret', 'tar_fin_ses_bp', 'cuest_aversion_al_riesgo', 'cuest_demografico', 'despedida'],
         'grupos_leviatan': 0,
         'grupos_democracia': 0,
         'control': 0,
@@ -190,6 +190,13 @@ SESSION_CONFIGS = [
         'num_demo_participants': 2,
         'app_sequence': ['comp_cournot'], 
     },
+    {
+        'name': 'public_goods',
+        'display_name': "Bienes Publicos (CLASE)",
+        'num_demo_participants': 3,
+        'app_sequence': ['public_goods'], 
+    },
+
     # other session configs ...
     # other session configs go here ...
 ]
