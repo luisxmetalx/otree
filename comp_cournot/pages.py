@@ -49,11 +49,11 @@ class TotalResults(Page):
 
         for i in self.player.in_rounds(1,self.round_number):
             lista = []
-            lista.append(i.unidades)
-            lista.append(i.other_player().unidades)
-            lista.append(i.group.total_units)
-            lista.append(str(i.group.unit_price))
-            lista.append(str(i.payoff))
+            lista.append(str(i.unidades)+ " unidades")
+            lista.append(str(i.other_player().unidades)+" unidades")
+            lista.append(str(i.group.total_units)+" unidades")
+            lista.append(str(round(i.group.unit_price,1))+" puntos")
+            lista.append(str(round(i.payoff,1))+" puntos")
             dic_ganancia[i.round_number]=lista
             
         return {

@@ -58,15 +58,13 @@
             new Chart(document.getElementById("grupos_ganancias"), {
                 type: 'line',
                 data: {
-                    labels: [ ""{% for i in rondas %} ,{{i|json}} {%endfor%}],
+                    labels: [{% for i in rondas %} {{i|json}}, {%endfor%}],
                     datasets: [{
                         label: "Grupo 1",
-                        data: [0 {% for i in grupo1_ganancia %} ,{{i|json}} {%endfor%}],
+                        data: [{% for i in grupo1_ganancia %} {{i|json}}, {%endfor%}],
                         fill: false,
                         borderWidth: 1,
                         borderColor: "rgb(5,149,226,1)",
-                        borderDash: [0],
-                        lineTension: 0,
                         steppedLine: false
                       }
                       {% for key,colors in grupos_ganancias.items %}
@@ -74,7 +72,7 @@
                             type: 'line',
                             {% for color,value in colors.items %}
                               label: "{{key}}",
-                              data: [ 0 {% for i in value %} ,'{{i|json}}' {%endfor%} ],
+                              data: [{% for i in value %} {{i|json}}, {%endfor%}],
                               fill: false,
                               borderWidth: 1,
                               borderColor: '{{color}}',
@@ -97,10 +95,10 @@
             new Chart(document.getElementById("grupos_pvu"), {
               type: 'line',
               data: {
-                  labels: [ ""{% for i in rondas %} ,{{i|json}} {%endfor%}],
+                  labels: [ {% for i in rondas %} {{i|json}}, {%endfor%}],
                   datasets: [{
                       label: "Grupo 1",
-                      data: [0 {% for i in grupo1_pvu %} ,{{i|json}} {%endfor%}],
+                      data: [{% for i in grupo1_pvu %} {{i|json}}, {%endfor%}],
                       fill: false,
                       borderWidth: 1,
                       borderColor: "rgb(5,149,226,1)",
@@ -113,7 +111,7 @@
                           type: 'line',
                           {% for color,value in colors.items %}
                             label: "{{key}}",
-                            data: [ 0 {% for i in value %} ,'{{i|json}}' {%endfor%} ],
+                            data: [ {% for i in value %} '{{i|json}}', {%endfor%} ],
                             fill: false,
                             borderWidth: 1,
                             borderColor: '{{color}}',
@@ -137,10 +135,10 @@
           new Chart(document.getElementById("grupos_units"), {
             type: 'line',
             data: {
-                labels: [ ""{% for i in rondas %} ,{{i|json}} {%endfor%}],
+                labels: [ {% for i in rondas %} {{i|json}}, {%endfor%}],
                 datasets: [{
                     label: "Grupo 1",
-                    data: [0 {% for i in grupo1_units %} ,{{i|json}} {%endfor%}],
+                    data: [{% for i in grupo1_units %} {{i|json}}, {%endfor%}],
                     fill: false,
                     borderWidth: 1,
                     borderColor: "rgb(5,149,226,1)",
@@ -153,7 +151,7 @@
                         type: 'line',
                         {% for color,value in colors.items %}
                           label: "{{key}}",
-                          data: [ 0 {% for i in value %} ,'{{i|json}}' {%endfor%} ],
+                          data: [ {% for i in value %} '{{i|json}}', {%endfor%} ],
                           fill: false,
                           borderWidth: 1,
                           borderColor: '{{color}}',
