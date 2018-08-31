@@ -2,16 +2,17 @@
 
 <div class="card bg-light instructions">
     <div class="card-body">
-    <h3>
-        Instrucciones
-    </h3>
+        <link rel="stylesheet" type="text/css" href="{% static 'global/matrix.css' %}"/>       
+        <h3>
+            Instrucciones
+        </h3>
 
-    <p>
-        En este estudio, usted estará en un grupo formado aleatoriamente de  {{ Constants.players_per_group }} participantes. Cada participnte en el grupo recibe {{ Constants.endowment }} puntos. El grupo tiene la oportunidad de emprender un proyecto en conjunto. Cada participante en el grupo decide cuánto aportar en el proyecto. La contribución puede ser cualquier número entero  de 0 a {{ Constants.endowment }} puntos.
-    </p>
-    <p>
-        Las ganancias del proyecto se calculan de la siguiente manera: se suman las contibuciones de los {{ Constants.players_per_group }} participantes, la contribución total se multiplica por un factor de  {{ Constants.multiplier }}, y la cantidad resultante es el total de ingresos del proyecto, que se divide equitativamente entre los  {{ Constants.players_per_group }}
-        participantes. Su pago equivale a  sus ganancias del proyecto, más la cantidad que no contribuyó.
-    </p>
+        <p>
+            En este estudio, usted estará en un grupo formado aleatoriamente de  {{ Constants.players_per_group }} participantes. Cada participnte en el grupo recibe {{ Constants.endowment }} puntos. El grupo tiene la oportunidad de emprender un proyecto en conjunto. Cada participante en el grupo decide cuánto aportar en el proyecto. La contribución puede ser cualquier número entero  de 0 a {{ Constants.endowment }} puntos.
+        </p>
+        <p>
+            Las ganancias del proyecto se calculan de la siguiente manera: se suman las contibuciones de los {{ Constants.players_per_group }} participantes, la contribución total se multiplica por un factor de  {{ Constants.multiplier }}, y la cantidad resultante es el total de ingresos del proyecto, que se divide equitativamente entre los  {{ Constants.players_per_group }}
+            participantes. Su pago equivale a  sus ganancias del proyecto, más la cantidad que no contribuyó.
+        </p>
     </div>
 </div>

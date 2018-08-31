@@ -15,6 +15,11 @@ class Contribute(Page):
     form_fields = ['contribution']
 
     timeout_submission = {'contribution': c(Constants.endowment / 2)}
+    
+    def vars_for_template(self):
+        return {
+            'ronda' : self.round_number
+            }
 
 
 class ResultsWaitPage(WaitPage):

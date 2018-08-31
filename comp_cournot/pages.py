@@ -84,7 +84,7 @@ class Charts(Page):
         grupos_pvu = {}
         grupos_units = {}
         control_grupo = 0
-        lista_colores = ['','#A2CD45','#21869A','#6D36D7','#08F20C','#D8991B','#13ABF1','#E32329','#12ED4F','#E1F111','#150EF4','#6A6895','#8F02F4','#3F7F04','#804005','#036F21','#170633','#625F66','#625F66']
+        lista_colores = ['','#d73027','#f46d43','#fdae61','#fee08b','#ffffbf','#d9ef8b','#a6d96a','#66bd63','#1a9850','#150EF4','#6A6895','#8F02F4','#3F7F04','#804005','#036F21','#170633','#625F66','#625F66']
         cont = 1
         #se saca el precio promedio y ganancia maxima del grupo para cada ronda
         for j in self.subsession.get_groups():

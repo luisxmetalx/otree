@@ -68,6 +68,13 @@
               }]
             },
             options: {
+              scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero:true
+                    }
+                }]
+              },
               title: {
                 display: true,
                 text: 'Afinidad de las Parejas al Decidir su Respuesta'
@@ -118,8 +125,51 @@
                 }
               }
           })
-
+          /*este podria ser el sustituto del cuadro anterior*/
           new Chart(document.getElementById("Mujdilemma"), {
+            type: 'bar',
+            data: {
+                labels: [{% for i in rondas %} {{i|json}}, {%endfor%}],
+                datasets: [{
+                    label: "Cooperan",
+                    data: [ {% for i in mc %} {{i|json}}, {%endfor%}],
+                    fill: false,
+                    backgroundColor: "#E25505",
+                    borderColor: "#E25505",
+                    borderWidth: 2
+                  },
+                  {
+                    type: 'bar',
+                    label: 'No cooperan',
+                    data: [{% for i in mnc %} {{i|json}}, {%endfor%}],
+                    fill: false,
+                    borderWidth: 1,
+                    backgroundColor: "#3288bd",
+                    borderColor: '#3288bd',
+                    
+                  }
+                ]
+            },
+            options: {
+              scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero:true
+                    }
+                }]
+              },
+              title: {
+                display: true,
+                text: 'Comportamiento de las Mujeres en el Experimento Dilema del Prisionero.'
+              },
+              animation: {
+                animateScale: true,
+                animateRotate: true
+              }
+            }
+        })
+
+          /*new Chart(document.getElementById("Mujdilemma"), {
             type: 'pie',
             data: {
               labels: ["Cooperaron", "No cooperaron"],
@@ -148,8 +198,44 @@
                 }
               }
             }
-          })
+          })*/
 
+          new Chart(document.getElementById("Homdilemma"), {
+            type: 'bar',
+            data: {
+                labels: [{% for i in rondas %} {{i|json}}, {%endfor%}],
+                datasets: [{
+                    label: "Cooperan",
+                    data: [ {% for i in hc %} {{i|json}}, {%endfor%}],
+                    fill: false,
+                    backgroundColor: "#29EC91",
+                    borderColor: "#29EC91",
+                    borderWidth: 2
+                  },
+                  {
+                    type: 'bar',
+                    label: 'No cooperan',
+                    data: [{% for i in hnc %} {{i|json}}, {%endfor%}],
+                    fill: false,
+                    borderWidth: 1,
+                    backgroundColor: "#037EA7",
+                    borderColor: '#037EA7',
+                    
+                  }
+                ]
+            },
+            options: {
+              title: {
+                display: true,
+                text: 'Comportamiento de los Hombres en el Experimento Dilema del Prisionero.'
+              },
+              animation: {
+                animateScale: true,
+                animateRotate: true
+              }
+            }
+        })
+          /*
           new Chart(document.getElementById("Homdilemma"), {
             type: 'pie',
             data: {
@@ -179,7 +265,7 @@
                 }
               }
             }
-          })
+          })*/
           new Chart(document.getElementById("edades"), {
             type: 'bar',
             data: {
@@ -191,6 +277,13 @@
               }]
             },
             options: {
+              scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero:true
+                    }
+                }]
+              },
               title: {
                 display: true,
                 text: 'Promedio de Edad de los Participantes'

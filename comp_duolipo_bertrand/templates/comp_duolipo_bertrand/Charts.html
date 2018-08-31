@@ -51,10 +51,10 @@
             new Chart(document.getElementById("grupos_precio"), {
                 type: 'line',
                 data: {
-                    labels: [ {% for i in total_grupos %} {{i|json}}, {%endfor%} "CMG"],
+                    labels: [ {% for i in total_grupos %} {{i|json}}, {%endfor%}],
                     datasets: [{
                         label: "Precio Promedio",
-                        data: [ {% for i in prom_precio %} {{i|json}}, {%endfor%} 0],
+                        data: [ {% for i in prom_precio %} {{i|json}}, {%endfor%}],
                         fill: false,
                         backgroundColor: "#E25505",
                         borderColor: "#E25505",
@@ -63,7 +63,7 @@
                       {
                         type: 'line',
                         label: 'CMG',
-                        data: [{% for i in cmg_const %} {{i|json}}, {%endfor%} {{cmg}}],
+                        data: [{% for i in cmg_const %} {{i|json}}, {%endfor%}],
                         fill: false,
                         borderWidth: 1,
                         borderColor: '#f00',
@@ -74,6 +74,13 @@
                     ]
                 },
                 options: {
+                  scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero:true
+                        }
+                    }]
+                  },
                   title: {
                     display: true,
                     text: 'Precio promedio por Ronda.'
@@ -95,6 +102,13 @@
                   }]
                 },
                 options: {
+                  scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero:true
+                        }
+                    }]
+                  },
                   title: {
                     display: true,
                     text: 'Ganancia Total por Ronda.'
@@ -147,6 +161,13 @@
                   }]
                 },
                 options: {
+                  scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero:true
+                        }
+                    }]
+                  },
                   title: {
                     display: true,
                     text: 'Promedio de Edad de los Participantes'
