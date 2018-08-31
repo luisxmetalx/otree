@@ -15,21 +15,25 @@
                     <thead>
                         <tr class="table-active">
                             <th scope="col">Ronda</th>
+                            <th scope="col">Precio</th>
                             <th scope="col">Ganancia</th>
                         </tr>
                     </thead>
                     <tbody>
-                        
+                        <!--items de las precio-->
                         {%for i,j in lista.items%}
                             <tr class="table-light">
                                 <td> {{i}} </td>
-                                <td> {{j}} puntos. </td>
+                                {%for v in j%}
+                                    <td> {{v|floatformat:1}} puntos. </td>
+                                {% endfor %}
                             </tr>
                         {%endfor%}
 
                         <tr class="table-light">
                             <th scope="row">Ganancia Total</th>
-                            <td> {{ganancia_total}} puntos. </td>
+                            <td></td>
+                            <td > {{ganancia_total|floatformat:1}} puntos. </td>
                         </tr>
                         
                     </tbody>                    

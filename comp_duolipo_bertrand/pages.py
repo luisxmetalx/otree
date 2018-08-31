@@ -37,13 +37,21 @@ class Resultados(Page):
         mi_ganancia = yo.payoff
         opon_ganancia = oponente.payoff
         lista = {}
+        precio_ronda = {}
+        valores=[]
+        #ganacia por ronda
         for i in self.player.in_rounds(1,self.round_number):
-            lista[i.round_number]=i.payoff;
+            valores.append(i.precio)
+            valores.append(i.payoff)
+            lista[i.round_number]=valores;
+            valores=[]
+       
         ganancia_total = sum([p.payoff for p in self.player.in_rounds(1,self.round_number)])
         return {
             'mi_ganancia' : mi_ganancia,
             'ganancia_total' : ganancia_total,
             'lista' : lista,
+            'precio' : precio_ronda,
             'round' : self.round_number
         }
 
@@ -54,8 +62,12 @@ class Results(Page):
     def vars_for_template(self):
         ganancia_total = sum([p.payoff for p in self.player.in_all_rounds()])
         lista = {}
+        valores=[]
         for i in self.player.in_rounds(1,self.round_number):
-            lista[i.round_number]=i.payoff;
+            valores.append(i.precio)
+            valores.append(i.payoff)
+            lista[i.round_number]=valores;
+            valores=[]
         return {
             'ganancia_total' : ganancia_total,
             'lista' : lista
@@ -71,6 +83,7 @@ class Charts(Page):
         return self.round_number == Constants.num_rounds
 
     def vars_for_template(self):
+        print(self.subsession.get_players())
         ganancia_total = []
         prom_precio = []
         #se saca el precio promedio y ganancia maxima del grupo
@@ -89,14 +102,16 @@ class Charts(Page):
                 tmp1 = yo.in_round(k).payoff
                 tmp2 = oponente.in_round(k).payoff
                 tmp3 = (tmp1 + tmp2)
-                tmp = ((tmp1 + tmp2))
+                p1 = yo.in_round(k).precio
+                p2 = oponente.in_round(k).precio
+                tmp = (p1 + p2)
                 precio.append(tmp)
                 ganancia.append(tmp3)
             #print('jugador 1: '+str(tmp1)+'jugador 2: '+str(tmp2))
             
-                
-            prom_precio.append(sum([i for i in ganancia])/len(grupos))
-            ganancia_total.append(sum([i for i in precio]))
+            print(precio)   
+            prom_precio.append(sum([i for i in precio])/len(self.subsession.get_players()))
+            ganancia_total.append(sum([i for i in ganancia]))
         
         #ganancia maxima del grupo    
         ganancia_maxima = Constants.demanda * 20 * Constants.ume * len(self.subsession.get_groups())
@@ -130,8 +145,13 @@ class Charts(Page):
         for i in l_edades_hombres:
             suma2 += i
         
-        prom_edad_mujer = round(suma1/len(l_edades_mujeres),2)
-        prom_edad_hombre = round(suma2/len(l_edades_hombres),2)
+        prom_edad_mujer = round(suma1/len(l_edades_mujeres),len(self.subsession.get_players()))
+        prom_edad_hombre = round(suma2/len(l_edades_hombres),len(self.subsession.get_players()))
+        #Guardando edades
+        edades=[]
+        edades.append(prom_edad_hombre)
+        edades.append(prom_edad_mujer)
+        
 
         total_grupos = []
         cmg_const = []
@@ -145,6 +165,7 @@ class Charts(Page):
             'prom_precio' : prom_precio,
             'cmg' : Constants.cmg,
             'ganancia_total' : ganancia_total,
+            'edades': edades,
             'ganancia_max' : ganancia_maxima,
             'prom_edad_mujer' : prom_edad_mujer,
             'prom_edad_hombre' : prom_edad_hombre,

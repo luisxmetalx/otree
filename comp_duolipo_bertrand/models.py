@@ -18,7 +18,7 @@ class Constants(BaseConstants):
     players_per_group = 2
     num_rounds = 5
     ume = 0.01
-    intructions_template = 'comp_duolipo_bertrand/instructions.html'
+    intructions_template = 'comp_duolipo_bertrand/Instructions.html'
     demanda = 10
     cmg = 4
 
@@ -42,7 +42,7 @@ class Player(BasePlayer):
     edad = models.IntegerField(min=18)
     
     #precio que pone el jugador entre 0 y 20 en cada ronda
-    precio = models.IntegerField(min=0, max=20)
+    precio = models.FloatField(min=0, max=20)
 
     #valor temporal para la ganancia actual de la ronda
     value = models.IntegerField(initial=0)

@@ -46,7 +46,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
     <script> 
        $(document).ready(function(){
-        
+            h={{prom_edad_hombre}}
+            mu={{prom_edad_mujer}}
             new Chart(document.getElementById("grupos_precio"), {
                 type: 'line',
                 data: {
@@ -55,8 +56,8 @@
                         label: "Precio Promedio",
                         data: [ {% for i in prom_precio %} {{i|json}}, {%endfor%} 0],
                         fill: false,
-                        backgroundColor: ["rgb(5,149,226,0.3)", "rgb(5,226,79,0.3)","rgb(226,85,5,0.3)","#E25505"],
-                        borderColor: ["rgb(5,149,226,1)", "rgb(5,226,79,1)","rgb(226,85,5,1)","#E25505"],
+                        backgroundColor: "#E25505",
+                        borderColor: "#E25505",
                         borderWidth: 2
                       },
                       {
@@ -71,6 +72,16 @@
                         steppedLine: true
                       }
                     ]
+                },
+                options: {
+                  title: {
+                    display: true,
+                    text: 'Precio promedio por Ronda.'
+                  },
+                  animation: {
+                    animateScale: true,
+                    animateRotate: true
+                  }
                 }
             })
             new Chart(document.getElementById("ganancias"), {
@@ -79,7 +90,7 @@
                   labels: [{% for i in total_grupos %} {{i|json}}, {%endfor%} "Ganancia Maxima"],
                   datasets: [{
                     label: "Ganancias",
-                    backgroundColor: ["#FCA802", "#9AED0B","#E25505","#FFF000"],
+                    backgroundColor: ["#2F6EEC", "#2F6EEC","#2F6EEC","#2F6EEC","#2F6EEC","#2F6EEC"],
                     data: [ {% for i in ganancia_total %} {{i|json}}, {%endfor%} {{ganancia_max}} ]
                   }]
                 },
@@ -132,7 +143,7 @@
                   datasets: [{
                     label: "Cantidad Hombres vs Mujeres",
                     backgroundColor: ["#E2DB05", "#8105E2"],
-                    data: [ {{prom_edad_hombre|json}} , {{prom_edad_mujer|json}} ]
+                    data: [{% for i in edades %} {{i|json}}, {%endfor%} {{edades}} ]
                   }]
                 },
                 options: {
