@@ -68,30 +68,34 @@ class Chart(Page):
                 for p in j.get_players():
                     yo = p
                     oponente = yo.other_player()
-                    if yo.in_round(k).decision == oponente.in_round(k).decision and yo.in_round(k).decision =='Confiesa':
+                    if yo.in_round(k).decision == oponente.in_round(k).decision and yo.in_round(k).decision =='cooperar':
                         pareja_conf += 1
-                    elif yo.in_round(k).decision == oponente.in_round(k).decision and yo.in_round(k).decision =='No Confiesa':
+                    elif yo.in_round(k).decision == oponente.in_round(k).decision and yo.in_round(k).decision =='no cooperar':
                         pareja_no_conf += 1
                     else:
                         pareja_dif += 1
-                    
+                   
         #se rellena la lista de edades 
         for k in range(1,Constants.num_rounds+1):
             for p in self.subsession.get_players():
-                l_generos.append(p.in_round(1).genero)
-                if p.in_round(k).decision=='Confiesa' and p.in_round(1).genero=='Femenino':
+                #l_generos.append(p.in_round(1).genero)
+                if p.in_round(k).decision=='cooperar' and p.in_round(1).genero=='Femenino':
                     mujeres_confesaron += 1
                     l_edades_mujeres.append(p.in_round(1).edad)
-                elif p.in_round(k).decision=='No Confiesa' and p.in_round(1).genero=='Femenino':
+                elif p.in_round(k).decision=='no cooperar' and p.in_round(1).genero=='Femenino':
                     mujeres_callaron += 1
                     l_edades_mujeres.append(p.in_round(1).edad)
-                elif p.in_round(k).decision=='Confiesa' and p.in_round(1).genero=='Masculino':
+                elif p.in_round(k).decision=='cooperar' and p.in_round(1).genero=='Masculino':
                     hombres_confesaron += 1
                     l_edades_hombres.append(p.in_round(1).edad)
                 else:
                     hombres_callaron += 1
                     l_edades_hombres.append(p.in_round(1).edad)
-
+        #sacar los generos de los participantes
+        for p in self.subsession.get_players():
+            l_generos.append(p.in_round(1).genero)
+        print(l_generos)
+        print(mujeres_confesaron)
         #se calcula total mujeres y hombres
         total_mujeres = l_generos.count('Femenino')
         total_hombres = l_generos.count('Masculino')
@@ -108,7 +112,7 @@ class Chart(Page):
         pair_no_conf = ((pareja_no_conf/2)/((total_hombres+total_mujeres)/2))*100
         pair_dif = ((pareja_dif/2)/((total_hombres+total_mujeres)/2))*100
 
-        #se calcula la edad promedio de hombres y mujeres
+        #se saca edades promedio de hombres y mujeres
         suma1 = 0
         suma2 = 0
 
@@ -118,12 +122,17 @@ class Chart(Page):
         for i in l_edades_hombres:
             suma2 += i
         
-        prom_edad_mujer = suma1/len(l_edades_mujeres)
-        prom_edad_hombre = suma2/len(l_edades_hombres)
+        prom_edad_mujer = round(suma1/len(l_edades_mujeres),len(self.subsession.get_players()))
+        prom_edad_hombre = round(suma2/len(l_edades_hombres),len(self.subsession.get_players()))
+        #Guardando edades
+        edades=[]
+        edades.append(round(prom_edad_hombre,2))
+        edades.append(round(prom_edad_mujer,2))
         
         return {
             'm' : porc_masculino,
             'f' : porc_femenino,
+            'edades': edades,
             'porc_muj_con' : porc_muj_confesaron,
             'porc_muj_cal' : porc_muj_callaron,
             'porc_hom_con' : porc_hom_confesaron,

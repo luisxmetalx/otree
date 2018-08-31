@@ -49,8 +49,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
     <script> 
        $(document).ready(function(){
-          m = {{m}}
-          f = {{f}}
           porc_muj_con = {{porc_muj_con}}
           porc_muj_cal = {{porc_muj_cal}}
           porc_hom_con = {{porc_hom_con}}
@@ -62,7 +60,7 @@
           new Chart(document.getElementById("pairs"), {
             type: 'bar',
             data: {
-              labels: ["Confesaron", "No Confesaron", "Respuesta Diferente"],
+              labels: ["Cooperaron", "No cooperaron", "Respuesta Diferente"],
               datasets: [{
                 label: "Porcentaje Respecto al total de grupos participantes",
                 backgroundColor: ["#FCA802", "#9AED0B", "#084B8A"],
@@ -97,7 +95,7 @@
                 datasets: [{
                   label: "Cantidad Hombres vs Mujeres",
                   backgroundColor: ["#20c997", "#fd7e14"],
-                  data: [ m , f ]
+                  data: [ {{m|json}} , {{f|json}} ]
                 }]
               },
               options: {
@@ -124,7 +122,7 @@
           new Chart(document.getElementById("Mujdilemma"), {
             type: 'pie',
             data: {
-              labels: ["Confesaron", "No Confesaron"],
+              labels: ["Cooperaron", "No cooperaron"],
               datasets: [{
                 label: "Mujeres en Experimento",
                 backgroundColor: ["#CB14CB", "#E31D52"],
@@ -155,7 +153,7 @@
           new Chart(document.getElementById("Homdilemma"), {
             type: 'pie',
             data: {
-              labels: ["Confesaron", "No Confesaron"],
+              labels: ["Cooperan", "No cooperan"],
               datasets: [{
                 label: "Hombres en Experimento",
                 backgroundColor: ["#29EC91", "#037EA7"],
@@ -182,7 +180,6 @@
               }
             }
           })
-
           new Chart(document.getElementById("edades"), {
             type: 'bar',
             data: {
@@ -190,7 +187,7 @@
               datasets: [{
                 label: "Cantidad Hombres vs Mujeres",
                 backgroundColor: ["#FCA802", "#9AED0B"],
-                data: [ prom_edad_hom , {{prom_edad_muj}} ]
+                data: [{% for i in edades %} {{i|json}}, {%endfor%} {{edades}}]
               }]
             },
             options: {
