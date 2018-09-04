@@ -10,9 +10,9 @@ class Introduction(Page):
 
 class Quiz(Page):
     def is_displayed(self):
-            return self.round_number == 1
+            return self.round_number == Constants.num_rounds
     form_model = 'player'
-    form_fields = ['genero','edad','matricula']
+    form_fields = ['genero','edad']
 
 class Decision(Page):
     form_model = 'player'
@@ -44,6 +44,9 @@ class CharWaitPage(WaitPage):
             return self.round_number == Constants.num_rounds
     wait_for_all_groups = True
             
+class ExpTeorico(Page):
+    def is_displayed(self):
+        return self.round_number == Constants.num_rounds
 
 class Chart(Page):
     def is_displayed(self):
@@ -85,18 +88,18 @@ class Chart(Page):
         for k in range(1,Constants.num_rounds+1):
             for p in self.subsession.get_players():
                 #l_generos.append(p.in_round(1).genero)
-                if p.in_round(k).decision=='cooperar' and p.in_round(1).genero=='Femenino':
+                if p.in_round(k).decision=='cooperar' and p.in_round(Constants.num_rounds).genero=='Femenino':
                     mujeres_confesaron += 1
-                    l_edades_mujeres.append(p.in_round(1).edad)
-                elif p.in_round(k).decision=='no cooperar' and p.in_round(1).genero=='Femenino':
+                    l_edades_mujeres.append(p.in_round(Constants.num_rounds).edad)
+                elif p.in_round(k).decision=='no cooperar' and p.in_round(Constants.num_rounds).genero=='Femenino':
                     mujeres_callaron += 1
-                    l_edades_mujeres.append(p.in_round(1).edad)
-                elif p.in_round(k).decision=='cooperar' and p.in_round(1).genero=='Masculino':
+                    l_edades_mujeres.append(p.in_round(Constants.num_rounds).edad)
+                elif p.in_round(k).decision=='cooperar' and p.in_round(Constants.num_rounds).genero=='Masculino':
                     hombres_confesaron += 1
-                    l_edades_hombres.append(p.in_round(1).edad)
+                    l_edades_hombres.append(p.in_round(Constants.num_rounds).edad)
                 else:
                     hombres_callaron += 1
-                    l_edades_hombres.append(p.in_round(1).edad)
+                    l_edades_hombres.append(p.in_round(Constants.num_rounds).edad)
             #sacar número de mujer por ronda
             ronda_mujeres_c.append(mujeres_confesaron)
             ronda_mujeres_nc.append(mujeres_callaron)
@@ -109,7 +112,7 @@ class Chart(Page):
 
         #sacar los generos de los participantes
         for p in self.subsession.get_players():
-            l_generos.append(p.in_round(1).genero)
+            l_generos.append(p.in_round(Constants.num_rounds).genero)
         print(l_generos)
         print(mujeres_confesaron)
         print("mujeres confesaron: ",mujeres_confesaron)
@@ -195,10 +198,11 @@ class Chart(Page):
 
 page_sequence = [
     Introduction,
-    Quiz,
     Decision,
     ResultsWaitPage,
     Results,
+    Quiz,
+    ExpTeorico,
     CharWaitPage,
     Chart
 ]

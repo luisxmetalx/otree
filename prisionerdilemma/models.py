@@ -52,10 +52,6 @@ class Player(BasePlayer):
 
     #La edad del jugador
     edad = models.IntegerField(min=18)
-    
-    #matricula del jugador
-    matricula = models.IntegerField(min=100000000,max=999999999)
-    
 
     def other_player(self):
         return self.get_others_in_group()[0]
