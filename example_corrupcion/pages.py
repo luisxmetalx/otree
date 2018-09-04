@@ -99,7 +99,6 @@ class WaitForP2(WaitPage):
 
 
 class ResultsWaitPage(WaitPage):
-    form_model = 'group'
 
     def after_all_players_arrive(self):
         group = self.group

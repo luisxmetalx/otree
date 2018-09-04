@@ -99,7 +99,6 @@ class WaitForP2(WaitPage):
 
 
 class ResultsWaitPage(WaitPage):
-    form_model = 'group'
 
     def after_all_players_arrive(self):
         group = self.group
@@ -188,7 +187,6 @@ class Results(Page):
         }
 
 class auditoria(Page):
-    form_model = 'group'
 
     def is_displayed(self):
         return self.player.id_in_group== 1 or self.player.id_in_group== 2 
@@ -225,7 +223,6 @@ class  AllGroupsWaitPage ( WaitPage ):
     body_text = "Por favor, espere."
 
 class Resulado_auditoria(WaitPage):
-    form_model = 'group'
 
     def after_all_players_arrive(self):
         lista_grupo=[]
@@ -327,7 +324,6 @@ class Resulado_auditoria(WaitPage):
     
 
 class Multa_Auditoria(WaitPage):
-    form_model = 'group'
 
     def is_displayed(self):
         return self.group.auditado == 1 and self.player.id_in_group == 2

@@ -70,24 +70,31 @@ class Chart(Page):
         pareja_conf = 0
         pareja_no_conf = 0
         pareja_dif = 0
+
+        porc_grupos_conf = []
+        porc_grupos_no_conf = []
+        porc_grupos_dif = []
         
+        #se saca el porcentajes de grupos que cooperaron, no cooperaron y dieron respuesta diferentes sus integrantes
         for k in range(1,Constants.num_rounds+1):
             for j in self.subsession.get_groups():
-                for p in j.get_players():
-                    yo = p
-                    oponente = yo.other_player()
-                    if yo.in_round(k).decision == oponente.in_round(k).decision and yo.in_round(k).decision =='cooperar':
-                        pareja_conf += 1
-                    elif yo.in_round(k).decision == oponente.in_round(k).decision and yo.in_round(k).decision =='no cooperar':
-                        pareja_no_conf += 1
-                    else:
-                        pareja_dif += 1
-        
-        #se rellena la lista de edades 
+                yo = j.get_players()[0]
+                oponente = yo.other_player()
+                if yo.in_round(k).decision == oponente.in_round(k).decision and yo.in_round(k).decision =='cooperar':
+                    pareja_conf += 1
+                elif yo.in_round(k).decision == oponente.in_round(k).decision and yo.in_round(k).decision =='no cooperar':
+                    pareja_no_conf += 1
+                else:
+                    pareja_dif += 1
+            porc_grupos_conf.append(round((pareja_conf/len(self.subsession.get_groups())*100),2))
+            porc_grupos_no_conf.append(round((pareja_no_conf/len(self.subsession.get_groups())*100),2))
+            porc_grupos_dif.append(round((pareja_dif/len(self.subsession.get_groups())*100),2))
+            pareja_conf = 0
+            pareja_no_conf = 0
+            pareja_dif = 0
         
         for k in range(1,Constants.num_rounds+1):
             for p in self.subsession.get_players():
-                #l_generos.append(p.in_round(1).genero)
                 if p.in_round(k).decision=='cooperar' and p.in_round(Constants.num_rounds).genero=='Femenino':
                     mujeres_confesaron += 1
                     l_edades_mujeres.append(p.in_round(Constants.num_rounds).edad)
@@ -100,7 +107,7 @@ class Chart(Page):
                 else:
                     hombres_callaron += 1
                     l_edades_hombres.append(p.in_round(Constants.num_rounds).edad)
-            #sacar número de mujer por ronda
+            #sacar número de mujer y hombres que cooperaron y no cooperaron por ronda
             ronda_mujeres_c.append(mujeres_confesaron)
             ronda_mujeres_nc.append(mujeres_callaron)
             ronda_hombres_c.append(hombres_confesaron)
@@ -113,46 +120,32 @@ class Chart(Page):
         #sacar los generos de los participantes
         for p in self.subsession.get_players():
             l_generos.append(p.in_round(Constants.num_rounds).genero)
-        print(l_generos)
-        print(mujeres_confesaron)
-        print("mujeres confesaron: ",mujeres_confesaron)
-        print(ronda_mujeres_c)
-        print(ronda_mujeres_nc)
         
         #se calcula total mujeres y hombres
         total_mujeres = l_generos.count('Femenino')
         print("total de mujeres: ",total_mujeres)
         total_hombres = l_generos.count('Masculino')
         #procentaje de hombres y mujeres
-        porc_femenino = (total_mujeres/len(self.subsession.get_players()))*100
-        porc_masculino = (total_hombres/len(self.subsession.get_players()))*100
-        #porcentaje de hombres y mujeres que callaron o confesaron
-        porc_muj_confesaron = (mujeres_confesaron/total_mujeres)*100
-        porc_muj_callaron = (mujeres_callaron/total_mujeres)*100
-        porc_hom_confesaron = (hombres_confesaron/total_hombres)*100
-        porc_hom_callaron = (hombres_callaron/total_hombres)*100
-        #procentaje de grupos que ambos callaron o confesaron o difirieron
-        pair_conf = ((pareja_conf/2)/((total_hombres+total_mujeres)/2))*100
-        pair_no_conf = ((pareja_no_conf/2)/((total_hombres+total_mujeres)/2))*100
-        pair_dif = ((pareja_dif/2)/((total_hombres+total_mujeres)/2))*100
+        porc_femenino = round((total_mujeres/len(self.subsession.get_players()))*100,2)
+        porc_masculino = round((total_hombres/len(self.subsession.get_players()))*100,2)
 
         #calculo del promedio de mujeres coperan y no cooperan por ronda
-        prom_mc=[]
-        prom_mnc=[]
-        prom_hc=[]
-        prom_hnc=[]
+        porc_mc=[]
+        porc_mnc=[]
+        porc_hc=[]
+        porc_hnc=[]
         for v in ronda_mujeres_c:
-            p=v/total_mujeres
-            prom_mc.append(p)
+            p=round((v/total_mujeres)*100,2)
+            porc_mc.append(p)
         for v in ronda_mujeres_nc:
-            p=v/total_mujeres
-            prom_mnc.append(p)
+            p=round((v/total_mujeres)*100,2)
+            porc_mnc.append(p)
         for v in ronda_hombres_c:
-            p=v/total_hombres
-            prom_hc.append(p)
+            p=round((v/total_hombres)*100,2)
+            porc_hc.append(p)
         for v in ronda_hombres_nc:
-            p=v/total_hombres
-            prom_hnc.append(p)
+            p=round((v/total_hombres)*100,2)
+            porc_hnc.append(p)
 
         #se saca edades promedio de hombres y mujeres
         suma1 = 0
@@ -177,23 +170,19 @@ class Chart(Page):
             rond += 1
             rondas.append("Ronda "+str(rond))
         return {
-            'mc': prom_mc,
-            'mnc': prom_mnc,
-            'hc': prom_hc,
-            'hnc': prom_hnc,
+            'mc': porc_mc,
+            'mnc': porc_mnc,
+            'hc': porc_hc,
+            'hnc': porc_hnc,
             'm' : porc_masculino,
             'f' : porc_femenino,
             'rondas': rondas,
             'edades': edades,
-            'porc_muj_con' : porc_muj_confesaron,
-            'porc_muj_cal' : porc_muj_callaron,
-            'porc_hom_con' : porc_hom_confesaron,
-            'porc_hom_cal' : porc_hom_callaron,
             'prom_edad_muj' : prom_edad_mujer,
             'prom_edad_hom' : prom_edad_hombre,
-            'pair_conf' : pair_conf,
-            'pair_no_conf' : pair_no_conf,
-            'pair_dif' : pair_dif
+            'pair_conf' : porc_grupos_conf,
+            'pair_no_conf' : porc_grupos_no_conf,
+            'pair_dif' : porc_grupos_dif
         }
 
 page_sequence = [

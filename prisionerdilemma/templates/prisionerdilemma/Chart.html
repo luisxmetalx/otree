@@ -2,18 +2,29 @@
 {% load otree static %}
 
 {% block title %}
-    Dilema del Prisionero
+    Graficas de Sesión Dilema del Prisionero
 {% endblock %}
 
 
 {% block content %}
 
-<div class="row" style="margin-top:4%;margin-bottom:5%;">
-
-  <div class="col-sm-12">
-      <canvas id="pairs" width="800" height="450"></canvas>
-  </div>
-
+<div class="row" style="margin-top:4%;margin-bottom:0%;">
+    <div id="tester" class="col-sm-12">
+    </div>
+</div>
+<div class="row">
+    <Label><strong>Simbologia</strong></Label><br>
+    <div class="col-sm-5" style="margin-top:0%;margin-bottom:2%;margin-left:6%">
+      <label for="text"><strong>Eq. Nash</strong> = Equilibrio Nash (Grupos No Cooperaron)</label><br>
+      <label for="text"><strong>Eq. Pareto</strong> = Equilibrio Pareto (Grupos Cooperaron)</label><br>
+      <label for="text"><strong>D</strong> = Grupos Respuesta Diferente</label><br>
+      <label for="text"><strong>HC</strong> = Hombres Cooperaron</label><br>
+    </div>
+    <div class="col-sm-4">
+        <label for="text"><strong>HNC</strong> = Hombres No Cooperaron</label><br>
+        <label for="text"><strong>MC</strong> = Mujeres Cooperaron</label><br>
+        <label for="text"><strong>MNC</strong> = Mujeres No Cooperaron</label><br>
+    </div>
 </div>
 
 <div class="row" style="margin-top:4%;margin-bottom:5%;">
@@ -28,17 +39,6 @@
 
 </div>
 
-<div class="row" style="margin-top:4%;margin-bottom:5%;">
-
-  <div class="col-sm-6">
-    <canvas id="Mujdilemma" width="600" height="350"></canvas>
-  </div>
-
-  <div class="col-sm-6">
-    <canvas id="Homdilemma" width="600" height="350"></canvas>
-  </div>
-
-</div>
 
 
 {% next_button %}
@@ -47,54 +47,104 @@
 
 {% block app_scripts %}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
+    <script>
+
+        $(document).ready(function() {
+        var d3 = Plotly.d3;
+        
+        var WIDTH_IN_PERCENT_OF_PARENT = 100;
+        
+        var gd3 = d3.select('#tester')
+            .append('div')
+            .style({
+                width: WIDTH_IN_PERCENT_OF_PARENT + '%',
+                height: 'AUTO',
+                class : 'col-sm-12'
+            });
+        
+        var gd = gd3.node();
+        
+        var trace2 = {
+          x: [0{% for i in rondas %} ,{{i|json}} {%endfor%}],
+          y: [0 {%for i in pair_conf%} ,{{i|json}} {%endfor%}],
+          mode: 'lines+markers',
+          name: '% Eq. Pareto',
+        };
+        
+        var trace1 = {
+          x: [0{% for i in rondas %} ,{{i|json}} {%endfor%}],
+          y: [0 {%for i in pair_no_conf%} ,{{i|json}} {%endfor%}],
+          mode: 'lines+markers',
+          name: '% Eq. Nash'
+        };
+        
+        var trace3 = {
+          x: [0 {% for i in rondas %} ,{{i|json}} {%endfor%}],
+          y: [0 {%for i in pair_dif%} ,{{i|json}} {%endfor%}],
+          mode: 'lines+markers',
+          name: '% D'
+        };
+        
+        var trace4 = {
+          x: [0 {% for i in rondas %} ,{{i|json}} {%endfor%}],
+          y: [0 {%for i in hc%} ,{{i|json}} {%endfor%}],
+          mode: 'lines+markers',
+          name: '% HC'
+        };
+        
+        var trace5 = {
+          x: [0 {% for i in rondas %} ,{{i|json}} {%endfor%}],
+          y: [0 {%for i in hnc%} ,{{i|json}} {%endfor%}],
+          mode: 'lines+markers',
+          name: '% HNC'
+        };
+  
+        var trace6 = {
+          x: [0 {% for i in rondas %} ,{{i|json}} {%endfor%}],
+          y: [0 {% for i in mc %} ,{{i|json}} {%endfor%}],
+          mode: 'lines+markers',
+          name: '% MC'
+        };
+  
+        var trace7 = {
+          x: [0 {% for i in rondas %} ,{{i|json}} {%endfor%}],
+          y: [0 {% for i in mnc %} ,{{i|json}} {%endfor%}],
+          mode: 'lines+markers',
+          name: '% MNC'
+        };
+  
+        var data = [ trace1, trace2, trace3, trace4, trace5, trace6, trace7 ];
+        
+        var layout = {
+          title:'<b>Porcentajes de Comportamiento General de Decisiones<b>',
+          legend: {
+            x: 1,
+            y: 0.5,
+            traceorder: 'normal',
+            font: {
+              family: 'sans-serif',
+              size: 12,
+              color: '#000'
+            },
+            bgcolor: '#E2E2E2',
+            bordercolor: '#FFFFFF',
+            borderwidth: 2
+          }
+        };
+        
+        Plotly.newPlot(gd, data, layout,{scrollZoom: true});
+        
+        window.onresize = function() {
+            Plotly.Plots.resize(gd);
+        };
+        
+        });
+    </script>
+
     <script> 
        $(document).ready(function(){
-          porc_muj_con = {{porc_muj_con}}
-          porc_muj_cal = {{porc_muj_cal}}
-          porc_hom_con = {{porc_hom_con}}
-          prom_edad_hom = {{prom_edad_hom}}
-          pair_dif = {{pair_dif}}
-          pair_no_conf = {{pair_no_conf}}
-          pair_conf = {{pair_conf}}
-
-          new Chart(document.getElementById("pairs"), {
-            type: 'bar',
-            data: {
-              labels: ["Cooperaron", "No cooperaron", "Respuesta Diferente"],
-              datasets: [{
-                label: "Porcentaje Respecto al total de grupos participantes",
-                backgroundColor: ["#FCA802", "#9AED0B", "#084B8A"],
-                data: [  pair_conf, pair_no_conf, pair_dif ]
-              }]
-            },
-            options: {
-              scales: {
-                yAxes: [{
-                    ticks: {
-                        beginAtZero:true
-                    }
-                }]
-              },
-              title: {
-                display: true,
-                text: 'Afinidad de las Parejas al Decidir su Respuesta'
-              },
-              animation: {
-                animateScale: true,
-                animateRotate: true
-              },
-              tooltips: {
-                callbacks: {
-                  label: function(tooltipItem, data) {
-                    var dataset = data.datasets[tooltipItem.datasetIndex]
-                    var currentValue = dataset.data[tooltipItem.index]       
-                    return currentValue + "%"
-                  }
-                }
-              }
-            }
-          })
-
           new Chart(document.getElementById("HvsM"), {
               type: 'doughnut',
               data: {
@@ -125,147 +175,7 @@
                 }
               }
           })
-          /*este podria ser el sustituto del cuadro anterior*/
-          new Chart(document.getElementById("Mujdilemma"), {
-            type: 'bar',
-            data: {
-                labels: [{% for i in rondas %} {{i|json}}, {%endfor%}],
-                datasets: [{
-                    label: "Cooperan",
-                    data: [ {% for i in mc %} {{i|json}}, {%endfor%}],
-                    fill: false,
-                    backgroundColor: "#E25505",
-                    borderColor: "#E25505",
-                    borderWidth: 2
-                  },
-                  {
-                    type: 'bar',
-                    label: 'No cooperan',
-                    data: [{% for i in mnc %} {{i|json}}, {%endfor%}],
-                    fill: false,
-                    borderWidth: 1,
-                    backgroundColor: "#3288bd",
-                    borderColor: '#3288bd',
-                    
-                  }
-                ]
-            },
-            options: {
-              scales: {
-                yAxes: [{
-                    ticks: {
-                        beginAtZero:true
-                    }
-                }]
-              },
-              title: {
-                display: true,
-                text: 'Comportamiento de las Mujeres en el Experimento Dilema del Prisionero.'
-              },
-              animation: {
-                animateScale: true,
-                animateRotate: true
-              }
-            }
-        })
-
-          /*new Chart(document.getElementById("Mujdilemma"), {
-            type: 'pie',
-            data: {
-              labels: ["Cooperaron", "No cooperaron"],
-              datasets: [{
-                label: "Mujeres en Experimento",
-                backgroundColor: ["#CB14CB", "#E31D52"],
-                data: [ porc_muj_con , porc_muj_cal ]
-              }]
-            },
-            options: {
-              title: {
-                display: true,
-                text: 'Comportamiento de las Mujeres en el Experimento Dilema del Prisionero'
-              },
-              animation: {
-                animateScale: true,
-                animateRotate: true
-              },
-              tooltips: {
-                callbacks: {
-                  label: function(tooltipItem, data) {
-                    var dataset = data.datasets[tooltipItem.datasetIndex]
-                    var currentValue = dataset.data[tooltipItem.index]       
-                    return currentValue + "%"
-                  }
-                }
-              }
-            }
-          })*/
-
-          new Chart(document.getElementById("Homdilemma"), {
-            type: 'bar',
-            data: {
-                labels: [{% for i in rondas %} {{i|json}}, {%endfor%}],
-                datasets: [{
-                    label: "Cooperan",
-                    data: [ {% for i in hc %} {{i|json}}, {%endfor%}],
-                    fill: false,
-                    backgroundColor: "#29EC91",
-                    borderColor: "#29EC91",
-                    borderWidth: 2
-                  },
-                  {
-                    type: 'bar',
-                    label: 'No cooperan',
-                    data: [{% for i in hnc %} {{i|json}}, {%endfor%}],
-                    fill: false,
-                    borderWidth: 1,
-                    backgroundColor: "#037EA7",
-                    borderColor: '#037EA7',
-                    
-                  }
-                ]
-            },
-            options: {
-              title: {
-                display: true,
-                text: 'Comportamiento de los Hombres en el Experimento Dilema del Prisionero.'
-              },
-              animation: {
-                animateScale: true,
-                animateRotate: true
-              }
-            }
-        })
-          /*
-          new Chart(document.getElementById("Homdilemma"), {
-            type: 'pie',
-            data: {
-              labels: ["Cooperan", "No cooperan"],
-              datasets: [{
-                label: "Hombres en Experimento",
-                backgroundColor: ["#29EC91", "#037EA7"],
-                data: [ porc_hom_con , {{porc_hom_cal}} ]
-              }]
-            },
-            options: {
-              title: {
-                display: true,
-                text: 'Comportamiento de los Hombres en el Experimento Dilema del Prisionero'
-              },
-              animation: {
-                animateScale: true,
-                animateRotate: true
-              },
-              tooltips: {
-                callbacks: {
-                  label: function(tooltipItem, data) {
-                    var dataset = data.datasets[tooltipItem.datasetIndex]
-                    var currentValue = dataset.data[tooltipItem.index]       
-                    return currentValue + "%"
-                  }
-                }
-              }
-            }
-          })*/
+         
           new Chart(document.getElementById("edades"), {
             type: 'bar',
             data: {
