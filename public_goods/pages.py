@@ -5,8 +5,14 @@ from .models import Constants
 
 class Introduction(Page):
     """Description of the game: How to play and returns expected"""
-    pass
+    def is_displayed(self):
+        return self.round_number == 1
 
+class Quiz(Page):
+    def is_displayed(self):
+        return self.round_number == Constants.num_rounds
+    form_model = 'player'
+    form_fields = ['genero','edad','matricula']
 
 class Contribute(Page):
     """Player: Choose how much to contribute"""
@@ -33,14 +39,21 @@ class Results(Page):
     """Players payoff: How much each has earned"""
 
     def vars_for_template(self):
+        promedio = self.group.total_contribution/Constants.players_per_group
         return {
             'total_earnings': self.group.total_contribution * Constants.multiplier,
+            'promedio': promedio,
         }
+class Graficas(Page):
+    def is_displayed(self):
+        return self.round_number == Constants.num_rounds
 
 
 page_sequence = [
     Introduction,
     Contribute,
     ResultsWaitPage,
-    Results
+    Results,
+    Quiz,
+    Graficas
 ]
