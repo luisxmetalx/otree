@@ -64,7 +64,7 @@ class Player(BasePlayer):
     edad = models.IntegerField(min=18)
     
     #matricula del jugador
-    matricula = models.IntegerField(min=100000000,max=999999999)
+    #matricula = models.IntegerField(min=100000000,max=999999999)
 
     contribution = models.CurrencyField(
         min=0, max=Constants.endowment,

@@ -2,11 +2,207 @@
 {% load otree static %}
 
 {% block title %}
-    Resultados.
+    Resultados
 {% endblock %}
 
 {% block content %}
+    <div class="container-fluid">
+        <div class="row">
+            <div id="cont_promedio" class="col-sm-12">
 
+            </div>
+        </div>
+        <div class="row">
+            <div id="cont_ganancia" class="col-sm-12">
+
+            </div>
+        </div>
+        <div class="row">
+            <div id="genero" class="col-sm-7"></div>
+            <div id="edades" class="col-sm-5"></div>
+        </div>
+    </div>
 
 
 {% endblock %}
+
+{% block app_scripts %}
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            var d3 = Plotly.d3;
+
+            var WIDTH_IN_PERCENT_OF_PARENT = 100
+            
+            var contotal = {
+                //data
+                x: [{% for i in rondas %} {{i|json}}, {%endfor%}],
+                y: [{% for i in promedio %} {{i|json}}, {%endfor%}],
+                type: 'scatter',
+                name:'Todos',
+            };
+            var caja1 = {
+                x: [{% for i in rondas %} {{i|json}}, {%endfor%}],
+                y: [{% for i in promedio %} {{i|json}}, {%endfor%}],
+                type: 'box',
+                name: 'total',
+              };
+            var conH = {
+                //data
+                x: [{% for i in rondas %} {{i|json}}, {%endfor%}],
+                y: [{% for i in con_hombres %} {{i|json}}, {%endfor%}],
+                type: 'scatter',
+                name:'Hombres',
+            };
+            var conM = {
+                //data
+                x: [{% for i in rondas %} {{i|json}}, {%endfor%}],
+                y: [{% for i in con_mujeres %} {{i|json}}, {%endfor%}],
+                type: 'scatter',
+                name:'Mujeres',
+            };
+            var layaout ={
+                title: 'Promedio de contribuciones',
+                yaxis: {rangemode: 'tozero',
+                    zeroline: true
+                }
+            };
+                        
+            var data = [contotal,caja1,conH,conM]   
+
+            var gd3 = d3.select('#cont_promedio')
+                .append('div')
+                .style({
+                    width: WIDTH_IN_PERCENT_OF_PARENT + '%',
+                    height: 'AUTO'
+                });
+
+            var gd = gd3.node();
+
+            Plotly.plot(gd,data,layaout)
+
+            //segunda grafica
+            var graf2 = Plotly.d3;
+
+            var WIDTH_IN_PERCENT_OF_PARENT = 100
+            
+            var ganT = {
+                //data
+                x: [{% for i in rondas %} {{i|json}}, {%endfor%}],
+                y: [{% for i in ganancia %} {{i|json}}, {%endfor%}],
+                type: 'scatter',
+                name:'Total',
+            };
+            var ganh = {
+                //data
+                x: [{% for i in rondas %} {{i|json}}, {%endfor%}],
+                y: [{% for i in ganancia_h %} {{i|json}}, {%endfor%}],
+                type: 'scatter',
+                name:'Hombres',
+            };
+            var ganM = {
+                //data
+                x: [{% for i in rondas %} {{i|json}}, {%endfor%}],
+                y: [{% for i in ganancia_m %} {{i|json}}, {%endfor%}],
+                type: 'scatter',
+                name:'Mujeres',
+            };
+            var layaout2 ={
+                title: 'Ganancias Totales',
+                yaxis: {rangemode: 'tozero',
+                    zeroline: true
+                }
+            };
+                        
+            var data2 = [ganT,ganh,ganM]   
+
+            var graficad2 = graf2.select('#cont_ganancia')
+                .append('div')
+                .style({
+                    width: WIDTH_IN_PERCENT_OF_PARENT + '%',
+                    height: 'AUTO'
+                });
+
+            var grafica2 = graficad2.node();
+
+            Plotly.plot(grafica2,data2,layaout2)
+                
+            //tercera grafica
+            var graf3 = Plotly.d3;
+
+            var WIDTH_IN_PERCENT_OF_PARENT = 100
+            
+            var trace3 = {
+                values: [{% for i in pGenero %} {{i|json}}, {%endfor%}],
+                labels: ['Hombres', 'Mujeres'],
+                type: 'pie'
+              };
+            var layaout3 ={
+                title: 'Porcentaje de participantes',
+                height: 400,
+                width: 500
+                
+            };
+                        
+            var data3 = [trace3]   
+
+            var graficad3 = d3.select('#genero')
+                .append('div')
+                .style({
+                    width: WIDTH_IN_PERCENT_OF_PARENT + '%',
+                    height: 'AUTO'
+                });
+
+            var graf3 = graficad3.node();
+
+            Plotly.plot(graf3,data3,layaout3)
+            
+            //cuarta grafica
+            var graf4 = Plotly.d3;
+
+            var WIDTH_IN_PERCENT_OF_PARENT = 100
+            
+            var edadP = {
+                x: ['Edades'],
+                y: [{{prom_edad|json}}],
+                name: 'Total',
+                type: 'bar'
+            };
+            var edadH = {
+                x: ['Edades'],
+                y: [{{prom_edadH|json}}],
+                name: 'Hombres',
+                type: 'bar'
+            };
+            var edadM = {
+                x: ['Edades'],
+                y: [{{prom_edadM|json}}],
+                name: 'Mujeres',
+                type: 'bar'
+            };
+            var layaout4 ={
+                title: 'Edades promedio de participantes',
+                barmode: 'group',  
+            };
+                        
+            var data4 = [edadP,edadH,edadM]   
+
+            var graficad3 = d3.select('#edades')
+                .append('div')
+                .style({
+                    width: WIDTH_IN_PERCENT_OF_PARENT + '%',
+                    height: 'AUTO'
+                });
+
+            var graf4 = graficad3.node();
+
+            Plotly.plot(graf4,data4,layaout4)
+
+            window.onresize = function() {
+                Plotly.Plots.resize(gd);
+                Plotly.Plots.resize(grafica2);
+                Plotly.Plots.resize(graf3);
+            };
+        });
+    </script>
+{% endblock  %}
