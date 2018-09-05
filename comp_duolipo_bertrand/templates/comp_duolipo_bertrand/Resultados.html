@@ -9,12 +9,13 @@
     <div class="card bg-light">
         <div class="card-body">
             <p class="text-justify font-weight-bold">
-                Su ganancia ha sido de ${{mi_ganancia}}
+                Su ganancia ha sido de {{mi_ganancia|floatformat:0}} puntos.
             </p>
                 <table class="table table-hover text-center">
                     <thead>
                         <tr class="table-active">
                             <th scope="col">Ronda</th>
+                            <th scope="col">Cantidad Vendida</th>
                             <th scope="col">Precio</th>
                             <th scope="col">Ganancia</th>
                         </tr>
@@ -24,16 +25,21 @@
                         {%for i,j in lista.items%}
                             <tr class="table-light">
                                 <td> {{i}} </td>
-                                {%for v in j%}
-                                    <td> {{v|floatformat:1}} puntos. </td>
+                                {%for k,v in j.items%}
+                                    {%if k == 'vendido' %}
+                                        <td> {{v|floatformat:0}} productos </td>
+                                    {%else%}
+                                        <td> {{v|floatformat:0}} puntos </td>
+                                    {%endif%}
                                 {% endfor %}
                             </tr>
                         {%endfor%}
 
                         <tr class="table-light">
+                            <td></td>
                             <th scope="row">Ganancia Total</th>
                             <td></td>
-                            <td > {{ganancia_total|floatformat:1}} puntos. </td>
+                            <td > {{ganancia_total|floatformat:0}} puntos </td>
                         </tr>
                         
                     </tbody>                    

@@ -123,11 +123,17 @@ class Chart(Page):
         
         #se calcula total mujeres y hombres
         total_mujeres = l_generos.count('Femenino')
-        print("total de mujeres: ",total_mujeres)
         total_hombres = l_generos.count('Masculino')
-        #procentaje de hombres y mujeres
-        porc_femenino = round((total_mujeres/len(self.subsession.get_players()))*100,2)
-        porc_masculino = round((total_hombres/len(self.subsession.get_players()))*100,2)
+        
+        #porcentaje de hombres y mujeres
+        if(total_mujeres != 0):
+            porc_femenino = round((total_mujeres/len(self.subsession.get_players()))*100,2)
+        else:
+            porc_femenino = 0
+        if(total_hombres != 0):
+            porc_masculino = round((total_hombres/len(self.subsession.get_players()))*100,2)
+        else:
+            porc_masculino = 0
 
         #calculo del promedio de mujeres coperan y no cooperan por ronda
         porc_mc=[]
@@ -135,16 +141,28 @@ class Chart(Page):
         porc_hc=[]
         porc_hnc=[]
         for v in ronda_mujeres_c:
-            p=round((v/total_mujeres)*100,2)
+            if(total_mujeres != 0):
+                p=round((v/total_mujeres)*100,2)
+            else:
+                p = 0
             porc_mc.append(p)
         for v in ronda_mujeres_nc:
-            p=round((v/total_mujeres)*100,2)
+            if(total_mujeres != 0):
+                p=round((v/total_mujeres)*100,2)
+            else:
+                p = 0
             porc_mnc.append(p)
         for v in ronda_hombres_c:
-            p=round((v/total_hombres)*100,2)
+            if(total_hombres != 0):
+                p=round((v/total_hombres)*100,2)
+            else:
+                p = 0
             porc_hc.append(p)
         for v in ronda_hombres_nc:
-            p=round((v/total_hombres)*100,2)
+            if(total_hombres != 0):
+                p=round((v/total_hombres)*100,2)
+            else:
+                p = 0
             porc_hnc.append(p)
 
         #se saca edades promedio de hombres y mujeres
@@ -156,9 +174,14 @@ class Chart(Page):
 
         for i in l_edades_hombres:
             suma2 += i
-        
-        prom_edad_mujer = round(suma1/len(l_edades_mujeres),len(self.subsession.get_players()))
-        prom_edad_hombre = round(suma2/len(l_edades_hombres),len(self.subsession.get_players()))
+        if (total_mujeres != 0):
+            prom_edad_mujer = round(suma1/len(l_edades_mujeres),len(self.subsession.get_players()))
+        else:
+            prom_edad_mujer = 0
+        if(total_hombres != 0):
+            prom_edad_hombre = round(suma2/len(l_edades_hombres),len(self.subsession.get_players()))
+        else:
+            prom_edad_hombre = 0
         #Guardando edades
         edades=[]
         edades.append(round(prom_edad_hombre,2))

@@ -67,50 +67,50 @@
         var gd = gd3.node();
         
         var trace2 = {
-          x: [0{% for i in rondas %} ,{{i|json}} {%endfor%}],
-          y: [0 {%for i in pair_conf%} ,{{i|json}} {%endfor%}],
+          x: [{% for i in rondas %} ,{{i|json}} {%endfor%}],
+          y: [{%for i in pair_conf%} ,{{i|json}} {%endfor%}],
           mode: 'lines+markers',
           name: '% Eq. Pareto',
         };
         
         var trace1 = {
-          x: [0{% for i in rondas %} ,{{i|json}} {%endfor%}],
-          y: [0 {%for i in pair_no_conf%} ,{{i|json}} {%endfor%}],
+          x: [{% for i in rondas %} ,{{i|json}} {%endfor%}],
+          y: [{%for i in pair_no_conf%} ,{{i|json}} {%endfor%}],
           mode: 'lines+markers',
           name: '% Eq. Nash'
         };
         
         var trace3 = {
-          x: [0 {% for i in rondas %} ,{{i|json}} {%endfor%}],
-          y: [0 {%for i in pair_dif%} ,{{i|json}} {%endfor%}],
+          x: [{% for i in rondas %} ,{{i|json}} {%endfor%}],
+          y: [{%for i in pair_dif%} ,{{i|json}} {%endfor%}],
           mode: 'lines+markers',
           name: '% D'
         };
         
         var trace4 = {
-          x: [0 {% for i in rondas %} ,{{i|json}} {%endfor%}],
-          y: [0 {%for i in hc%} ,{{i|json}} {%endfor%}],
+          x: [{% for i in rondas %} ,{{i|json}} {%endfor%}],
+          y: [{%for i in hc%} ,{{i|json}} {%endfor%}],
           mode: 'lines+markers',
           name: '% HC'
         };
         
         var trace5 = {
-          x: [0 {% for i in rondas %} ,{{i|json}} {%endfor%}],
-          y: [0 {%for i in hnc%} ,{{i|json}} {%endfor%}],
+          x: [{% for i in rondas %} ,{{i|json}} {%endfor%}],
+          y: [{%for i in hnc%} ,{{i|json}} {%endfor%}],
           mode: 'lines+markers',
           name: '% HNC'
         };
   
         var trace6 = {
-          x: [0 {% for i in rondas %} ,{{i|json}} {%endfor%}],
-          y: [0 {% for i in mc %} ,{{i|json}} {%endfor%}],
+          x: [{% for i in rondas %} ,{{i|json}} {%endfor%}],
+          y: [{% for i in mc %} ,{{i|json}} {%endfor%}],
           mode: 'lines+markers',
           name: '% MC'
         };
   
         var trace7 = {
-          x: [0 {% for i in rondas %} ,{{i|json}} {%endfor%}],
-          y: [0 {% for i in mnc %} ,{{i|json}} {%endfor%}],
+          x: [{% for i in rondas %} ,{{i|json}} {%endfor%}],
+          y: [{% for i in mnc %} ,{{i|json}} {%endfor%}],
           mode: 'lines+markers',
           name: '% MNC'
         };
@@ -131,6 +131,23 @@
             bgcolor: '#E2E2E2',
             bordercolor: '#FFFFFF',
             borderwidth: 2
+          },
+          yaxis: {rangemode: 'tozero',
+            zeroline: true,
+            title: '%',
+            titlefont: {
+              family: 'Courier New, monospace',
+              size: 18,
+              color: '#7f7f7f'
+            }
+          },
+          xaxis: {
+            title: 'Rondas',
+            titlefont: {
+              family: 'Courier New, monospace',
+              size: 18,
+              color: '#7f7f7f'
+            }
           }
         };
         

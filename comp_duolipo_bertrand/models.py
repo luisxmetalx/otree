@@ -47,8 +47,8 @@ class Player(BasePlayer):
     #valor temporal para la ganancia actual de la ronda
     value = models.IntegerField(initial=0)
 
-    #matricula del jugador
-    matricula = models.IntegerField(min=100000000,max=999999999)
+    #cantidad que vende el jugador 0, 5 o 10
+    vendido = models.IntegerField(initial=0)
 
     def other_player(self):
         return self.get_others_in_group()[0]
@@ -56,11 +56,16 @@ class Player(BasePlayer):
     def ganancia(self):
         yo = self
         oponente = self.other_player()
-        value=0
+        value = 0
+        vendido = 0
         if yo.precio == oponente.precio:
             value = (yo.precio-4)*(Constants.demanda/2)
+            vendido = 5
         elif yo.precio < oponente.precio:
             value = (yo.precio-4)*(Constants.demanda)
+            vendido = 10
         else:
             value = 0
+            vendido = 0
         self.payoff = value
+        self.vendido = vendido
