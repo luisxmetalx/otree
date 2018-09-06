@@ -19,11 +19,11 @@ class Constants(BaseConstants):
     num_rounds = 3
     intructions_template = 'prisionerdilemma/instructions.html'
     #Pago cuando ambos jugadores confiesan o callan
-    pago_ambos_confiesan = c(200)
-    pago_ambos_callan = c(100)
+    pago_ambos_confiesan = c(5)
+    pago_ambos_callan = c(3)
     #Pago cuando un juigador confiesa y el otro coopera
-    pago_jugador_confiesa = c(0)
-    pago_jugador_calla = c(300)
+    pago_jugador_confiesa = c(1)
+    pago_jugador_calla = c(8)
 
 
 class Subsession(BaseSubsession):
