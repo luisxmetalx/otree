@@ -9,13 +9,13 @@
 
 {% block content %}
 
-<div class="row" style="margin-top:4%;margin-bottom:5%;">
+<div class="row" style="margin-top:4%;margin-bottom:0%;">
 
   <div id="tester" class="col-sm-12"></div>
 
 </div>
-
-<div class="row">
+{% comment %} <input type="button" id='mostrar' class="btn btn-primary" value="Simbología">  {% endcomment %}
+<div id="target" class="row">
   <Label><strong>Simbologia</strong></Label><br>
   <div class="col-sm-5" style="margin-top:0%;margin-bottom:2%;margin-left:6%">
     <label for="text"><strong>PPT</strong> = Precio Promedio Total</label><br>
@@ -30,7 +30,7 @@
   </div>
 </div>
 
-<div class="row" style="margin-top:4%;margin-bottom:5%;">
+<div class="row" style="margin-top:4%;margin-bottom:0%;">
 
   <div id="bst" class="col-sm-12"></div>
 
@@ -75,6 +75,17 @@
   <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 
   <script>
+    $(document).ready(function(){
+      $("#mostrar").on( "click", function() {
+        $('#target').show(); //muestro mediante id
+       });
+      $("#mostrar").on( "click", function() {
+        $('#target').hide(); //oculto mediante id
+      });
+    });
+  </script>
+
+  <script>
     $(document).ready(function() {
         var d3 = Plotly.d3;
         
@@ -94,7 +105,8 @@
           x: [{% for i in rondas_cajas %} ,{{i|json}} {%endfor%}],
           y: [{%for i in precios%} ,{{i|json}} {%endfor%}],
           type: 'box',
-          name: 'PPT Disp.'
+          name: 'PPT Disp.',
+          boxpoints: 'all'
         };
 
         var trace2 = {
@@ -108,7 +120,9 @@
           x: [{% for i in rondas_cajas_hom %} ,{{i|json}} {%endfor%}],
           y: [{%for i in precios_hom%} ,{{i|json}} {%endfor%}],
           type: 'box',
-          name: 'PPTH Disp.'
+          name: 'PPTH Disp.',
+          visible : 'legendonly',
+          boxpoints: 'all'
         };
 
         var trace4 = {
@@ -116,12 +130,16 @@
           y: [{%for i in prom_precio_hom%} ,{{i|json}} {%endfor%}],
           mode: 'lines+markers',
           name: 'PPTH',
+          visible : 'legendonly',
         };
+
         var trace5 = {
           x: [{% for i in rondas_cajas_muj %} ,{{i|json}} {%endfor%}],
           y: [{%for i in precios_muj%} ,{{i|json}} {%endfor%}],
           type: 'box',
-          name: 'PPTM Disp.'
+          name: 'PPTM Disp.',
+          visible : 'legendonly',
+          boxpoints: 'all'
         };
 
         var trace6 = {
@@ -129,6 +147,7 @@
           y: [{%for i in prom_precio_muj%} ,{{i|json}} {%endfor%}],
           mode: 'lines+markers',
           name: 'PPTM',
+          visible : 'legendonly',
         };
 
         var trace7 = {
@@ -136,6 +155,7 @@
           y: [{%for i in cmg_const%} ,{{i|json}} {%endfor%}],
           mode: 'lines+markers',
           name: 'CMG',
+          visible : 'legendonly',
         };
       
         var data = [ trace1, trace2, trace3, trace4, trace5, trace6, trace7];
@@ -157,10 +177,18 @@
           },
           yaxis: {rangemode: 'tozero',
             zeroline: true,
-            title: 'Puntos'
+            title: 'Puntos',
+            titlefont: {
+              size: 18,
+              color: '#7f7f7f'
+            }
           },
           xaxis: {
-            title: 'Rondas'
+            title: 'Rondas',
+            titlefont: {
+              size: 18,
+              color: '#7f7f7f'
+            }
           }
         };
         
@@ -193,7 +221,8 @@
         x: [{% for i in rondas_cajas %} ,{{i|json}} {%endfor%}],
         y: [{%for i in ganancias_total%} ,{{i|json}} {%endfor%}],
         type: 'box',
-        name: 'BST Disp.'
+        name: 'BST Disp.',
+        boxpoints: 'all'
       };
 
       var trace2 = {
@@ -207,7 +236,9 @@
         x: [{% for i in rondas_cajas_grupal %} ,{{i|json}} {%endfor%}],
         y: [{%for i in ganancias_group%} ,{{i|json}} {%endfor%}],
         type: 'box',
-        name: 'BSG Disp.'
+        name: 'BSG Disp.',
+        visible : 'legendonly',
+        boxpoints: 'all'
       };
 
       var trace4 = {
@@ -215,13 +246,16 @@
         y: [{%for i in ganancia_prom_group%} ,{{i|json}} {%endfor%}],
         mode: 'lines+markers',
         name: 'BSPG',
+        visible : 'legendonly',
       };
 
       var trace5 = {
         x: [{% for i in rondas_cajas_hom %} ,{{i|json}} {%endfor%}],
         y: [{%for i in ganancias_hom%} ,{{i|json}} {%endfor%}],
         type: 'box',
-        name: 'BSTH Disp.'
+        name: 'BSTH Disp.',
+        visible : 'legendonly',
+        boxpoints: 'all'
       };
 
       var trace6 = {
@@ -229,12 +263,15 @@
         y: [{%for i in ganancia_prom_hom%} ,{{i|json}} {%endfor%}],
         mode: 'lines+markers',
         name: 'BSPTH',
+        visible : 'legendonly',
       };
       var trace7 = {
         x: [{% for i in rondas_cajas_muj %} ,{{i|json}} {%endfor%}],
         y: [{%for i in ganancias_muj%} ,{{i|json}} {%endfor%}],
         type: 'box',
-        name: 'BSPTM Disp.'
+        name: 'BSPTM Disp.',
+        visible : 'legendonly',
+        boxpoints: 'all'
       };
 
       var trace8 = {
@@ -242,6 +279,7 @@
         y: [{%for i in ganancia_prom_muj%} ,{{i|json}} {%endfor%}],
         mode: 'lines+markers',
         name: 'BSPTM',
+        visible : 'legendonly',
       };
 
       var trace9 = {
@@ -249,6 +287,7 @@
         y: [{%for i in const_max%} ,{{i|json}} {%endfor%}],
         mode: 'lines+markers',
         name: 'GMax',
+        visible : 'legendonly',
       };
     
       var data = [ trace1, trace2, trace3, trace4, trace5, trace6, trace7, trace8, trace9];
@@ -270,10 +309,18 @@
         },
         yaxis: {rangemode: 'tozero',
           zeroline: true,
-          title: 'Puntos'
+          title: 'Puntos',
+          titlefont: {
+            size: 18,
+            color: '#7f7f7f'
+          }
         },
         xaxis: {
-          title: 'Rondas'
+          title: 'Rondas',
+          titlefont: {
+            size: 18,
+            color: '#7f7f7f'
+          }
         }
       };
       

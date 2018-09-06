@@ -114,13 +114,13 @@ class Charts(Page):
         total_mujeres = l_generos.count('Femenino')
         total_hombres = l_generos.count('Masculino')
 
+        grupos = self.subsession.get_groups()
         #se saca el precio promedio y ganancia maxima del grupo
         for k in range(1,Constants.num_rounds+1):
             tmp = 0
             tmp1 = 0
             tmp2 = 0
             tmp3 = 0
-            grupos = self.subsession.get_groups()
             ganancia = []
             precio = []
             precio_hom = []
@@ -241,8 +241,6 @@ class Charts(Page):
                 rondas_cajas_grupal.append("Ronda "+str(c))
             cmg_const.append(Constants.cmg)
             const_max.append(ganancia_maxima)
-        print(rondas_cajas_grupal)
-        print(ganancias_group)
         return{
             'prom_precio' : prom_precio,
             'prom_precio_hom' : precio_prom_hom,

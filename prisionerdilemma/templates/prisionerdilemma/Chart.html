@@ -71,6 +71,7 @@
           y: [{%for i in pair_conf%} ,{{i|json}} {%endfor%}],
           mode: 'lines+markers',
           name: '% Eq. Pareto',
+          visible : 'legendonly'
         };
         
         var trace1 = {
@@ -84,35 +85,40 @@
           x: [{% for i in rondas %} ,{{i|json}} {%endfor%}],
           y: [{%for i in pair_dif%} ,{{i|json}} {%endfor%}],
           mode: 'lines+markers',
-          name: '% D'
+          name: '% D',
+          visible : 'legendonly'
         };
         
         var trace4 = {
           x: [{% for i in rondas %} ,{{i|json}} {%endfor%}],
           y: [{%for i in hc%} ,{{i|json}} {%endfor%}],
           mode: 'lines+markers',
-          name: '% HC'
+          name: '% HC',
+          visible : 'legendonly'
         };
         
         var trace5 = {
           x: [{% for i in rondas %} ,{{i|json}} {%endfor%}],
           y: [{%for i in hnc%} ,{{i|json}} {%endfor%}],
           mode: 'lines+markers',
-          name: '% HNC'
+          name: '% HNC',
+          visible : 'legendonly'
         };
   
         var trace6 = {
           x: [{% for i in rondas %} ,{{i|json}} {%endfor%}],
           y: [{% for i in mc %} ,{{i|json}} {%endfor%}],
           mode: 'lines+markers',
-          name: '% MC'
+          name: '% MC',
+          visible : 'legendonly'
         };
   
         var trace7 = {
           x: [{% for i in rondas %} ,{{i|json}} {%endfor%}],
           y: [{% for i in mnc %} ,{{i|json}} {%endfor%}],
           mode: 'lines+markers',
-          name: '% MNC'
+          name: '% MNC',
+          visible : 'legendonly'
         };
   
         var data = [ trace1, trace2, trace3, trace4, trace5, trace6, trace7 ];
@@ -134,9 +140,8 @@
           },
           yaxis: {rangemode: 'tozero',
             zeroline: true,
-            title: '%',
+            title: '% Porcentaje',
             titlefont: {
-              family: 'Courier New, monospace',
               size: 18,
               color: '#7f7f7f'
             }
@@ -144,7 +149,6 @@
           xaxis: {
             title: 'Rondas',
             titlefont: {
-              family: 'Courier New, monospace',
               size: 18,
               color: '#7f7f7f'
             }
