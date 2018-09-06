@@ -32,7 +32,7 @@ class ResultsWaitPage(WaitPage):
     def after_all_players_arrive(self):
         self.group.set_payoffs()
 
-    body_text = "Waiting for other participants to contribute."
+    body_text = "Esperando la contribución de los otros participantes del grupo."
 
 
 class Results(Page):
@@ -129,12 +129,31 @@ class Graficas(Page):
             ganancia_mujeres.append(round(int(cm),2))
             ch=0
             cm=0
-        #rondas para la caja
-        rond1=0
-        for j in range(len(self.subsession.get_groups))
-        for i in range(Constants.num_rounds):
-            rond1 += 1
-            rondas.append("Ronda "+str(rond1))
+        #rondas para la caja y los valores correspondientes
+        rondas_todos=[]
+        caja_contotal=[]
+        caja_gantotal=[]
+        rondas_mujeres=[]
+        caja_conM=[]
+        caja_ganM=[]
+        rondas_hombres=[]        
+        caja_conH=[]
+        caja_ganH=[]
+        for j in range(1,Constants.num_rounds+1):
+            for p in self.subsession.get_players():
+                caja_contotal.append(p.in_round(j).contribution)
+                caja_gantotal.append(p.in_round(j).payoff)
+                rondas_todos.append("Ronda "+str(j))
+        for j in range(1,rond+1):
+            for p in self.subsession.get_players():
+                if p.genero == 'Masculino':
+                    rondas_hombres.append("Ronda "+str(j))
+                    caja_conH.append(p.in_round(j).contribution)
+                    caja_ganH.append(p.in_round(j).payoff)
+                else:
+                    rondas_mujeres.append("Ronda "+str(j))
+                    caja_conM.append(p.in_round(j).contribution)
+                    caja_ganM.append(p.in_round(j).payoff)
         return {
             'rondas': rondas,
             'promedio':cont_promedio,
@@ -148,10 +167,21 @@ class Graficas(Page):
             'con_mujeres': cont_mujeres,
             'ganancia_h': ganancia_hombre,
             'ganancia_m': ganancia_mujeres,
+            'cr1': rondas_todos,
+            'ct1': caja_contotal,
+            'cm1': caja_conM,
+            'ch1': caja_conH,
+            'cgt2': caja_gantotal,
+            'cgm2': caja_ganM,
+            'cgh2': caja_ganH,
+            'rh': rondas_hombres,
+            'rm': rondas_mujeres,
         }
 
 class AllGroupsWaitPage(WaitPage):
     wait_for_all_groups = True
+    
+    body_text = "Esperando a los demás participantes."
 
 page_sequence = [
     Introduction,

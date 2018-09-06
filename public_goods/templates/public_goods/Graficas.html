@@ -13,8 +13,88 @@
             </div>
         </div>
         <div class="row">
+            <div class="col-1"></div>
+            <div class="col">
+                <button class="btn btn-primary center" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                        Variables
+                </button>
+                <div class="collapse" id="collapseExample">
+                    <div class="card card-body">
+                        <table class="table">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th colspan="4" class="text-center">Variables</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th scope="row" class="table-primary">PC</th>
+                                    <td colspan="3" class="text-center">Promedio de Contribución </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" class="table-primary">DPC</th>
+                                    <td colspan="3" class="text-center">Dispersión Promedio Contribución </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" class="table-success">PCH</th>
+                                    <td colspan="3" class="text-center">Promedio de Contribución Hombres </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" class="table-success">DPCH</th>
+                                    <td colspan="3" class="text-center">Dispersión Promedio de Contribución Hombres </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" class="table-danger">PCM</th>
+                                    <td colspan="3" class="text-center">Promedio de Contribución Mujeres </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" class="table-danger">DPCM</th>
+                                    <td colspan="3" class="text-center">Dispersión Promedio de Contribución Mujeres </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="col"></div>
+        </div>
+        <div class="row">
             <div id="cont_ganancia" class="col-sm-12">
 
+            </div>
+            <div class="row">
+                <div class="col-1"></div>
+                <div class="col">
+                    <button class="btn btn-primary center" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                            Variables
+                    </button>
+                    <div class="collapse" id="collapseExample">
+                        <div class="card card-body">
+                            <table class="table">
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th colspan="4" class="text-center">Variables</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <th scope="row" class="table-primary">GT</th>
+                                        <td colspan="3" class="text-center">Ganancia Total </td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row" class="table-success">GTH</th>
+                                        <td colspan="3" class="text-center">Ganancia Total Hombres </td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row" class="table-danger">GTM</th>
+                                        <td colspan="3" class="text-center">Ganancia Total Mujeres </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="col"></div>
             </div>
         </div>
         <div class="row">
@@ -39,36 +119,60 @@
                 x: [{% for i in rondas %} {{i|json}}, {%endfor%}],
                 y: [{% for i in promedio %} {{i|json}}, {%endfor%}],
                 type: 'scatter',
-                name:'Todos',
+                marker: {color: '#6474fb'},
+                name:'PC',
             };
             var caja1 = {
-                x: [{% for i in rondas %} {{i|json}}, {%endfor%}],
-                y: [{% for i in promedio %} {{i|json}}, {%endfor%}],
+                x: [{% for i in cr1 %} {{i|json}}, {%endfor%}],
+                y: [{% for i in ct1 %} {{i|json}}, {%endfor%}],
                 type: 'box',
-                name: 'total',
+                marker: {color: '#6474fb'},
+                visible : "legendonly",
+                name: 'DPC',
+                boxpoints: false,
               };
             var conH = {
                 //data
                 x: [{% for i in rondas %} {{i|json}}, {%endfor%}],
                 y: [{% for i in con_hombres %} {{i|json}}, {%endfor%}],
                 type: 'scatter',
-                name:'Hombres',
+                marker: {color: '#62db51'},
+                name:'PCH',
             };
+            var caja2 = {
+                x: [{% for i in rh %} {{i|json}}, {%endfor%}],
+                y: [{% for i in ch1 %} {{i|json}}, {%endfor%}],
+                type: 'box',
+                visible : "legendonly",
+                marker: {color: '#62db51'},
+                name: 'DPCH',
+                boxpoints: false,
+              };
             var conM = {
                 //data
                 x: [{% for i in rondas %} {{i|json}}, {%endfor%}],
                 y: [{% for i in con_mujeres %} {{i|json}}, {%endfor%}],
                 type: 'scatter',
-                name:'Mujeres',
+                marker: {color: '#f94d00'},
+                name:'PCM',
             };
+            var caja3 = {
+                x: [{% for i in rm %} {{i|json}}, {%endfor%}],
+                y: [{% for i in cm1 %} {{i|json}}, {%endfor%}],
+                type: 'box',
+                visible : "legendonly",
+                marker: {color: '#f94d00'},
+                name: 'DPCM',
+                boxpoints: false,
+              };
             var layaout ={
-                title: 'Promedio de contribuciones',
+                title: 'Contribuciones',
                 yaxis: {rangemode: 'tozero',
                     zeroline: true
                 }
             };
                         
-            var data = [contotal,caja1,conH,conM]   
+            var data = [contotal,caja1,conH,caja2,conM,caja3]   
 
             var gd3 = d3.select('#cont_promedio')
                 .append('div')
@@ -91,24 +195,27 @@
                 x: [{% for i in rondas %} {{i|json}}, {%endfor%}],
                 y: [{% for i in ganancia %} {{i|json}}, {%endfor%}],
                 type: 'scatter',
-                name:'Total',
+                marker: {color: '#6474fb'},
+                name:'GT',
             };
             var ganh = {
                 //data
                 x: [{% for i in rondas %} {{i|json}}, {%endfor%}],
                 y: [{% for i in ganancia_h %} {{i|json}}, {%endfor%}],
                 type: 'scatter',
-                name:'Hombres',
+                marker: {color: '#62db51'},
+                name:'GTH',
             };
             var ganM = {
                 //data
                 x: [{% for i in rondas %} {{i|json}}, {%endfor%}],
                 y: [{% for i in ganancia_m %} {{i|json}}, {%endfor%}],
                 type: 'scatter',
-                name:'Mujeres',
+                marker: {color: '#f94d00'},
+                name:'GTM',
             };
             var layaout2 ={
-                title: 'Ganancias Totales',
+                title: 'Ganancias',
                 yaxis: {rangemode: 'tozero',
                     zeroline: true
                 }
@@ -138,7 +245,7 @@
                 type: 'pie'
               };
             var layaout3 ={
-                title: 'Porcentaje de participantes',
+                title: 'Género',
                 height: 400,
                 width: 500
                 
@@ -181,7 +288,7 @@
                 type: 'bar'
             };
             var layaout4 ={
-                title: 'Edades promedio de participantes',
+                title: 'Edad',
                 barmode: 'group',  
             };
                         

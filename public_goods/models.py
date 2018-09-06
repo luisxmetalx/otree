@@ -14,7 +14,7 @@ Your app description
 class Constants(BaseConstants):
     name_in_url = 'public_goods'
     players_per_group = 3
-    num_rounds = 3
+    num_rounds = 10
 
     instructions_template = 'public_goods/Instructions.html'
 
