@@ -36,6 +36,23 @@
 
 </div>
 
+<div class="row">
+  <Label><strong>Simbologia</strong></Label><br>
+  <div class="col-sm-5" style="margin-top:0%;margin-bottom:2%;margin-left:6%">
+    <label for="text"><strong>BSPT</strong> = Beneficio Social Promedio Total</label><br>
+    <label for="text"><strong>BST Disp.</strong> = Dispersión de Beneficio Social Total</label><br>
+    <label for="text"><strong>BSPG</strong> = Beneficio Social Promedio por Grupos</label><br>
+    <label for="text"><strong>BSG Disp.</strong> = Dispersión de Beneficio Social por Grupos</label><br>
+    <label for="text"><strong>GMax</strong> = Ganancia Grupal Máxima</label><br>
+  </div>
+  <div class="col-sm-5">
+    <label for="text"><strong>BSPTH</strong> = Beneficio Social Promedio Total Hombres</label><br>
+    <label for="text"><strong>BSPTH Disp.</strong> = Dispersión de Beneficio Social Total Hombres</label><br>
+    <label for="text"><strong>BSPTM</strong> =  Beneficio Social Promedio Total Mujeres</label><br>
+    <label for="text"><strong>BSPTM Disp.</strong> = Dispersión de Beneficio Social Total Mujeres</label><br>
+  </div>
+</div>
+
 <div class="row" style="margin-top:4%;margin-bottom:5%;">
 
     <div class="col-sm-5">
@@ -174,53 +191,67 @@
       
       var trace1 = {
         x: [{% for i in rondas_cajas %} ,{{i|json}} {%endfor%}],
-        y: [{%for i in precios%} ,{{i|json}} {%endfor%}],
+        y: [{%for i in ganancias_total%} ,{{i|json}} {%endfor%}],
         type: 'box',
-        name: 'PPT Disp.'
+        name: 'BST Disp.'
       };
 
       var trace2 = {
         x: [{% for i in total_grupos %} ,{{i|json}} {%endfor%}],
-        y: [{%for i in prom_precio%} ,{{i|json}} {%endfor%}],
+        y: [{%for i in ganancia_prom_total%} ,{{i|json}} {%endfor%}],
         mode: 'lines+markers',
-        name: 'PPT',
+        name: 'BSPT',
       };
 
       var trace3 = {
-        x: [{% for i in rondas_cajas_hom %} ,{{i|json}} {%endfor%}],
-        y: [{%for i in precios_hom%} ,{{i|json}} {%endfor%}],
+        x: [{% for i in rondas_cajas_grupal %} ,{{i|json}} {%endfor%}],
+        y: [{%for i in ganancias_group%} ,{{i|json}} {%endfor%}],
         type: 'box',
-        name: 'PPTH Disp.'
+        name: 'BSG Disp.'
       };
 
       var trace4 = {
         x: [{% for i in total_grupos %} ,{{i|json}} {%endfor%}],
-        y: [{%for i in prom_precio_hom%} ,{{i|json}} {%endfor%}],
+        y: [{%for i in ganancia_prom_group%} ,{{i|json}} {%endfor%}],
         mode: 'lines+markers',
-        name: 'PPTH',
+        name: 'BSPG',
       };
+
       var trace5 = {
-        x: [{% for i in rondas_cajas_muj %} ,{{i|json}} {%endfor%}],
-        y: [{%for i in precios_muj%} ,{{i|json}} {%endfor%}],
+        x: [{% for i in rondas_cajas_hom %} ,{{i|json}} {%endfor%}],
+        y: [{%for i in ganancias_hom%} ,{{i|json}} {%endfor%}],
         type: 'box',
-        name: 'PPTM Disp.'
+        name: 'BSTH Disp.'
       };
 
       var trace6 = {
         x: [{% for i in total_grupos %} ,{{i|json}} {%endfor%}],
-        y: [{%for i in prom_precio_muj%} ,{{i|json}} {%endfor%}],
+        y: [{%for i in ganancia_prom_hom%} ,{{i|json}} {%endfor%}],
         mode: 'lines+markers',
-        name: 'PPTM',
+        name: 'BSPTH',
+      };
+      var trace7 = {
+        x: [{% for i in rondas_cajas_muj %} ,{{i|json}} {%endfor%}],
+        y: [{%for i in ganancias_muj%} ,{{i|json}} {%endfor%}],
+        type: 'box',
+        name: 'BSPTM Disp.'
       };
 
-      var trace7 = {
+      var trace8 = {
         x: [{% for i in total_grupos %} ,{{i|json}} {%endfor%}],
-        y: [{%for i in cmg_const%} ,{{i|json}} {%endfor%}],
+        y: [{%for i in ganancia_prom_muj%} ,{{i|json}} {%endfor%}],
         mode: 'lines+markers',
-        name: 'CMG',
+        name: 'BSPTM',
+      };
+
+      var trace9 = {
+        x: [{% for i in total_grupos %} ,{{i|json}} {%endfor%}],
+        y: [{%for i in const_max%} ,{{i|json}} {%endfor%}],
+        mode: 'lines+markers',
+        name: 'GMax',
       };
     
-      var data = [ trace1, trace2, trace3, trace4, trace5, trace6, trace7];
+      var data = [ trace1, trace2, trace3, trace4, trace5, trace6, trace7, trace8, trace9];
       
       var layout = {
         title:'<b>Beneficio Social<b>',
@@ -257,37 +288,6 @@
 
   <script> 
     $(document).ready(function(){
-      h={{prom_edad_hombre}}
-      mu={{prom_edad_mujer}}
-
-      new Chart(document.getElementById("ganancias"), {
-        type: 'bar',
-        data: {
-          labels: [{% for i in total_grupos %} {{i|json}}, {%endfor%} "Ganancia Maxima"],
-          datasets: [{
-            label: "Ganancias",
-            backgroundColor: ["#2F6EEC", "#2F6EEC","#2F6EEC","#2F6EEC","#2F6EEC","#2F6EEC"],
-            data: [ {% for i in ganancia_total %} {{i|json}}, {%endfor%} {{ganancia_max}} ]
-          }]
-        },
-        options: {
-          scales: {
-            yAxes: [{
-                ticks: {
-                    beginAtZero:true
-                }
-            }]
-          },
-          title: {
-            display: true,
-            text: 'Ganancia Total por Ronda.'
-          },
-          animation: {
-            animateScale: true,
-            animateRotate: true
-          }
-        }
-      })
       
       new Chart(document.getElementById("HvsM"), {
         type: 'doughnut',

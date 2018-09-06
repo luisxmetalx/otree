@@ -86,8 +86,12 @@ class Charts(Page):
     def vars_for_template(self):
         ganancia_prom_total = []
         ganancia_prom_group = []
+        ganancias_total = []
+        ganancias_group = []
         ganancia_prom_hom = []
+        ganancias_hom = []
         ganancia_prom_muj = []
+        ganancias_muj = []
         prom_precio = []
         precios = []
         precio_prom_hom = []
@@ -132,22 +136,29 @@ class Charts(Page):
                 tmp3 = (tmp1 + tmp2)
                 p1 = yo.in_round(k).precio
                 p2 = oponente.in_round(k).precio
+                ganancias_total.append(tmp1)
+                ganancias_total.append(tmp2)
+                ganancias_group.append(tmp3)
                 if(yo.in_round(Constants.num_rounds).genero == 'Masculino'):
                     precio_hom.append(p1)
                     precios_hom.append(p1)
                     ganancia_hom.append(tmp1)
+                    ganancias_hom.append(tmp1)
                 if(yo.in_round(Constants.num_rounds).genero == 'Femenino'):
                     precio_muj.append(p1)
                     precios_muj.append(p1)
                     ganancia_muj.append(tmp1)
+                    ganancias_muj.append(tmp1)
                 if(oponente.in_round(Constants.num_rounds).genero == 'Masculino'):
                     precio_hom.append(p2)
                     precios_hom.append(p2)
                     ganancia_hom.append(tmp2)
+                    ganancias_hom.append(tmp2)
                 if(oponente.in_round(Constants.num_rounds).genero == 'Femenino'):
                     precio_muj.append(p2)
                     precios_muj.append(p2)
                     ganancia_muj.append(tmp2)
+                    ganancias_muj.append(tmp2)
                 
                 precios.append(p1)
                 precios.append(p2)
@@ -155,18 +166,18 @@ class Charts(Page):
                 ganancia.append(tmp3)
 
             prom_precio.append(round(sum([i for i in precio])/len(self.subsession.get_players()),2))
-            ganancia_prom_total.append(round(sum([i for i in ganancia])/len(self.subsession.get_players()),2))
-            ganancia_prom_group.append(round(sum([i for i in ganancia])/len(self.subsession.get_groups()),2))
+            ganancia_prom_total.append(round(sum([float(i.in_round(k).payoff) for i in self.subsession.get_players()])/len(self.subsession.get_players()),2))
+            ganancia_prom_group.append(round(sum([float(i) for i in ganancia])/len(self.subsession.get_groups()),2))
             
             if(total_hombres != 0):
                 precio_prom_hom.append(round(sum([i for i in precio_hom])/total_hombres,2))
-                ganancia_prom_hom.append(round(sum([i for i in ganancia_hom]))/total_hombres,2)
+                ganancia_prom_hom.append(round(sum([float(i) for i in ganancia_hom])/total_hombres,2))
             else:
                 precio_prom_hom.append(0)
                 ganancia_prom_hom.append(0)
             if(total_mujeres != 0):
                 precio_prom_muj.append(round(sum([i for i in precio_muj])/total_mujeres,2))
-                ganancia_prom_muj.append(round(sum([i for i in ganancia_muj])/total_mujeres,2))
+                ganancia_prom_muj.append(round(sum([float(i) for i in ganancia_muj])/total_mujeres,2))
             else:
                 precio_prom_muj.append(0)
                 ganancia_prom_muj.append(0)
@@ -213,7 +224,9 @@ class Charts(Page):
         rondas_cajas = []
         rondas_cajas_hom = []
         rondas_cajas_muj = []
+        rondas_cajas_grupal = []
         cmg_const = []
+        const_max = []
         c = 0
         for i in range(Constants.num_rounds):
             c += 1
@@ -224,9 +237,12 @@ class Charts(Page):
                 rondas_cajas_hom.append("Ronda "+str(c))
             for j in range(total_mujeres):
                 rondas_cajas_muj.append("Ronda "+str(c))
+            for j in range(len(self.subsession.get_groups())):
+                rondas_cajas_grupal.append("Ronda "+str(c))
             cmg_const.append(Constants.cmg)
-        print(rondas_cajas_muj)
-        print(precios_muj)
+            const_max.append(ganancia_maxima)
+        print(rondas_cajas_grupal)
+        print(ganancias_group)
         return{
             'prom_precio' : prom_precio,
             'prom_precio_hom' : precio_prom_hom,
@@ -234,18 +250,23 @@ class Charts(Page):
             'precios' : precios,
             'precios_hom' : precios_hom,
             'precios_muj' : precios_muj,
-            'cmg' : Constants.cmg,
-            'ganancia_total' : ganancia_total,
+            'ganancia_prom_total' : ganancia_prom_total,
+            'ganancia_prom_group' : ganancia_prom_group,
+            'ganancia_prom_hom' : ganancia_prom_hom,
+            'ganancia_prom_muj' : ganancia_prom_muj,
+            'ganancias_total' : ganancias_total,
+            'ganancias_group' : ganancias_group,
+            'ganancias_hom' : ganancias_hom,
+            'ganancias_muj' : ganancias_muj,
             'edades': edades,
-            'ganancia_max' : ganancia_maxima,
-            'prom_edad_mujer' : prom_edad_mujer,
-            'prom_edad_hombre' : prom_edad_hombre,
+            'const_max' : const_max,
             'f' : porc_femenino,
             'm' : porc_masculino,
             'total_grupos' : total_grupos,
             'rondas_cajas' : rondas_cajas,
             'rondas_cajas_hom' : rondas_cajas_hom,
             'rondas_cajas_muj' : rondas_cajas_muj,
+            'rondas_cajas_grupal' : rondas_cajas_grupal,
             'cmg_const' : cmg_const
         }
 
