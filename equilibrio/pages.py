@@ -1,11 +1,16 @@
 from otree.api import Currency as c, currency_range
 from ._builtin import Page, WaitPage
+from . import models
 from .models import Constants
 
 
-class MyPage(Page):
-    pass
+class Definir_precio(Page):
+    form_model = models.Player
+    form_fields = ['precio']
 
+    def is_displayed(self):
+
+        return True
 
 class ResultsWaitPage(WaitPage):
 
@@ -18,7 +23,7 @@ class Results(Page):
 
 
 page_sequence = [
-    MyPage,
+    Definir_precio,
     ResultsWaitPage,
     Results
 ]

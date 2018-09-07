@@ -1,0 +1,55 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+    
+    {% if player.tratamiento == 'vendedor' %}
+        Definir Precio
+    {% else %}    
+        Verificar presupuesto
+    {% endif %}
+        
+    
+{% endblock %}
+
+{% block content %}
+    <div class="container-fluid">
+        {% if player.tratamiento == 'vendedor' %}
+            <div class="row">
+                <div class="col-sm-9">
+                    {% formfield player.precio with label="¿Cuál será el precio de su producto?" %}
+                    <p>Por favor ingrese un número entero entre {{player.carta}} y 20 </p>
+                </div>
+                <div class="col-sm-3">
+                    <div class="card text-white bg-info mb-3" style="max-width: 18rem;">
+                        <div class="card-header"><b>Presupuesto  (Puntos)</b></div>
+                        <div class="card-body">
+                            <h1 class="display-1 text-center">{{player.carta}}</h1>
+                        </div>
+                    </div>
+                </div>
+                {% next_button %}
+            </div>
+        {% else %}
+            <div class="row">
+                <div class="col-sm-9"><p class="text-justify">
+                    Usted consta de {{player.carta}} puntos para efectuar la negociación. Usted decidirá en el período de negociación caunto gastará en el producto.
+                </p></div>
+                <div class="col-sm-3">
+                    <div class="card text-white bg-info mb-3" style="max-width: 18rem;">
+                        <div class="card-header"><b>Presupuesto  (Puntos)</b></div>
+                        <div class="card-body">
+                            <h1 class="display-1 text-center">{{player.carta}}</h1>
+                        </div>
+                    </div>
+                </div>
+                <button type="button" class="btn btn-primary" name="precio" value={{ player.precio }}>
+                    siguiente
+                </button>
+            </div>
+        {% endif %}
+
+        
+    </div>
+
+{% endblock %}
