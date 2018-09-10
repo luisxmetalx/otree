@@ -183,7 +183,7 @@ class Charts(Page):
                 ganancia_prom_muj.append(0)
         
         #ganancia maxima del grupo    
-        ganancia_maxima = Constants.demanda * 16 * len(self.subsession.get_groups())
+        ganancia_maxima = Constants.demanda * 16
         
         
 

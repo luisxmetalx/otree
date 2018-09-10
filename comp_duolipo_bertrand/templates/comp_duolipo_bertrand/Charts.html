@@ -16,7 +16,6 @@
 </div>
 {% comment %} <input type="button" id='mostrar' class="btn btn-primary" value="Simbología">  {% endcomment %}
 <div id="target" class="row">
-  <Label><strong>Simbologia</strong></Label><br>
   <div class="col-sm-5" style="margin-top:0%;margin-bottom:2%;margin-left:6%">
     <label for="text"><strong>PPT</strong> = Precio Promedio Total</label><br>
     <label for="text"><strong>PPT Disp.</strong> = Dispersión de Precio Promedio Total</label><br>
@@ -37,7 +36,6 @@
 </div>
 
 <div class="row">
-  <Label><strong>Simbologia</strong></Label><br>
   <div class="col-sm-5" style="margin-top:0%;margin-bottom:2%;margin-left:6%">
     <label for="text"><strong>BSPT</strong> = Beneficio Social Promedio Total</label><br>
     <label for="text"><strong>BST Disp.</strong> = Dispersión de Beneficio Social Total</label><br>
@@ -159,7 +157,7 @@
         var data = [ trace1, trace2, trace3, trace4, trace5, trace6, trace7];
         
         var layout = {
-          title:'<b>Precio Promedio por Ronda<b>',
+          title:'<b>Precio<b>',
           legend: {
             x: 1,
             y: 0.5,
@@ -176,13 +174,6 @@
           yaxis: {rangemode: 'tozero',
             zeroline: true,
             title: 'Puntos',
-            titlefont: {
-              size: 18,
-              color: '#7f7f7f'
-            }
-          },
-          xaxis: {
-            title: 'Rondas',
             titlefont: {
               size: 18,
               color: '#7f7f7f'
@@ -312,13 +303,6 @@
             size: 18,
             color: '#7f7f7f'
           }
-        },
-        xaxis: {
-          title: 'Rondas',
-          titlefont: {
-            size: 18,
-            color: '#7f7f7f'
-          }
         }
       };
       
@@ -364,7 +348,7 @@
         var data = [ trace1, trace2];
       
       var layout = {
-        title:'<b>Promedio de Edad por Género<b>',
+        title:'<b>Edad<b>',
         legend: {
           x: 1,
           y: 0.5,
@@ -381,13 +365,6 @@
         yaxis: {rangemode: 'tozero',
           zeroline: true,
           title: 'Años',
-          titlefont: {
-            size: 18,
-            color: '#7f7f7f'
-          }
-        },
-        xaxis: {
-          title: 'Género',
           titlefont: {
             size: 18,
             color: '#7f7f7f'
@@ -432,7 +409,7 @@
         var data = [ trace1 ];
       
       var layout = {
-        title:'<b>Porcentaje de Participantes por Género<b>'
+        title:'<b>Género<b>'
       };
       
       Plotly.newPlot(gd, data, layout,{scrollZoom: true});
