@@ -39,6 +39,23 @@ class Results(Page):
             'misma_eleccion' : yo.decision == oponente.decision
         }
 
+class FinalResults(Page):
+    def is_displayed(self):
+            return self.round_number == Constants.num_rounds
+
+    def vars_for_template(self):
+        yo = self.player
+        puntos_perdidos = 0
+        for i in range(1, Constants.num_rounds+1):
+            puntos_perdidos += int(yo.in_round(i).payoff)
+        puntos_total = 100 - puntos_perdidos
+
+        return {
+            'puntos_perdidos' : puntos_perdidos,
+            'puntos_total' : puntos_total
+        }
+    
+
 class CharWaitPage(WaitPage):
     def is_displayed(self):
             return self.round_number == Constants.num_rounds
@@ -75,14 +92,14 @@ class Chart(Page):
         porc_grupos_no_conf = []
         porc_grupos_dif = []
         
-        #se saca el porcentajes de grupos que cooperaron, no cooperaron y dieron respuesta diferentes sus integrantes
+        #se saca el porcentajes de grupos que confesaron, no confesaron y dieron respuesta diferentes sus integrantes
         for k in range(1,Constants.num_rounds+1):
             for j in self.subsession.get_groups():
                 yo = j.get_players()[0]
                 oponente = yo.other_player()
-                if yo.in_round(k).decision == oponente.in_round(k).decision and yo.in_round(k).decision =='cooperar':
+                if yo.in_round(k).decision == oponente.in_round(k).decision and yo.in_round(k).decision =='confesar':
                     pareja_conf += 1
-                elif yo.in_round(k).decision == oponente.in_round(k).decision and yo.in_round(k).decision =='no cooperar':
+                elif yo.in_round(k).decision == oponente.in_round(k).decision and yo.in_round(k).decision =='no confesar':
                     pareja_no_conf += 1
                 else:
                     pareja_dif += 1
@@ -95,19 +112,19 @@ class Chart(Page):
         
         for k in range(1,Constants.num_rounds+1):
             for p in self.subsession.get_players():
-                if p.in_round(k).decision=='cooperar' and p.in_round(Constants.num_rounds).genero=='Femenino':
+                if p.in_round(k).decision=='confesar' and p.in_round(Constants.num_rounds).genero=='Femenino':
                     mujeres_confesaron += 1
                     l_edades_mujeres.append(p.in_round(Constants.num_rounds).edad)
-                elif p.in_round(k).decision=='no cooperar' and p.in_round(Constants.num_rounds).genero=='Femenino':
+                elif p.in_round(k).decision=='no confesar' and p.in_round(Constants.num_rounds).genero=='Femenino':
                     mujeres_callaron += 1
                     l_edades_mujeres.append(p.in_round(Constants.num_rounds).edad)
-                elif p.in_round(k).decision=='cooperar' and p.in_round(Constants.num_rounds).genero=='Masculino':
+                elif p.in_round(k).decision=='confesar' and p.in_round(Constants.num_rounds).genero=='Masculino':
                     hombres_confesaron += 1
                     l_edades_hombres.append(p.in_round(Constants.num_rounds).edad)
                 else:
                     hombres_callaron += 1
                     l_edades_hombres.append(p.in_round(Constants.num_rounds).edad)
-            #sacar número de mujer y hombres que cooperaron y no cooperaron por ronda
+            #sacar número de mujer y hombres que confesaron y no confesaron por ronda
             ronda_mujeres_c.append(mujeres_confesaron)
             ronda_mujeres_nc.append(mujeres_callaron)
             ronda_hombres_c.append(hombres_confesaron)
@@ -213,6 +230,7 @@ page_sequence = [
     Decision,
     ResultsWaitPage,
     Results,
+    FinalResults,
     Quiz,
     ExpTeorico,
     CharWaitPage,

@@ -38,7 +38,7 @@ class Player(BasePlayer):
 
     #Se crea un campo para almacenar la decisión del jugador
     decision = models.StringField(
-        choices=['cooperar', 'no cooperar'],
+        choices=['confesar', 'no confesar'],
         doc="""Esto es la decisión del jugador""",
         widget=widgets.RadioSelect
     )
@@ -58,15 +58,15 @@ class Player(BasePlayer):
 
     def escoger_decision(self):
         matriz_pagos = {
-            'cooperar':
+            'confesar':
                 {
-                    'cooperar': Constants.pago_ambos_confiesan,
-                    'no cooperar': Constants.pago_jugador_confiesa
+                    'confesar': Constants.pago_ambos_confiesan,
+                    'no confesar': Constants.pago_jugador_confiesa
                 },
-            'no cooperar':
+            'no confesar':
                 {
-                    'cooperar': Constants.pago_jugador_calla,
-                    'no cooperar': Constants.pago_ambos_callan
+                    'confesar': Constants.pago_jugador_calla,
+                    'no confesar': Constants.pago_ambos_callan
                 }
         }
 

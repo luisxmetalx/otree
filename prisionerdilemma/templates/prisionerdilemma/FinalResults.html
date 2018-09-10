@@ -1,0 +1,22 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+    Resultados Finales
+{% endblock %}
+
+{% block content %}
+    <p>
+        Estimado participante, el resultado final es sobre un exámen de 100 puntos,
+        por lo tanto durante las {{ Constants.num_rounds }} rondas jugadas usted perdió <b>{{ puntos_perdidos|floatformat:"0" }}
+        puntos</b>.
+    </p>
+
+    <p>
+        Consecuentemente, su nota será <b>100 - {{ puntos_perdidos|floatformat:"0" }} = {{ puntos_total|floatformat:"0" }} puntos</b>.
+    </p>
+
+    {% next_button %}
+
+{% endblock %}
+
