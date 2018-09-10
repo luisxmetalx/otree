@@ -66,12 +66,10 @@
 
 <div class="row" style="margin-top:4%;margin-bottom:5%;">
 
-    <div class="col-sm-6">
-        <canvas id="HvsM" width="600" height="350"></canvas>
+    <div class="col-sm-6" id="HvsM">
     </div>
   
-    <div class="col-sm-6">
-        <canvas id="edades" width="600" height="350"></canvas>
+    <div class="col-sm-6" id="edades">
     </div>
   
 </div>
@@ -375,67 +373,116 @@
           });
     </script>
 
-    <script> 
-       $(document).ready(function(){
-          new Chart(document.getElementById("HvsM"), {
-            type: 'doughnut',
-            data: {
-              labels: ["Hombres", "Mujeres"],
-              datasets: [{
-                label: "Cantidad Hombres vs Mujeres",
-                backgroundColor: ["#20c997", "#fd7e14"],
-                data: [ {{m|json}} , {{f|json}} ]
-              }]
-            },
-            options: {
-              title: {
-                display: true,
-                text: 'Género de los Participantes'
-              },
-              animation: {
-                animateScale: true,
-                animateRotate: true
-              },
-              tooltips: {
-                callbacks: {
-                  label: function(tooltipItem, data) {
-                    var dataset = data.datasets[tooltipItem.datasetIndex]
-                    var currentValue = dataset.data[tooltipItem.index]       
-                    return currentValue + "%"
-                  }
-                }
-              }
-            }
-          })
-
-          new Chart(document.getElementById("edades"), {
+    <script>
+        $(document).ready(function() {
+          var d3 = Plotly.d3;
+          
+          var WIDTH_IN_PERCENT_OF_PARENT = 100;
+          
+          var gd3 = d3.select('#edades')
+              .append('div')
+              .style({
+                  width: WIDTH_IN_PERCENT_OF_PARENT + '%',
+                  height: 'AUTO',
+                  class : 'col-sm-12'
+              });
+          
+          var gd = gd3.node();
+          
+          var trace1 = {
+            x: ['Hombres'],
+            y: [{{prom_edad_hom|json}} ],
             type: 'bar',
-            data: {
-              labels: ["Hombres", "Mujeres"],
-              datasets: [{
-                label: "Cantidad Hombres vs Mujeres",
-                backgroundColor: ["#E2DB05", "#8105E2"],
-                data: [ {% for i in edades %} {{i|json}}, {%endfor%} {{edades}} ]
-              }]
+            name: 'Hombres',
+          };
+        
+          var trace2 = {
+            x: ['Mujeres'],
+            y: [{{prom_edad_muj|json}} ],
+            type: 'bar',
+            name: 'Mujeres',
+          };
+        
+          var data = [ trace1, trace2];
+        
+        var layout = {
+          title:'<b>Promedio de Edad por Género<b>',
+          legend: {
+            x: 1,
+            y: 0.5,
+            traceorder: 'normal',
+            font: {
+              family: 'sans-serif',
+              size: 12,
+              color: '#000'
             },
-            options: {
-              scales: {
-                yAxes: [{
-                    ticks: {
-                        beginAtZero:true
-                    }
-                }]
-              },
-              title: {
-                display: true,
-                text: 'Promedio de Edad de los Participantes'
-              },
-              animation: {
-                animateScale: true,
-                animateRotate: true
-              }
+            bgcolor: '#E2E2E2',
+            bordercolor: '#FFFFFF',
+            borderwidth: 2
+          },
+          yaxis: {rangemode: 'tozero',
+            zeroline: true,
+            title: 'Años',
+            titlefont: {
+              size: 18,
+              color: '#7f7f7f'
             }
-          })
+          },
+          xaxis: {
+            title: 'Género',
+            titlefont: {
+              size: 18,
+              color: '#7f7f7f'
+            }
+          }
+        };
+        
+        Plotly.newPlot(gd, data, layout,{scrollZoom: true});
+        
+        window.onresize = function() {
+            Plotly.Plots.resize(gd);
+        };
+        
+        });
+    </script>
+  
+    <script>
+        $(document).ready(function() {
+          var d3 = Plotly.d3;
+          
+          var WIDTH_IN_PERCENT_OF_PARENT = 100;
+          
+          var gd3 = d3.select('#HvsM')
+              .append('div')
+              .style({
+                  width: WIDTH_IN_PERCENT_OF_PARENT + '%',
+                  height: 'AUTO',
+                  class : 'col-sm-12'
+              });
+          
+          var gd = gd3.node();
+          
+          var trace1 = {
+            labels: [ 'Mujeres', 'Hombres'],
+            values: [ {{f|json}},{{m|json}}],
+            hoverinfo: 'label+percent',
+            hole: .4,
+            type: 'pie',
+            name: 'Porcentaje de Participantes',
+          };
+        
+          var data = [ trace1 ];
+        
+        var layout = {
+          title:'<b>Porcentaje de Participantes por Género<b>'
+        };
+        
+        Plotly.newPlot(gd, data, layout,{scrollZoom: true});
+        
+        window.onresize = function() {
+            Plotly.Plots.resize(gd);
+        };
+        
         });
     </script>
     

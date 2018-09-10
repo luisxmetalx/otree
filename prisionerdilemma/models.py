@@ -16,7 +16,7 @@ prision.
 class Constants(BaseConstants):
     name_in_url = 'prisionerdilemma'
     players_per_group = 2
-    num_rounds = 3
+    num_rounds = 5
     intructions_template = 'prisionerdilemma/instructions.html'
     #Pago cuando ambos jugadores confiesan o callan
     pago_ambos_confiesan = c(5)

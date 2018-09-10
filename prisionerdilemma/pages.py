@@ -33,10 +33,13 @@ class Results(Page):
         yo = self.player
         oponente = yo.other_player()
 
+        puntos = int(yo.payoff)
+
         return {
             'mi_decision' : yo.decision,
             'oponente_decision' : oponente.decision,
-            'misma_eleccion' : yo.decision == oponente.decision
+            'misma_eleccion' : yo.decision == oponente.decision,
+            'puntos' : puntos
         }
 
 class FinalResults(Page):
@@ -114,16 +117,13 @@ class Chart(Page):
             for p in self.subsession.get_players():
                 if p.in_round(k).decision=='confesar' and p.in_round(Constants.num_rounds).genero=='Femenino':
                     mujeres_confesaron += 1
-                    l_edades_mujeres.append(p.in_round(Constants.num_rounds).edad)
                 elif p.in_round(k).decision=='no confesar' and p.in_round(Constants.num_rounds).genero=='Femenino':
                     mujeres_callaron += 1
-                    l_edades_mujeres.append(p.in_round(Constants.num_rounds).edad)
                 elif p.in_round(k).decision=='confesar' and p.in_round(Constants.num_rounds).genero=='Masculino':
                     hombres_confesaron += 1
-                    l_edades_hombres.append(p.in_round(Constants.num_rounds).edad)
                 else:
                     hombres_callaron += 1
-                    l_edades_hombres.append(p.in_round(Constants.num_rounds).edad)
+                    
             #sacar número de mujer y hombres que confesaron y no confesaron por ronda
             ronda_mujeres_c.append(mujeres_confesaron)
             ronda_mujeres_nc.append(mujeres_callaron)
@@ -134,9 +134,13 @@ class Chart(Page):
             hombres_callaron=0
             hombres_confesaron=0
 
-        #sacar los generos de los participantes
+        #sacar los generos de los participantes y edades de hombres y mujeres
         for p in self.subsession.get_players():
             l_generos.append(p.in_round(Constants.num_rounds).genero)
+            if p.in_round(Constants.num_rounds).genero=='Masculino':
+                l_edades_hombres.append(p.in_round(Constants.num_rounds).edad)
+            if p.in_round(Constants.num_rounds).genero=='Femenino':
+                l_edades_mujeres.append(p.in_round(Constants.num_rounds).edad)
         
         #se calcula total mujeres y hombres
         total_mujeres = l_generos.count('Femenino')
@@ -185,24 +189,20 @@ class Chart(Page):
         #se saca edades promedio de hombres y mujeres
         suma1 = 0
         suma2 = 0
-
+        prom_edad_hom = 0
+        prom_edad_muj = 0 
         for i in l_edades_mujeres:
             suma1 += i
 
         for i in l_edades_hombres:
             suma2 += i
+        
+        #se saca la edad promedio de hombres y mujeres 
         if (total_mujeres != 0):
-            prom_edad_mujer = round(suma1/len(l_edades_mujeres),len(self.subsession.get_players()))
-        else:
-            prom_edad_mujer = 0
+            prom_edad_muj = round(suma1/total_mujeres,2)
         if(total_hombres != 0):
-            prom_edad_hombre = round(suma2/len(l_edades_hombres),len(self.subsession.get_players()))
-        else:
-            prom_edad_hombre = 0
-        #Guardando edades
-        edades=[]
-        edades.append(round(prom_edad_hombre,2))
-        edades.append(round(prom_edad_mujer,2))
+            prom_edad_hom = round(suma2/total_hombres,2)
+
         
         rondas = []
         rond = 0
@@ -217,9 +217,8 @@ class Chart(Page):
             'm' : porc_masculino,
             'f' : porc_femenino,
             'rondas': rondas,
-            'edades': edades,
-            'prom_edad_muj' : prom_edad_mujer,
-            'prom_edad_hom' : prom_edad_hombre,
+            'prom_edad_muj' : prom_edad_muj,
+            'prom_edad_hom' : prom_edad_hom,
             'pair_conf' : porc_grupos_conf,
             'pair_no_conf' : porc_grupos_no_conf,
             'pair_dif' : porc_grupos_dif

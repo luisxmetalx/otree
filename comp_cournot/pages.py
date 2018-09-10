@@ -181,24 +181,19 @@ class Charts(Page):
         #se saca edades promedio de hombres y mujeres
         suma1 = 0
         suma2 = 0
-
+        prom_edad_hom = 0
+        prom_edad_muj = 0 
         for i in l_edades_mujeres:
             suma1 += i
 
         for i in l_edades_hombres:
             suma2 += i
+        
+        #se saca la edad promedio de hombres y mujeres 
         if (total_mujeres != 0):
-            prom_edad_mujer = round(suma1/len(l_edades_mujeres),len(self.subsession.get_players()))
-        else:
-            prom_edad_mujer = 0
+            prom_edad_muj = round(suma1/total_mujeres,2)
         if(total_hombres != 0):
-            prom_edad_hombre = round(suma2/len(l_edades_hombres),len(self.subsession.get_players()))
-        else:
-            prom_edad_hombre = 0
-        #Guardando edades
-        edades=[]
-        edades.append(round(prom_edad_hombre,2))
-        edades.append(round(prom_edad_mujer,2))
+            prom_edad_hom = round(suma2/total_hombres,2)
 
         total_grupos = []
         rondas_cajas = []
@@ -233,7 +228,8 @@ class Charts(Page):
             'cant_muj' : cantidades_producidas_muj,
             'precio_prom_group' : precio_prom_group,
             'precios_group' : precios_group,
-            'edades' : edades,
+            'prom_edad_hom' : prom_edad_hom,
+            'prom_edad_muj' : prom_edad_muj,
             'f' : porc_femenino,
             'm' : porc_masculino,
             'total_grupos' : total_grupos,
