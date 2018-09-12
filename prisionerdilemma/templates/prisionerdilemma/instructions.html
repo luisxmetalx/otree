@@ -1,39 +1,48 @@
-{% load otree static %}
+{% load otree static staticfiles otree_tags %}
 <div class="card bg-light instructions">
     <div class="card-body">
-        <link rel="stylesheet" type="text/css" href="{% static 'global/matrix.css' %}"/>
 
-        <p class="justify">
-            Usted será emparejado aleatoriamente con otro participante. Cada uno de ustedes elige de manera
-            simultánea y privada si desea <b>cooperar</b> o <b>no cooperar</b>. Sus pagos serán determinados por las decisiones de ambos como se
-            detalla a continuación:
+        <p class="text-justify">
+            Durante un examen, el profesor vigila cuidadosamente a los estudiantes. Curiosamente, 
+            encuentra un papel con todas las respuestas en el espacio entre dos alumnos, desde ahora: 
+            alumno A y alumno B, coincidentemente, los alumnos tienen todas las respuestas correctas 
+            en su examen. El profesor, asumiendo que hubo un acto deshonesto, confisca el examen a los 
+            estudiantes y los lleva ante el consejo académico de la universidad. 
         </p>
-        <p class="justify">
-            <i>En cada celda, la cantidad a la izquierda es la recompensa para usted, y la cantidad a la derecha para el otro participante.</i>
+        <p class="text-justify">
+            Los estudiantes A y B son recibidos en oficinas diferentes, en cada una de ellas, 
+            le espera un miembro del comité académico de la universidad. Al mismo tiempo, a cada 
+            estudiante se le informa que su otro compañero está en otra sala, y que tendrá que 
+            responder las mismas preguntas sobre si se efectuó o no el acto de copia.
+        </p>
+        <p class="text-justify">
+            <i>Cada estudiante tiene solo dos opciones:&nbsp;&nbsp;</i> <b>Confesar</b><img src="https://twemoji.maxcdn.com/2/svg/1f632.svg" style="width:6%; margin-left:1%; height:auto;" alt="">
+            o <b>No Confesar</b><img src="https://twemoji.maxcdn.com/2/svg/1f910.svg" style="width:6%; margin-left:1%; height:auto;" alt="">
         </p>
 
-        <table class='table table-bordered text-center' style='width: auto; margin: auto'>
-            <tr>
-                <th colspan=2 rowspan=2></th>
-                <th colspan=2>El otro participante</th>
-            </tr>
-            <tr>
-                <th>Cooperar</th>
-                <th>No cooperar</th>
-            </tr>
-            <tr>
-                <th rowspan=2>
-                    <span class="rotate90">Usted</span>
-                </th>
-                <th>Cooperar</th>
-                <td>{{ Constants.pago_ambos_confiesan|floatformat:"0" }} puntos, {{ Constants.pago_ambos_confiesan|floatformat:"0" }} puntos</td>
-                <td>0 puntos, {{ Constants.pago_jugador_calla|floatformat:"0" }} puntos</td>
-            </tr>
-            <tr>
-                <th>No cooperar</th>
-                <td>{{ Constants.pago_jugador_calla|floatformat:"0" }} puntos, 0 puntos</td>
-                <td>{{ Constants.pago_ambos_callan|floatformat:"0" }} puntos, {{ Constants.pago_ambos_callan|floatformat:"0" }} puntos</td>
-            </tr>
-        </table>
+        <p class="text-justify">
+                El castigo que recibirá cada estudiante será una cantidad de puntos menos en la nota 
+                final de su examen, y se determinará en función de la decisión de cada uno de ellos, 
+                y la de su compañero.</br> 
+                Es decir:
+        </p>
+        <p class="text-justify">
+            1) Si el participante A decide <b>Confesar</b><img src="https://twemoji.maxcdn.com/2/svg/1f632.svg" style="width:6%; margin-left:1%; height:auto;" alt="">
+            , y el estudiante B, también decide <b>Confesar</b><img src="https://twemoji.maxcdn.com/2/svg/1f632.svg" style="width:6%; margin-left:1%; height:auto;" alt="">
+            . Entonces, a cada uno se le restarán <b>5 puntos</b> en el examen.
+        </p>
+        <p class="text-justify">
+            2) Si el participante A decide <b>Confesar</b><img src="https://twemoji.maxcdn.com/2/svg/1f632.svg" style="width:6%; margin-left:1%; height:auto;" alt="">
+            , y el estudiante B, también decide <b>No Confesar</b><img src="https://twemoji.maxcdn.com/2/svg/1f910.svg" style="width:6%; margin-left:1%; height:auto;" alt="">
+            . Entonces, al estudiante A se le restará <b>1 punto</b> en su examen, mientras que al estudiante B, 
+            se le restará <b>8 puntos</b>. Si se invierte el escenario, es decir, el estudiante B decide <b>confesar</b> 
+            y el estudiante A decide <b>no confesar</b>, entonces al estudiante B se le restarán <b>1 punto</b>, y al 
+            estudiante A se le restarán <b>8 puntos</b>.
+        </p>
+        <p class="text-justify">
+            3) Si el participante A decide <b>No Confesar</b><img src="https://twemoji.maxcdn.com/2/svg/1f910.svg" style="width:6%; margin-left:1%; height:auto;" alt="">
+            , y el estudiante B, también decide <b>No Confesar</b><img src="https://twemoji.maxcdn.com/2/svg/1f910.svg" style="width:6%; margin-left:1%; height:auto;" alt="">
+            . Entonces, a los dos estudiantes se le restarán <b>3 puntos</b> en el examen. 
+        </p>
     </div>
 </div>

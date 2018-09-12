@@ -8,14 +8,18 @@
 {% block content %}
     <p>
         {% if misma_eleccion %}
-            Ambos decidieron {{ mi_decision }}.
+            Ambos decidieron <b>{{ mi_decision }}</b>.
         {% else %}
-            Usted decidió {{ mi_decision }} y el otro participante decidió {{ oponente_decision }}.
+            Usted decidió <b>{{ mi_decision }}</b> y el otro participante decidió <b>{{ oponente_decision }}</b>.
         {% endif %}
     </p>
 
     <p>
-        Por lo tanto, su pago es {{ player.payoff|floatformat:"0" }} puntos.
+        {% if puntos == 1%}
+            Por lo tanto, se le restará <b>{{ puntos|floatformat:"0" }} punto</b> del exámen.
+        {%else%}
+            Por lo tanto, se le restarán <b>{{ puntos|floatformat:"0" }} puntos</b> del exámen.
+        {%endif%}
     </p>
 
     {% next_button %}

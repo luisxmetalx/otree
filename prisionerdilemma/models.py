@@ -16,14 +16,14 @@ prision.
 class Constants(BaseConstants):
     name_in_url = 'prisionerdilemma'
     players_per_group = 2
-    num_rounds = 3
+    num_rounds = 5
     intructions_template = 'prisionerdilemma/instructions.html'
     #Pago cuando ambos jugadores confiesan o callan
-    pago_ambos_confiesan = c(200)
-    pago_ambos_callan = c(100)
+    pago_ambos_confiesan = c(5)
+    pago_ambos_callan = c(3)
     #Pago cuando un juigador confiesa y el otro coopera
-    pago_jugador_confiesa = c(0)
-    pago_jugador_calla = c(300)
+    pago_jugador_confiesa = c(1)
+    pago_jugador_calla = c(8)
 
 
 class Subsession(BaseSubsession):
@@ -38,7 +38,7 @@ class Player(BasePlayer):
 
     #Se crea un campo para almacenar la decisión del jugador
     decision = models.StringField(
-        choices=['cooperar', 'no cooperar'],
+        choices=['confesar', 'no confesar'],
         doc="""Esto es la decisión del jugador""",
         widget=widgets.RadioSelect
     )
@@ -52,25 +52,21 @@ class Player(BasePlayer):
 
     #La edad del jugador
     edad = models.IntegerField(min=18)
-    
-    #matricula del jugador
-    matricula = models.IntegerField(min=100000000,max=999999999)
-    
 
     def other_player(self):
         return self.get_others_in_group()[0]
 
     def escoger_decision(self):
         matriz_pagos = {
-            'cooperar':
+            'confesar':
                 {
-                    'cooperar': Constants.pago_ambos_confiesan,
-                    'no cooperar': Constants.pago_jugador_confiesa
+                    'confesar': Constants.pago_ambos_confiesan,
+                    'no confesar': Constants.pago_jugador_confiesa
                 },
-            'no cooperar':
+            'no confesar':
                 {
-                    'cooperar': Constants.pago_jugador_calla,
-                    'no cooperar': Constants.pago_ambos_callan
+                    'confesar': Constants.pago_jugador_calla,
+                    'no confesar': Constants.pago_ambos_callan
                 }
         }
 

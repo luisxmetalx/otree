@@ -3,36 +3,60 @@
 
 
 {% block title %}
-    Competencia de Duolipo a la Bertrand
+    Resultados
 {% endblock %}
 
 
 {% block content %}
 
-<div class="row" style="margin-top:4%;margin-bottom:5%;">
+<div class="row" style="margin-top:4%;margin-bottom:0%;">
 
-  <div class="col-sm-12">
-      <canvas id="grupos_precio" width="800" height="450"></canvas>
+  <div id="tester" class="col-sm-12"></div>
+
+</div>
+{% comment %} <input type="button" id='mostrar' class="btn btn-primary" value="Simbología">  {% endcomment %}
+<div id="target" class="row">
+  <div class="col-sm-5" style="margin-top:0%;margin-bottom:2%;margin-left:6%">
+    <label for="text"><strong>PPT</strong> = Precio Promedio Total</label><br>
+    <label for="text"><strong>PPT Disp.</strong> = Dispersión de Precio Promedio Total</label><br>
+    <label for="text"><strong>PPH</strong> = Precio Promedio Hombres</label><br>
+    <label for="text"><strong>PPH Disp.</strong> = Dispersión de Precio Promedio Hombres</label><br>
   </div>
+  <div class="col-sm-5">
+      <label for="text"><strong>PPM</strong> = Precio Promedio Mujeres</label><br>
+      <label for="text"><strong>PPM Disp.</strong> = Dispersión de Precio Promedio Mujeres</label><br>
+      <label for="text"><strong>CMG</strong> = Costo Marginal</label><br>
+  </div>
+</div>
 
+<div class="row" style="margin-top:4%;margin-bottom:0%;">
+
+  <div id="bst" class="col-sm-12"></div>
+
+</div>
+
+<div class="row">
+  <div class="col-sm-5" style="margin-top:0%;margin-bottom:2%;margin-left:6%">
+    <label for="text"><strong>BSPT</strong> = Beneficio Social Promedio Total</label><br>
+    <label for="text"><strong>BST Disp.</strong> = Dispersión de Beneficio Social Total</label><br>
+    <label for="text"><strong>BSPG</strong> = Beneficio Social Promedio por Grupos</label><br>
+    <label for="text"><strong>BSG Disp.</strong> = Dispersión de Beneficio Social por Grupos</label><br>
+    <label for="text"><strong>GMax</strong> = Ganancia Grupal Máxima</label><br>
+  </div>
+  <div class="col-sm-5">
+    <label for="text"><strong>BSPTH</strong> = Beneficio Social Promedio Total Hombres</label><br>
+    <label for="text"><strong>BSPTH Disp.</strong> = Dispersión de Beneficio Social Total Hombres</label><br>
+    <label for="text"><strong>BSPTM</strong> =  Beneficio Social Promedio Total Mujeres</label><br>
+    <label for="text"><strong>BSPTM Disp.</strong> = Dispersión de Beneficio Social Total Mujeres</label><br>
+  </div>
 </div>
 
 <div class="row" style="margin-top:4%;margin-bottom:5%;">
 
-    <div class="col-sm-12">
-        <canvas id="ganancias" width="800" height="450"></canvas>
+    <div class="col-sm-6" id="HvsM">
     </div>
   
-</div>
-
-<div class="row" style="margin-top:4%;margin-bottom:5%;">
-
-    <div class="col-sm-6">
-        <canvas id="HvsM" width="600" height="350"></canvas>
-    </div>
-  
-    <div class="col-sm-6">
-        <canvas id="edades" width="600" height="350"></canvas>
+    <div class="col-sm-6" id="edades">
     </div>
   
 </div>
@@ -43,142 +67,357 @@
 {% endblock %}
 
 {% block app_scripts %}
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
-    <script> 
-       $(document).ready(function(){
-            h={{prom_edad_hombre}}
-            mu={{prom_edad_mujer}}
-            new Chart(document.getElementById("grupos_precio"), {
-                type: 'line',
-                data: {
-                    labels: [ {% for i in total_grupos %} {{i|json}}, {%endfor%}],
-                    datasets: [{
-                        label: "Precio Promedio",
-                        data: [ {% for i in prom_precio %} {{i|json}}, {%endfor%}],
-                        fill: false,
-                        backgroundColor: "#E25505",
-                        borderColor: "#E25505",
-                        borderWidth: 2
-                      },
-                      {
-                        type: 'line',
-                        label: 'CMG',
-                        data: [{% for i in cmg_const %} {{i|json}}, {%endfor%}],
-                        fill: false,
-                        borderWidth: 1,
-                        borderColor: '#f00',
-                        borderDash: [5,4],
-                        lineTension: 0,
-                        steppedLine: true
-                      }
-                    ]
-                },
-                options: {
-                  scales: {
-                    yAxes: [{
-                        ticks: {
-                            beginAtZero:true
-                        }
-                    }]
-                  },
-                  title: {
-                    display: true,
-                    text: 'Precio promedio por Ronda.'
-                  },
-                  animation: {
-                    animateScale: true,
-                    animateRotate: true
-                  }
-                }
-            })
-            new Chart(document.getElementById("ganancias"), {
-                type: 'bar',
-                data: {
-                  labels: [{% for i in total_grupos %} {{i|json}}, {%endfor%} "Ganancia Maxima"],
-                  datasets: [{
-                    label: "Ganancias",
-                    backgroundColor: ["#2F6EEC", "#2F6EEC","#2F6EEC","#2F6EEC","#2F6EEC","#2F6EEC"],
-                    data: [ {% for i in ganancia_total %} {{i|json}}, {%endfor%} {{ganancia_max}} ]
-                  }]
-                },
-                options: {
-                  scales: {
-                    yAxes: [{
-                        ticks: {
-                            beginAtZero:true
-                        }
-                    }]
-                  },
-                  title: {
-                    display: true,
-                    text: 'Ganancia Total por Ronda.'
-                  },
-                  animation: {
-                    animateScale: true,
-                    animateRotate: true
-                  }
-                }
-              })
-            
-            new Chart(document.getElementById("HvsM"), {
-                type: 'doughnut',
-                data: {
-                  labels: ["Hombres", "Mujeres"],
-                  datasets: [{
-                    label: "Cantidad Hombres vs Mujeres",
-                    backgroundColor: ["#20c997", "#fd7e14"],
-                    data: [ {{m|json}} , {{f|json}} ]
-                  }]
-                },
-                options: {
-                  title: {
-                    display: true,
-                    text: 'Género de los Participantes'
-                  },
-                  animation: {
-                    animateScale: true,
-                    animateRotate: true
-                  },
-                  tooltips: {
-                    callbacks: {
-                      label: function(tooltipItem, data) {
-                        var dataset = data.datasets[tooltipItem.datasetIndex]
-                        var currentValue = dataset.data[tooltipItem.index]       
-                        return currentValue + "%"
-                      }
-                    }
-                  }
-                }
-            })
-            new Chart(document.getElementById("edades"), {
-                type: 'bar',
-                data: {
-                  labels: ["Hombres", "Mujeres"],
-                  datasets: [{
-                    label: "Cantidad Hombres vs Mujeres",
-                    backgroundColor: ["#E2DB05", "#8105E2"],
-                    data: [{% for i in edades %} {{i|json}}, {%endfor%} {{edades}} ]
-                  }]
-                },
-                options: {
-                  scales: {
-                    yAxes: [{
-                        ticks: {
-                            beginAtZero:true
-                        }
-                    }]
-                  },
-                  title: {
-                    display: true,
-                    text: 'Promedio de Edad de los Participantes'
-                  },
-                  animation: {
-                    animateScale: true,
-                    animateRotate: true
-                  }
-                }
-              })
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
+  <script>
+    $(document).ready(function(){
+      $("#mostrar").on( "click", function() {
+        $('#target').show(); //muestro mediante id
+       });
+      $("#mostrar").on( "click", function() {
+        $('#target').hide(); //oculto mediante id
+      });
+    });
+  </script>
+
+  <script>
+    $(document).ready(function() {
+        var d3 = Plotly.d3;
+        
+        var WIDTH_IN_PERCENT_OF_PARENT = 100;
+        
+        var gd3 = d3.select('#tester')
+            .append('div')
+            .style({
+                width: WIDTH_IN_PERCENT_OF_PARENT + '%',
+                height: 'AUTO',
+                class : 'col-sm-12'
+            });
+        
+        var gd = gd3.node();
+        
+        var trace1 = {
+          x: [{% for i in rondas_cajas %} ,{{i|json}} {%endfor%}],
+          y: [{%for i in precios%} ,{{i|json}} {%endfor%}],
+          type: 'box',
+          name: 'PPT Disp.',
+          boxpoints: 'all'
+        };
+
+        var trace2 = {
+          x: [{% for i in total_grupos %} ,{{i|json}} {%endfor%}],
+          y: [{%for i in prom_precio%} ,{{i|json}} {%endfor%}],
+          mode: 'lines+markers',
+          name: 'PPT',
+        };
+
+        var trace3 = {
+          x: [{% for i in rondas_cajas_hom %} ,{{i|json}} {%endfor%}],
+          y: [{%for i in precios_hom%} ,{{i|json}} {%endfor%}],
+          type: 'box',
+          name: 'PPTH Disp.',
+          visible : 'legendonly',
+          boxpoints: 'all'
+        };
+
+        var trace4 = {
+          x: [{% for i in total_grupos %} ,{{i|json}} {%endfor%}],
+          y: [{%for i in prom_precio_hom%} ,{{i|json}} {%endfor%}],
+          mode: 'lines+markers',
+          name: 'PPTH',
+          visible : 'legendonly',
+        };
+
+        var trace5 = {
+          x: [{% for i in rondas_cajas_muj %} ,{{i|json}} {%endfor%}],
+          y: [{%for i in precios_muj%} ,{{i|json}} {%endfor%}],
+          type: 'box',
+          name: 'PPTM Disp.',
+          visible : 'legendonly',
+          boxpoints: 'all'
+        };
+
+        var trace6 = {
+          x: [{% for i in total_grupos %} ,{{i|json}} {%endfor%}],
+          y: [{%for i in prom_precio_muj%} ,{{i|json}} {%endfor%}],
+          mode: 'lines+markers',
+          name: 'PPTM',
+          visible : 'legendonly',
+        };
+
+        var trace7 = {
+          x: [{% for i in total_grupos %} ,{{i|json}} {%endfor%}],
+          y: [{%for i in cmg_const%} ,{{i|json}} {%endfor%}],
+          mode: 'lines+markers',
+          name: 'CMG',
+          visible : 'legendonly',
+        };
+      
+        var data = [ trace1, trace2, trace3, trace4, trace5, trace6, trace7];
+        
+        var layout = {
+          title:'<b>Precio<b>',
+          legend: {
+            x: 1,
+            y: 0.5,
+            traceorder: 'normal',
+            font: {
+              family: 'sans-serif',
+              size: 12,
+              color: '#000'
+            },
+            bgcolor: '#E2E2E2',
+            bordercolor: '#FFFFFF',
+            borderwidth: 2
+          },
+          yaxis: {rangemode: 'tozero',
+            zeroline: true,
+            title: 'Puntos',
+            titlefont: {
+              size: 18,
+              color: '#7f7f7f'
+            }
+          }
+        };
+        
+        Plotly.newPlot(gd, data, layout,{scrollZoom: true});
+        
+        window.onresize = function() {
+            Plotly.Plots.resize(gd);
+        };
+        
         });
-    </script>
+  </script>
+
+  <script>
+    $(document).ready(function() {
+      var d3 = Plotly.d3;
+      
+      var WIDTH_IN_PERCENT_OF_PARENT = 100;
+      
+      var gd3 = d3.select('#bst')
+          .append('div')
+          .style({
+              width: WIDTH_IN_PERCENT_OF_PARENT + '%',
+              height: 'AUTO',
+              class : 'col-sm-12'
+          });
+      
+      var gd = gd3.node();
+      
+      var trace1 = {
+        x: [{% for i in rondas_cajas %} ,{{i|json}} {%endfor%}],
+        y: [{%for i in ganancias_total%} ,{{i|json}} {%endfor%}],
+        type: 'box',
+        name: 'BST Disp.',
+        boxpoints: 'all'
+      };
+
+      var trace2 = {
+        x: [{% for i in total_grupos %} ,{{i|json}} {%endfor%}],
+        y: [{%for i in ganancia_prom_total%} ,{{i|json}} {%endfor%}],
+        mode: 'lines+markers',
+        name: 'BSPT',
+      };
+
+      var trace3 = {
+        x: [{% for i in rondas_cajas_grupal %} ,{{i|json}} {%endfor%}],
+        y: [{%for i in ganancias_group%} ,{{i|json}} {%endfor%}],
+        type: 'box',
+        name: 'BSG Disp.',
+        visible : 'legendonly',
+        boxpoints: 'all'
+      };
+
+      var trace4 = {
+        x: [{% for i in total_grupos %} ,{{i|json}} {%endfor%}],
+        y: [{%for i in ganancia_prom_group%} ,{{i|json}} {%endfor%}],
+        mode: 'lines+markers',
+        name: 'BSPG',
+        visible : 'legendonly',
+      };
+
+      var trace5 = {
+        x: [{% for i in rondas_cajas_hom %} ,{{i|json}} {%endfor%}],
+        y: [{%for i in ganancias_hom%} ,{{i|json}} {%endfor%}],
+        type: 'box',
+        name: 'BSTH Disp.',
+        visible : 'legendonly',
+        boxpoints: 'all'
+      };
+
+      var trace6 = {
+        x: [{% for i in total_grupos %} ,{{i|json}} {%endfor%}],
+        y: [{%for i in ganancia_prom_hom%} ,{{i|json}} {%endfor%}],
+        mode: 'lines+markers',
+        name: 'BSPTH',
+        visible : 'legendonly',
+      };
+      var trace7 = {
+        x: [{% for i in rondas_cajas_muj %} ,{{i|json}} {%endfor%}],
+        y: [{%for i in ganancias_muj%} ,{{i|json}} {%endfor%}],
+        type: 'box',
+        name: 'BSPTM Disp.',
+        visible : 'legendonly',
+        boxpoints: 'all'
+      };
+
+      var trace8 = {
+        x: [{% for i in total_grupos %} ,{{i|json}} {%endfor%}],
+        y: [{%for i in ganancia_prom_muj%} ,{{i|json}} {%endfor%}],
+        mode: 'lines+markers',
+        name: 'BSPTM',
+        visible : 'legendonly',
+      };
+
+      var trace9 = {
+        x: [{% for i in total_grupos %} ,{{i|json}} {%endfor%}],
+        y: [{%for i in const_max%} ,{{i|json}} {%endfor%}],
+        mode: 'lines+markers',
+        name: 'GMax',
+        visible : 'legendonly',
+      };
     
+      var data = [ trace1, trace2, trace3, trace4, trace5, trace6, trace7, trace8, trace9];
+      
+      var layout = {
+        title:'<b>Beneficio Social<b>',
+        legend: {
+          x: 1,
+          y: 0.5,
+          traceorder: 'normal',
+          font: {
+            family: 'sans-serif',
+            size: 12,
+            color: '#000'
+          },
+          bgcolor: '#E2E2E2',
+          bordercolor: '#FFFFFF',
+          borderwidth: 2
+        },
+        yaxis: {rangemode: 'tozero',
+          zeroline: true,
+          title: 'Puntos',
+          titlefont: {
+            size: 18,
+            color: '#7f7f7f'
+          }
+        }
+      };
+      
+      Plotly.newPlot(gd, data, layout,{scrollZoom: true});
+      
+      window.onresize = function() {
+          Plotly.Plots.resize(gd);
+      };
+      
+      });
+  </script>
+
+  <script>
+      $(document).ready(function() {
+        var d3 = Plotly.d3;
+        
+        var WIDTH_IN_PERCENT_OF_PARENT = 100;
+        
+        var gd3 = d3.select('#edades')
+            .append('div')
+            .style({
+                width: WIDTH_IN_PERCENT_OF_PARENT + '%',
+                height: 'AUTO',
+                class : 'col-sm-12'
+            });
+        
+        var gd = gd3.node();
+        
+        var trace1 = {
+          x: ['Hombres'],
+          y: [{{prom_edad_hom|json}} ],
+          type: 'bar',
+          name: 'Hombres',
+        };
+      
+        var trace2 = {
+          x: ['Mujeres'],
+          y: [{{prom_edad_muj|json}} ],
+          type: 'bar',
+          name: 'Mujeres',
+        };
+      
+        var data = [ trace1, trace2];
+      
+      var layout = {
+        title:'<b>Edad<b>',
+        legend: {
+          x: 1,
+          y: 0.5,
+          traceorder: 'normal',
+          font: {
+            family: 'sans-serif',
+            size: 12,
+            color: '#000'
+          },
+          bgcolor: '#E2E2E2',
+          bordercolor: '#FFFFFF',
+          borderwidth: 2
+        },
+        yaxis: {rangemode: 'tozero',
+          zeroline: true,
+          title: 'Años',
+          titlefont: {
+            size: 18,
+            color: '#7f7f7f'
+          }
+        }
+      };
+      
+      Plotly.newPlot(gd, data, layout,{scrollZoom: true});
+      
+      window.onresize = function() {
+          Plotly.Plots.resize(gd);
+      };
+      
+      });
+  </script>
+
+  <script>
+      $(document).ready(function() {
+        var d3 = Plotly.d3;
+        
+        var WIDTH_IN_PERCENT_OF_PARENT = 100;
+        
+        var gd3 = d3.select('#HvsM')
+            .append('div')
+            .style({
+                width: WIDTH_IN_PERCENT_OF_PARENT + '%',
+                height: 'AUTO',
+                class : 'col-sm-12'
+            });
+        
+        var gd = gd3.node();
+        
+        var trace1 = {
+          labels: [ 'Mujeres', 'Hombres'],
+          values: [ {{f|json}},{{m|json}}],
+          hoverinfo: 'label+percent',
+          hole: .4,
+          type: 'pie',
+          name: 'Porcentaje de Participantes',
+        };
+      
+        var data = [ trace1 ];
+      
+      var layout = {
+        title:'<b>Género<b>'
+      };
+      
+      Plotly.newPlot(gd, data, layout,{scrollZoom: true});
+      
+      window.onresize = function() {
+          Plotly.Plots.resize(gd);
+      };
+      
+      });
+  </script>
 {% endblock %}

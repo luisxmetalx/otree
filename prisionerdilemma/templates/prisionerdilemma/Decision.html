@@ -6,7 +6,7 @@
 {% endblock %}
 
 {% block styles %}
-    <link rel="stylesheet" type="text/css" href="{% static 'global/matrix.css' %}" />
+    <link href="https://afeld.github.io/emoji-css/emoji.css" rel="stylesheet">
 
     <style>
         .highlight-row-on-hover:hover td {
@@ -26,34 +26,14 @@
         </button>
         <div class="form-group required">
             <p class="justify">
-                <i>En cada celda, la cantidad a la izquierda es la recompensa para usted y la derecha para el otro participante.</i>
+                <i>A continuación escoja la decisión que le convenga:</i>
             </p>
-            <table class="table table-bordered text-center" style="width: auto; margin: auto">
-                <tr>
-                    <th colspan="2" rowspan="2"></th>
-                    <th colspan="2">El otro participante</th>
-                </tr>
-                <tr>
-                    <th>Cooperar</th>
-                    <th>No cooperar</th>
-                </tr>
-                <tr class="highlight-row-on-hover">
-                    <th rowspan="2"><span class="rotate90">Usted</span></th>
-                    <td><button name="decision" value="cooperar" class="btn btn-primary btn-large">Cooperar</button></td>
-                    <td>{{Constants.pago_ambos_confiesan|floatformat:"0" }} puntos, {{Constants.pago_ambos_confiesan|floatformat:"0" }} puntos</td>
-                    <td>{{ Constants.pago_jugador_confiesa|floatformat:"0" }} puntos, {{Constants.pago_jugador_calla|floatformat:"0" }} puntos</td>
-                </tr>
-                <tr class="highlight-row-on-hover">
-                    <td><button name="decision" value="no cooperar" class="btn btn-primary btn-large">No Cooperar</button></td>
-                    <td>{{Constants.pago_jugador_calla|floatformat:"0" }} puntos, {{ Constants.pago_jugador_confiesa|floatformat:"0" }} puntos</td>
-                    <td>{{Constants.pago_ambos_callan|floatformat:"0" }} puntos, {{Constants.pago_ambos_callan|floatformat:"0" }} puntos</td>
-                </tr>
-            </table>
+            <button name="decision" value="confesar" class="btn btn-primary btn-large"> <i class="em-svg em-astonished"></i> Confesar</button></br></br>
+            <button name="decision" value="no confesar" class="btn btn-primary btn-large"> <i class="em-svg em-zipper_mouth_face"></i> No Confesar</button>
             {% comment %} aqui se agrega el chat {% chat %} {% endcomment %}
         </div>
     <div>
 <div>
-
 
     <div class="modal fade bd-example-modal-lg" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">

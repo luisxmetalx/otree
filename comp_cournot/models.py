@@ -17,7 +17,7 @@ En esta implementación, hay 2 empresas que compiten por 1 período.
 class Constants(BaseConstants):
     name_in_url = 'cournot'
     players_per_group = 2
-    num_rounds = 3
+    num_rounds = 5
 
     instructions_template = 'comp_cournot/Instructions.html'
 
@@ -55,14 +55,11 @@ class Player(BasePlayer):
 
     #edad del participante
     edad = models.IntegerField(min=18)
-    
-    #matricula del jugador
-    matricula = models.IntegerField(min=100000000,max=999999999)
 
     #unidades que produce el jugador
     unidades = models.FloatField(
         min=0, max=Constants.max_units_per_player,
-        doc="""Quantity of units to produce"""
+        doc="""Cantidad de unidades a producir del jugador"""
     )
 
     def other_player(self):
