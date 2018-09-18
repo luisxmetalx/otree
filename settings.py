@@ -176,25 +176,25 @@ SESSION_CONFIGS = [
         'name': 'prisionerdilemma',
         'display_name': "Prisoner's Dilemma",
         'num_demo_participants': 2,
-        'app_sequence': ['prisionerdilemma'], 
+        'app_sequence': ['prisionerdilemma','despedida'], 
     },
     {
         'name': 'comp_duolipo_bertrand',
         'display_name': "Competencia de Duolipo a la Bertrand",
         'num_demo_participants': 2,
-        'app_sequence': ['comp_duolipo_bertrand'], 
+        'app_sequence': ['comp_duolipo_bertrand','despedida'], 
     },
     {
         'name': 'comp_cournot',
         'display_name': "Competencia Cournot",
         'num_demo_participants': 2,
-        'app_sequence': ['comp_cournot'], 
+        'app_sequence': ['comp_cournot','despedida'], 
     },
     {
         'name': 'public_goods',
         'display_name': "Bienes Publicos (CLASE)",
         'num_demo_participants': 3,
-        'app_sequence': ['public_goods'], 
+        'app_sequence': ['public_goods','despedida'], 
     },
 
     # other session configs ...
