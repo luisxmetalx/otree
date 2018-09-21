@@ -37,10 +37,14 @@ class Group(BaseGroup):
 class Player(BasePlayer):
 
     #Se crea un campo para almacenar la decisión del jugador
+    decision_tratamiento = models.StringField(
+        choices=['confesar', 'no confesar'],
+        doc="""Esto es la decisión del jugador para el tratamiento""",
+    )
+
     decision = models.StringField(
         choices=['confesar', 'no confesar'],
         doc="""Esto es la decisión del jugador""",
-        widget=widgets.RadioSelect
     )
 
     #Se crea un campo para almacenar el género del jugador
@@ -71,5 +75,21 @@ class Player(BasePlayer):
         }
 
         self.payoff = matriz_pagos[self.decision][self.other_player().decision]
+
+    def escoger_decision_tratamiento(self):
+        matriz_pagos = {
+            'confesar':
+                {
+                    'confesar': Constants.pago_ambos_confiesan,
+                    'no confesar': Constants.pago_jugador_confiesa
+                },
+            'no confesar':
+                {
+                    'confesar': Constants.pago_jugador_calla,
+                    'no confesar': Constants.pago_ambos_callan
+                }
+        }
+
+        self.payoff = matriz_pagos[self.decision_tratamiento][self.other_player().decision_tratamiento]
 
 

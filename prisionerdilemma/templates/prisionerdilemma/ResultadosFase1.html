@@ -1,0 +1,37 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+    Resultados
+{% endblock %}
+
+{% block content %}
+    <p>
+        {% if misma_eleccion %}
+            {% if mi_decision == 'confesar'%}
+                Ambos decidieron <img src="{% static 'prisionerdilemma/confesar.png' %}" style="width:6%; margin-left:1%; margin-right:1%; height:auto;" alt=""><b>{{ mi_decision }}</b>.
+            {%else%}
+            Ambos decidieron <img src="{% static 'prisionerdilemma/no_confesar.png' %}" style="width:6%; margin-left:1%; margin-right:1%; height:auto;" alt=""><b>{{ mi_decision }}</b>.
+            {%endif%}
+        {% else %}
+            {%if mi_decision == 'confesar' and oponente_decision == 'no confesar'%}
+                Usted decidió <img src="{% static 'prisionerdilemma/confesar.png' %}" style="width:6%; margin-left:1%; margin-right:1%; height:auto;" alt=""><b>{{ mi_decision }}</b> y el otro participante decidió <img src="{% static 'prisionerdilemma/no_confesar.png' %}" style="width:6%; margin-left:1%; margin-right:1%; height:auto;" alt=""><b>{{ oponente_decision }}</b>.
+            {%else%}
+                Usted decidió <img src="{% static 'prisionerdilemma/no_confesar.png' %}" style="width:6%; margin-left:1%; margin-right:1%; height:auto;" alt=""><b>{{ mi_decision }}</b> y el otro participante decidió <img src="{% static 'prisionerdilemma/confesar.png' %}" style="width:6%; margin-left:1%; margin-right:1%; height:auto;" alt=""><b>{{ oponente_decision }}</b>.
+            {%endif%}
+        {% endif %}
+    </p>
+
+    <p>
+        {% if puntos == 1%}
+            Por lo tanto, se le restará <b>{{ puntos|floatformat:"0" }} punto</b> del examen.
+        {%else%}
+            Por lo tanto, se le restarán <b>{{ puntos|floatformat:"0" }} puntos</b> del examen.
+        {%endif%}
+    </p>
+
+    {% next_button %}
+
+{% endblock %}
+
+

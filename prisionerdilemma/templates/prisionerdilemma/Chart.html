@@ -9,13 +9,13 @@
 {% block content %}
 
 <div class="row" style="margin-top:4%;margin-bottom:0%;">
-    <div id="tester" class="col-sm-12">
-    </div>
+  <div id="tratamiento" class="col-lg-4"></div>
+  <div id="tester" class="col-lg-8"></div>
 </div>
 <div class="row">
     <div class="col-sm-5" style="margin-top:0%;margin-bottom:2%;margin-left:6%">
-      <label for="text"><strong>Eq. Nash</strong> = Equilibrio Nash (Grupos Confesaron)</label><br>
-      <label for="text"><strong>Eq. Pareto</strong> = Equilibrio Pareto (Grupos No Confesaron)</label><br>
+      <label for="text"><strong>EN</strong> = Equilibrio Nash (Grupos Confesaron)</label><br>
+      <label for="text"><strong>EP</strong> = Equilibrio Pareto (Grupos No Confesaron)</label><br>
       <label for="text"><strong>D</strong> = Grupos Respuesta Diferente</label><br>
       <label for="text"><strong>HC</strong> = Hombres Confesaron</label><br>
     </div>
@@ -25,9 +25,12 @@
         <label for="text"><strong>MNC</strong> = Mujeres No Confesaron</label><br>
     </div>
 </div>
-
-<div class="row" style="margin-top:4%;margin-bottom:5%;">
-
+<div class="row">
+  <div class="col-sm-12 text-center">
+    <h3>Estadística Descriptiva</h3>
+  </div>
+</div>
+<div class="row" style="margin-top:1%;margin-bottom:5%;">
   <div class="col-sm-6" id="HvsM">
   </div>
 
@@ -53,6 +56,111 @@
         
         var WIDTH_IN_PERCENT_OF_PARENT = 100;
         
+        var gd3 = d3.select('#tratamiento')
+            .append('div')
+            .style({
+                width: WIDTH_IN_PERCENT_OF_PARENT + '%',
+                height: 'AUTO',
+                class : 'col-sm-12'
+            });
+        
+        var gd = gd3.node();
+        
+        var trace1 = {
+          x: ['EP'],
+          y: [{{pair_conf_tratamiento|json}} ],
+          type: 'bar',
+          name: 'EP'
+        };
+
+        var trace2 = {
+          x: ['EN'],
+          y: [{{pair_no_conf_tratamiento|json}} ],
+          type: 'bar',
+          name: 'EN'
+        };
+
+        var trace3 = {
+          x: ['D'],
+          y: [{{pair_dif_tratamiento|json}} ],
+          type: 'bar',
+          name: 'D'
+        };
+
+        var trace4 = {
+          x: ['HC'],
+          y: [{{hom_conf_tratamiento|json}} ],
+          type: 'bar',
+          name: 'HC'
+        };
+
+        var trace5 = {
+          x: ['HNC'],
+          y: [{{hom_no_conf_tratamiento|json}} ],
+          type: 'bar',
+          name: 'HNC'
+        };
+        
+        var trace6 = {
+          x: ['MC'],
+          y: [{{muj_conf_tratamiento|json}} ],
+          type: 'bar',
+          name: 'MC'
+        };
+
+        var trace7 = {
+          x: ['MNC'],
+          y: [{{muj_no_conf_tratamiento|json}} ],
+          type: 'bar',
+          name: 'MNC'
+        };
+  
+        var data = [ trace1, trace2, trace3, trace4, trace5, trace6, trace7];
+        
+        var layout = {
+          title:'<b>Desiciones Ronda de Control<b>',
+          legend: {
+            x: 1,
+            y: 0.5,
+            traceorder: 'normal',
+            font: {
+              family: 'sans-serif',
+              size: 12,
+              color: '#000'
+            },
+            bgcolor: '#E2E2E2',
+            bordercolor: '#FFFFFF',
+            borderwidth: 2
+          },
+          yaxis: {rangemode: 'tozero',
+            zeroline: true,
+            title: '%',
+            titlefont: {
+              size: 18,
+              color: '#7f7f7f'
+            }
+          },
+          xaxis: {
+            tickangle: -75
+          },
+        };
+        
+        Plotly.newPlot(gd, data, layout);
+        
+        window.onresize = function() {
+            Plotly.Plots.resize(gd);
+        };
+        
+        });
+    </script>
+
+    <script>
+
+        $(document).ready(function() {
+        var d3 = Plotly.d3;
+        
+        var WIDTH_IN_PERCENT_OF_PARENT = 100;
+        
         var gd3 = d3.select('#tester')
             .append('div')
             .style({
@@ -67,7 +175,7 @@
           x: [{% for i in rondas %} ,{{i|json}} {%endfor%}],
           y: [{%for i in pair_conf%} ,{{i|json}} {%endfor%}],
           mode: 'lines+markers',
-          name: 'Eq. Nash',
+          name: 'EN',
           visible : 'legendonly'
         };
         
@@ -75,7 +183,7 @@
           x: [{% for i in rondas %} ,{{i|json}} {%endfor%}],
           y: [{%for i in pair_no_conf%} ,{{i|json}} {%endfor%}],
           mode: 'lines+markers',
-          name: 'Eq. Pareto'
+          name: 'EP'
         };
         
         var trace3 = {
@@ -121,7 +229,7 @@
         var data = [ trace1, trace2, trace3, trace4, trace5, trace6, trace7 ];
         
         var layout = {
-          title:'<b>Decisiones<b>',
+          title:'<b>Decisiones Rondas de Tratamiento<b>',
           legend: {
             x: 1,
             y: 0.5,
@@ -138,13 +246,6 @@
           yaxis: {rangemode: 'tozero',
             zeroline: true,
             title: '%',
-            titlefont: {
-              size: 18,
-              color: '#7f7f7f'
-            }
-          },
-          xaxis: {
-            title: 'Rondas',
             titlefont: {
               size: 18,
               color: '#7f7f7f'
@@ -194,7 +295,7 @@
           var data = [ trace1, trace2];
         
         var layout = {
-          title:'<b>Edad<b>',
+          title:'<b>Edad Promedio<b>',
           legend: {
             x: 1,
             y: 0.5,
