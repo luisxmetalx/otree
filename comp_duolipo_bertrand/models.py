@@ -42,7 +42,7 @@ class Player(BasePlayer):
     edad = models.IntegerField(min=18)
     
     #precio que pone el jugador entre 0 y 20 en cada ronda
-    precio = models.FloatField(min=0, max=20)
+    precio = models.FloatField(min=0.00, max=20.00)
 
     #valor temporal para la ganancia actual de la ronda
     value = models.IntegerField(initial=0)

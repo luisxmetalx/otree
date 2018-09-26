@@ -44,14 +44,19 @@
     <label for="text"><strong>GMax</strong> = Ganancia Grupal Máxima</label><br>
   </div>
   <div class="col-sm-5">
-    <label for="text"><strong>BSPTH</strong> = Beneficio Social Promedio Total Hombres</label><br>
-    <label for="text"><strong>BSPTH Disp.</strong> = Dispersión de Beneficio Social Total Hombres</label><br>
-    <label for="text"><strong>BSPTM</strong> =  Beneficio Social Promedio Total Mujeres</label><br>
-    <label for="text"><strong>BSPTM Disp.</strong> = Dispersión de Beneficio Social Total Mujeres</label><br>
+    <label for="text"><strong>BSPH</strong> = Beneficio Social Promedio Hombres</label><br>
+    <label for="text"><strong>BSPH Disp.</strong> = Dispersión de Beneficio Social Hombres</label><br>
+    <label for="text"><strong>BSPM</strong> =  Beneficio Social Promedio Mujeres</label><br>
+    <label for="text"><strong>BSPM Disp.</strong> = Dispersión de Beneficio Social Mujeres</label><br>
   </div>
 </div>
 
-<div class="row" style="margin-top:4%;margin-bottom:5%;">
+<div class="row">
+  <div class="col-sm-12 text-center">
+    <h3>Estadística Descriptiva</h3>
+  </div>
+</div>
+<div class="row" style="margin-top:1%;margin-bottom:5%;">
 
     <div class="col-sm-6" id="HvsM">
     </div>
@@ -102,7 +107,7 @@
           y: [{%for i in precios%} ,{{i|json}} {%endfor%}],
           type: 'box',
           name: 'PPT Disp.',
-          boxpoints: 'all'
+          boxpoints: false
         };
 
         var trace2 = {
@@ -116,16 +121,16 @@
           x: [{% for i in rondas_cajas_hom %} ,{{i|json}} {%endfor%}],
           y: [{%for i in precios_hom%} ,{{i|json}} {%endfor%}],
           type: 'box',
-          name: 'PPTH Disp.',
+          name: 'PPH Disp.',
           visible : 'legendonly',
-          boxpoints: 'all'
+          boxpoints: false
         };
 
         var trace4 = {
           x: [{% for i in total_grupos %} ,{{i|json}} {%endfor%}],
           y: [{%for i in prom_precio_hom%} ,{{i|json}} {%endfor%}],
           mode: 'lines+markers',
-          name: 'PPTH',
+          name: 'PPH',
           visible : 'legendonly',
         };
 
@@ -133,16 +138,16 @@
           x: [{% for i in rondas_cajas_muj %} ,{{i|json}} {%endfor%}],
           y: [{%for i in precios_muj%} ,{{i|json}} {%endfor%}],
           type: 'box',
-          name: 'PPTM Disp.',
+          name: 'PPM Disp.',
           visible : 'legendonly',
-          boxpoints: 'all'
+          boxpoints: false
         };
 
         var trace6 = {
           x: [{% for i in total_grupos %} ,{{i|json}} {%endfor%}],
           y: [{%for i in prom_precio_muj%} ,{{i|json}} {%endfor%}],
           mode: 'lines+markers',
-          name: 'PPTM',
+          name: 'PPM',
           visible : 'legendonly',
         };
 
@@ -211,7 +216,7 @@
         y: [{%for i in ganancias_total%} ,{{i|json}} {%endfor%}],
         type: 'box',
         name: 'BST Disp.',
-        boxpoints: 'all'
+        boxpoints: false
       };
 
       var trace2 = {
@@ -227,7 +232,7 @@
         type: 'box',
         name: 'BSG Disp.',
         visible : 'legendonly',
-        boxpoints: 'all'
+        boxpoints: false
       };
 
       var trace4 = {
@@ -242,32 +247,32 @@
         x: [{% for i in rondas_cajas_hom %} ,{{i|json}} {%endfor%}],
         y: [{%for i in ganancias_hom%} ,{{i|json}} {%endfor%}],
         type: 'box',
-        name: 'BSTH Disp.',
+        name: 'BSH Disp.',
         visible : 'legendonly',
-        boxpoints: 'all'
+        boxpoints: false
       };
 
       var trace6 = {
         x: [{% for i in total_grupos %} ,{{i|json}} {%endfor%}],
         y: [{%for i in ganancia_prom_hom%} ,{{i|json}} {%endfor%}],
         mode: 'lines+markers',
-        name: 'BSPTH',
+        name: 'BSPH',
         visible : 'legendonly',
       };
       var trace7 = {
         x: [{% for i in rondas_cajas_muj %} ,{{i|json}} {%endfor%}],
         y: [{%for i in ganancias_muj%} ,{{i|json}} {%endfor%}],
         type: 'box',
-        name: 'BSPTM Disp.',
+        name: 'BSPM Disp.',
         visible : 'legendonly',
-        boxpoints: 'all'
+        boxpoints: false
       };
 
       var trace8 = {
         x: [{% for i in total_grupos %} ,{{i|json}} {%endfor%}],
         y: [{%for i in ganancia_prom_muj%} ,{{i|json}} {%endfor%}],
         mode: 'lines+markers',
-        name: 'BSPTM',
+        name: 'BSPM',
         visible : 'legendonly',
       };
 

@@ -43,7 +43,13 @@ class Results(Page):
         return {
             'total_earnings': self.group.total_contribution * Constants.multiplier,
             'promedio': promedio,
+            'rowspan' : Constants.players_per_group,
         }
+
+class ExpTeorico(Page):
+    def is_displayed(self):
+        return self.round_number == Constants.num_rounds
+
 class Graficas(Page):
     def is_displayed(self):
         return self.round_number == Constants.num_rounds
@@ -189,6 +195,7 @@ page_sequence = [
     ResultsWaitPage,
     Results,
     Quiz,
+    ExpTeorico,
     AllGroupsWaitPage,
     Graficas
 ]

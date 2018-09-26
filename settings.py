@@ -94,7 +94,7 @@ mturk_hit_settings = {
 # e.g. self.session.config['participation_fee']
 
 SESSION_CONFIG_DEFAULTS = {
-    'real_world_currency_per_point': 0.000,
+    'real_world_currency_per_point': 0.00,
     'participation_fee': 0.00,
     'doc': "",
     'mturk_hit_settings': mturk_hit_settings,
@@ -122,33 +122,33 @@ SESSION_CONFIGS = [
         'app_sequence': ['my_trust'],
     },
     {
-    'name': 'my_matching_pennies',
-    'display_name': "My Matching Pennies (tutorial version)",
-    'num_demo_participants': 2,
-    'app_sequence': [
-        'my_matching_pennies',
+        'name': 'my_matching_pennies',
+        'display_name': "My Matching Pennies (tutorial version)",
+        'num_demo_participants': 2,
+        'app_sequence': [
+            'my_matching_pennies',
         ],
     },
     {
-    'name': 'example_corrupcion',
-    'display_name': "experiemnto de corrupcion",
-    'num_demo_participants': 4,
-    'app_sequence': [
-        'example_corrupcion',
+        'name': 'example_corrupcion',
+        'display_name': "experiemnto de corrupcion",
+        'num_demo_participants': 4,
+        'app_sequence': [
+            'example_corrupcion',
         ],
     },
     {
-    'name': 'corrupcion_terceros',
-    'display_name': "Sesión Corrupcion.",
-    'num_demo_participants': 30 ,
-    'app_sequence': ['Bienvenida_v2','example_corrupcion','corrupcion_terceros','cuestionario_corrupcion'],
+        'name': 'corrupcion_terceros',
+        'display_name': "Sesión Corrupcion.",
+        'num_demo_participants': 30 ,
+        'app_sequence': ['Bienvenida_v2','example_corrupcion','corrupcion_terceros','cuestionario_corrupcion'],
     },
     {
-    'name': 'Bienvenida_v2',
-    'display_name': "bienvenida de experimentos",
-    'num_demo_participants':24,
-    'app_sequence': [
-        'Bienvenida_v2',
+        'name': 'Bienvenida_v2',
+        'display_name': "bienvenida de experimentos",
+        'num_demo_participants':24,
+        'app_sequence': [
+            'Bienvenida_v2',
         ],
     },
     {

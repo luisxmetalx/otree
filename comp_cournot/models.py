@@ -33,7 +33,7 @@ class Group(BaseGroup):
 
     unit_price = models.CurrencyField()
 
-    total_units = models.FloatField(
+    total_units = models.IntegerField(
         doc="""Total unidades producidas por todos los jugadores."""
     )
 
@@ -57,7 +57,7 @@ class Player(BasePlayer):
     edad = models.IntegerField(min=18)
 
     #unidades que produce el jugador
-    unidades = models.FloatField(
+    unidades = models.IntegerField(
         min=0, max=Constants.max_units_per_player,
         doc="""Cantidad de unidades a producir del jugador"""
     )

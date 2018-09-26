@@ -6,69 +6,60 @@
 {% endblock %}
 
 {% block content %}
-    <div class="container-fluid">
         <div class="row">
-            <div id="cont_promedio" class="col-sm-12">
-
+            <div id="cont_promedio" class="col-sm-11">
             </div>
-        </div>
-        <div class="row">
-            <div class="col-1"></div>
-            <div class="col">
-                <button class="btn btn-primary center" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+            <div class="col-sm-1 dropdown">
+                <button class="btn btn-primary center dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Variables
                 </button>
-                <div class="collapse" id="collapseExample">
-                    <div class="card card-body">
-                        <table class="table">
-                            <thead class="thead-dark">
-                                <tr>
-                                    <th colspan="4" class="text-center">Variables</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <th scope="row" class="table-primary">PC</th>
-                                    <td colspan="3" class="text-center">Promedio de Contribución </td>
-                                </tr>
-                                <tr>
-                                    <th scope="row" class="table-primary">DPC</th>
-                                    <td colspan="3" class="text-center">Dispersión Promedio Contribución </td>
-                                </tr>
-                                <tr>
-                                    <th scope="row" class="table-success">PCH</th>
-                                    <td colspan="3" class="text-center">Promedio de Contribución Hombres </td>
-                                </tr>
-                                <tr>
-                                    <th scope="row" class="table-success">DPCH</th>
-                                    <td colspan="3" class="text-center">Dispersión Promedio de Contribución Hombres </td>
-                                </tr>
-                                <tr>
-                                    <th scope="row" class="table-danger">PCM</th>
-                                    <td colspan="3" class="text-center">Promedio de Contribución Mujeres </td>
-                                </tr>
-                                <tr>
-                                    <th scope="row" class="table-danger">DPCM</th>
-                                    <td colspan="3" class="text-center">Dispersión Promedio de Contribución Mujeres </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <div class="card card-body">
+                            <table class="table">
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th colspan="4" class="text-center">Variables</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <th scope="row" class="table-primary">PC</th>
+                                        <td colspan="3" class="text-center">Promedio de Contribución </td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row" class="table-primary">DPC</th>
+                                        <td colspan="3" class="text-center">Dispersión Promedio Contribución </td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row" class="table-success">PCH</th>
+                                        <td colspan="3" class="text-center">Promedio de Contribución Hombres </td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row" class="table-success">DPCH</th>
+                                        <td colspan="3" class="text-center">Dispersión Promedio de Contribución Hombres </td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row" class="table-danger">PCM</th>
+                                        <td colspan="3" class="text-center">Promedio de Contribución Mujeres </td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row" class="table-danger">DPCM</th>
+                                        <td colspan="3" class="text-center">Dispersión Promedio de Contribución Mujeres </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
-                </div>
             </div>
-            <div class="col"></div>
         </div>
         <div class="row">
-            <div id="cont_ganancia" class="col-sm-12">
-
+            <div id="cont_ganancia" class="col-sm-11">
             </div>
-            <div class="row">
-                <div class="col-1"></div>
-                <div class="col">
-                    <button class="btn btn-primary center" type="button" data-toggle="collapse" data-target="#collapseExample1" aria-expanded="false" aria-controls="collapseExample">
+            <div class="col-sm-1 dropdown">
+                    <button class="btn btn-primary center dropdown-toggle" type="button" id="dropdownMenuButton2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             Variables
                     </button>
-                    <div class="collapse" id="collapseExample1">
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton2">
                         <div class="card card-body">
                             <table class="table">
                                 <thead class="thead-dark">
@@ -94,14 +85,11 @@
                         </div>
                     </div>
                 </div>
-                <div class="col"></div>
-            </div>
         </div>
         <div class="row">
             <div id="genero" class="col-sm-7"></div>
             <div id="edades" class="col-sm-5"></div>
         </div>
-    </div>
 
 
 {% endblock %}
@@ -166,7 +154,7 @@
                 boxpoints: false,
               };
             var layaout ={
-                title: 'Contribuciones',
+                title: '<b>Contribuciones</b>',
                 yaxis: {rangemode: 'tozero',
                     zeroline: true
                 }
@@ -215,7 +203,7 @@
                 name:'GTM',
             };
             var layaout2 ={
-                title: 'Ganancias',
+                title: '<b>Ganancias</b>',
                 yaxis: {rangemode: 'tozero',
                     zeroline: true
                 }
@@ -242,10 +230,13 @@
             var trace3 = {
                 values: [{% for i in pGenero %} {{i|json}}, {%endfor%}],
                 labels: ['Hombres', 'Mujeres'],
-                type: 'pie'
+                hoverinfo: 'label+percent',
+                hole: .4,
+                type: 'pie',
+                name: 'Porcentaje de Participantes',
               };
             var layaout3 ={
-                title: 'Género',
+                title: '<b>Género</b>',
                 height: 400,
                 width: 500
                 
@@ -288,7 +279,7 @@
                 type: 'bar'
             };
             var layaout4 ={
-                title: 'Edad',
+                title: '<b>Edad Promedio</b>',
                 barmode: 'group',  
             };
                         

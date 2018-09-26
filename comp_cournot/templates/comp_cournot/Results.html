@@ -7,7 +7,7 @@
 
 {% block content %}
 
-    <p>Los resultados son mostrados en la siguiente tabla.</p>
+    <p>Los resultados son mostrados en la siguiente tabla:</p>
 
     <table class="table">
 
@@ -27,13 +27,13 @@
         </tr>
 
         <tr>
-            <td style="border-top-width:4px">Precion de Venta Unitario:</td>
-            <td style="border-top-width:4px">{{ Constants.total_capacity }} – {{ group.total_units }} = {{ group.unit_price }} puntos.</td>
+            <td style="border-top-width:4px"><b>Precio de Venta Unitario:</b></td>
+            <td style="border-top-width:4px">{{ Constants.total_capacity }} – {{ group.total_units }} = {{ group.unit_price }} puntos</td>
         </tr>
 
         <tr>
-            <td>Su ganancia:</td>
-            <td>{{ player.payoff }} puntos.</td>
+            <td><b>Su ganancia:</b></td>
+            <td>{{ player.payoff }} puntos</td>
         </tr>
 
     </table>

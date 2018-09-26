@@ -66,7 +66,7 @@ class Player(BasePlayer):
     #matricula del jugador
     #matricula = models.IntegerField(min=100000000,max=999999999)
 
-    contribution = models.CurrencyField(
+    contribution = models.IntegerField(
         min=0, max=Constants.endowment,
         doc="""The amount contributed by the player""",
     )

@@ -2,29 +2,45 @@
 {% load otree static %}
 
 {% block title %}
-    Resultados.
+    Resultados
 {% endblock %}
 
 {% block content %}
   
 
-    <table class="table-condensed" style="width:500px; margin-top:20px;">
-        <tr><td>Tú contribución:</td><td>{{ player.contribution }}</td></tr>
-        <tr><td>Contribución de los otros participantes:</td><td></td></tr>
-        {% for p in player.get_others_in_group %}
-            <tr><td></td><td>{{ p.contribution }}</td></tr>
-        {% endfor %}
+    <table class="table">
+        <tr>
+            <td>Su Contribución:</td>
+            <td>{{ player.contribution }} puntos</td>
+        </tr>
+        <tr>
+            <td rowspan="{{rowspan}}">Contribución de los otros participantes:</td>
+            {% for p in player.get_others_in_group %}
+                <tr>
+                    <td>{{ p.contribution }} puntos</td>
+                </tr>    
+            {% endfor %}
+        </tr>
 
-        <tr><td>Total de contribución:</td><td>{{ group.total_contribution }}</td></tr>
+        <tr>
+            <td><b>Total Contribución:</b></td>
+            <td>{{ group.total_contribution }} puntos</td>
+        </tr>
 
-        <tr><td colspan="2"><hr/></td></tr>
+        <tr>
+            <td style="border-top-width:4px"><b>Ganancia Total del Proyecto:</b></td>
+            <td style="border-top-width:4px">{{ total_earnings }} puntos</td>
+        </tr>
 
-        <tr><td>Ganancias totales del proyecto:</td><td>{{ total_earnings }}</td></tr>
-        <tr><td>Sus ganancias del proyecto:</td><td>{{ group.individual_share }}</td></tr>
+        <tr>
+            <td><b>Su Ganancia del Proyecto:</b></td>
+            <td>{{ group.individual_share }} puntos</td>
+        </tr>
 
-        <tr><td colspan="2"><hr/></td></tr>
-
-        <tr><td>Por lo tanto, en total, usted gana:</td><td>{{ player.payoff }}</td></tr>
+        <tr>
+            <td style="border-top-width:4px"><b>Ganancia Total:</b></td>
+            <td style="border-top-width:4px">{{ player.payoff }} puntos</td>
+        </tr>
 
     </table>
     <p></p>

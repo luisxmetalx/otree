@@ -2,11 +2,22 @@
 {% load otree static %}
 
 {% block title %}
-Explicación Teórica: Por favor, preste atención a la exposición del profesor y presione "Siguiente"
-únicamente cuando él lo indique.
+Explicación Teórica
 {% endblock %}
 
 
 {% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12">
+            <h3>¡Por favor, preste atención a la exposición del profesor! </h3></br></br>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <h4>Presione "Siguiente" únicamente cuando él lo indique.</h4></br></br>
+        </div>
+    </div>
+</div>
     {% next_button %}
 {% endblock %}
